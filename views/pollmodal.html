@@ -1,0 +1,20 @@
+  <div class="modal" id="mymodal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" onclick="onCloseDialog()">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">{{.Polls.Title}}</h4>
+        </div>
+        <div class="modal-body">
+          <p>您还不能参与{{.Polls.Title}}，请先关注公众号</p>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" onclick="onSubscribe()">关注公众号</a>
+        </div>
+      </div>
+      <!-- /.modal-content --> </div>
+    <!-- /.modal-dialog --> </div>
+  <!-- /.modal -->

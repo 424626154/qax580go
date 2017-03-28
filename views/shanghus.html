@@ -1,0 +1,46 @@
+{{template "header.html" .}}
+<div id="cont_bg">
+	<!--分类标题-->
+	 	<div class="container-fluid">
+	<ul class="row">
+		<li class="col-xs-4 col-md-4 shanghu_type_bg" >
+			<a class="my_button my_gray shanghu_type" style="text-decoration:none;color:#2ebb86"href="/shanghulist?type=1">餐饮小吃</a>
+		</li>
+		<li class="col-xs-4 col-md-4 shanghu_type_bg" >
+			<a class="my_button my_gray shanghu_type" style="text-decoration:none;color:#2ebb86"href="/shanghulist?type=2">汽车服务</a>
+		</li>
+		<li class="col-xs-4 col-md-4 shanghu_type_bg" >
+			<a class="my_button my_gray shanghu_type" style="text-decoration:none;color:#2ebb86"href="/shanghulist?type=3">家电维修</a>
+		</li>
+		<li class="col-xs-4 col-md-4 shanghu_type_bg">
+			<a class="my_button my_gray shanghu_type" style="text-decoration:none;color:#2ebb86"href="/shanghulist?type=4">教育培训</a>
+		</li>
+	</ul>
+</div>
+<div><h5>推荐商户</h5></div>
+<div class="list_page_bg">
+
+	<ul class="qax_list_bg">
+		{{range .Objs}}
+		<a href="" style="text-decoration:none;">
+			<div  id="list_item">
+			<div class="list_item_1">
+				<div class="caidn_img_div">
+							{{if eq .Image ""}}
+                    {{.Image}}
+                {{else}}
+							<img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" class="list_time_caidan" >{{end}}</div>
+				<div class="caidn_info_div"> 
+					<div><font class="info_fnot1">{{.Name}}</font> </div>
+					<div><font class="info_fnot">{{.Info}}</font></div>
+
+				</div>
+			</div>
+			</div>
+		</a>
+		{{end}}
+	</ul>
+</div>
+
+</div>
+{{template "footer.html" .}}

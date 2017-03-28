@@ -1,0 +1,340 @@
+{{template "pollheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+//微信分享
+wx.config({
+    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: {{.WxShare.AppId}}, // 必填，公众号的唯一标识
+    timestamp: {{.WxShare.TimeStamp}}, // 必填，生成签名的时间戳
+    nonceStr: {{.WxShare.NonceStr}}, // 必填，生成签名的随机串
+    signature: {{.WxShare.Signature}},// 必填，签名，见附录1
+    jsApiList: ['onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2  分享到朋友圈onMenuShareTimeline
+});
+wx.ready(function(){
+
+    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+    // alert("wx read");
+    wx.onMenuShareTimeline({
+    title: {{.WxShareCon.Title}}, // 分享标题
+    link: {{.WxShareCon.Link}}, // 分享链接
+    imgUrl: {{.WxShareCon.ImgUrl}}, // 分享图标
+    success: function () { 
+        // 用户确认分享后执行的回调函数
+    },
+    cancel: function () { 
+        // 用户取消分享后执行的回调函数
+    }
+});
+});
+wx.error(function(res){
+
+    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+    // alert(res);
+    // alert(location.href)
+    // alert({{.WxShare.TimeStamp}})
+    // alert({{.WxShare.NonceStr}})
+    // alert({{.WxShare.Signature}})
+});
+//微信分享
+
+
+$(document).ready(function(){
+      // alert({{.OpenId}})
+        });
+  
+  function closeErro(){
+    // alert("closeErro")
+    window.location.href="http://www.baoguangguang.cn/"; 
+  }
+  /**
+  参与
+  */
+  function onPartake(){
+      $.ajax({
+                url : '/wxqax/qualification?openid='+{{.OpenId}}+'&pollsid='+{{.PollsId}},
+                data:{},
+                cache : false, 
+                async : false,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                        if(isCheck()){
+                        window.location.href="/poll/addpoll?pollsid="+{{.Polls.Id}};  
+                        }
+                    }else{
+                        showDialog()
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               // alert(XMLHttpRequest.status);
+               // alert(XMLHttpRequest.readyState);
+               // alert(textStatus);
+               }
+            });
+  }
+  /**
+  了解更多
+  */
+  function onMore(){
+    window.location.href={{.Polls.More}};   
+  }
+  /**
+  投票
+  */
+  function onclikVote(id){
+          $.ajax({
+                url : '/wxqax/qualification?openid='+{{.OpenId}}+'&pollsid='+{{.PollsId}},
+                data:{},
+                cache : false, 
+                async : false,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                        checkVote(id)
+                    }else{
+                        showDialog()
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               // alert(XMLHttpRequest.status);
+               // alert(XMLHttpRequest.readyState);
+               // alert(textStatus);
+               }
+            });
+  }
+
+function checkVote(id){
+  // alert('/poll/pollcheckvote?openid='+{{.OpenId}}+'&pollsid='+{{.PollsId}}+"&pollid="+id)
+          $.ajax({
+                url : '/poll/pollcheckvote?openid='+{{.OpenId}}+'&pollsid='+{{.PollsId}}+"&pollid="+id,
+                data:{},
+                cache : false, 
+                async : false,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                                   if(isCheck()){
+                        var url = "/poll/pollhome?op=vote&pollsid="+{{.PollsId}}+"&id="+id; 
+                        // alert(url)
+                        window.location.href = url
+                        }
+                    }else{
+                        alert("今天已经为选手投过票")
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               // alert(XMLHttpRequest.status);
+               // alert(XMLHttpRequest.readyState);
+               // alert(textStatus);
+               }
+            });
+}
+
+  function onCon(id){
+    var url = "/poll/pollhomecon?pollsid="+{{.PollsId}}+"&pollid="+id; 
+    // alert(url)
+    window.location.href = url
+  }
+  function onSearch(){
+    var search = document.getElementById("search").value;
+    if(search != ""){
+    var url = "/poll/pollhomesearch?pollsid="+{{.PollsId}}+"&search="+search;
+    // alert(url)
+     window.location.href = url
+    }
+  }
+  /**
+  排名
+  */
+  function onRanking(){
+    if(isCheck()){
+          var url = "/poll/pollhomeranking?pollsid="+{{.PollsId}};
+          // alert(url)
+          window.location.href = url
+    }
+  }
+  /**
+  限制条件判断
+  */
+  function isCheck(){
+    // alert("isCheck")
+    if({{.PollsId}} == ""){
+      return false;
+    }
+    if({{.Polls.State}} == 0){
+      alert("投票活动未上线")
+      return false;
+    }
+    if({{isoverdue .Time}}){
+      alert("活动已经过期")
+      return false;
+    }
+    return true;
+  }
+  /**
+  关注公众号
+  */
+  function onSubscribe(){
+    // alert("onSubscribe")
+     $('#mymodal').hide();
+    window.location.href={{.Polls.More}}; 
+  }
+  /**
+关闭
+  */
+  function onCloseDialog(){
+    $('#mymodal').hide();
+        // alert("onCloseDialog")
+  }
+  function showDialog(){
+    $('#mymodal').show();
+     // alert("showDialog")
+  }
+</script>
+<body id="header_body">
+<div id="cont_bg">
+  {{if eq .PollsId ""}}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeErro()">
+      <span aria-hidden="true">&times;</span>
+    </button> <strong>参数错误</strong>
+    请确保您的投票打开方式正确
+  </div>
+  {{else}}
+  <!--投票详情-->
+  <div class="jumbotron">
+    {{if eq .Polls.Image ""}}
+  {{else}}
+    <img src="{{isImgPath .Polls.Image}}" alt="{{isImgPath .Polls.Image}}" width="280px" height="auto">
+    {{end}}
+    <h1>{{.Polls.Title}}</h1>
+    <p>{{.Polls.Info}}</p>
+  </div>
+  <!--搜索-->
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="搜索名字或者编号" id="search" name="search">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" onclick="onSearch()">搜索</button>
+    </span>
+  </div>
+  <!--投票统计-->
+  <br>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-4 col-md-4">
+        <table >
+          <tr>
+            <td>参与选手</td>
+          </tr>
+          <tr>
+            <td>{{.PollNum}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-xs-4 col-md-4">
+        <table >
+          <tr>
+            <td>累计投票</td>
+          </tr>
+          <tr>
+            <td>{{.VoteNum}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-xs-4 col-md-4">
+        <table >
+          <tr>
+            <td>访问量</td>
+          </tr>
+          <tr>
+            <td>{{.PV}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h4>距离活动结束剩余：{{.TimeStr}}</h4>
+  </div>
+  <!--列表-->
+  <ul class="list-group">
+    {{range .Objs}}
+    <li class="list-group-item">
+      {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+      <div id="image_fnot" >
+        <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+      {{end}}
+      <div> <font class="poll_title">{{pollnumber .Id .Title}}</font>
+      </div>
+      <div class="poll_vote"> <font class="poll_vote_font">{{.VoteNum}}票</font>
+        <span class="poll_but">
+          <button type="button" class="btn btn-success" onclick="onclikVote({{.Id}})">投票</button>
+        </span>
+      </div>
+      <a href="javascript:void(0)" onclick="onCon({{.Id}})" style="text-decoration:none;">详情</a>
+    </li>
+    {{end}}
+  </ul>
+  {{if eq .Polls.Prize ""}}
+    {{else}}
+  <div>
+    <div class="footer_div">
+      <font >活动奖品</font>
+    </div>
+    <font>{{.Polls.Prize}}</font>
+  </div>
+  {{end}}
+  <div>
+    <font>{{.Polls.Ext}}</font>
+  </div>
+  <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="container-fluid">
+      <div class="row">
+        <button class="col-xs-4 col-md-4 poll_home_but" onclick="onRanking()">
+          <font class="poll_nav_font">排名</font>
+        </button>
+        <button class="col-xs-4 col-md-4 footer_div poll_home_but" onclick="onPartake()">
+          <font class="poll_nav_font">我要参与</font>
+        </button>
+        <button class="col-xs-4 col-md-4 footer_div poll_home_but" onclick="onMore()">
+          <font class="poll_nav_font">了解更多</font>
+        </button>
+      </div>
+    </div>
+  </nav>
+  {{end}}
+  <br></div>
+<!--弹出框-->
+<div class="modal" id="mymodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" onclick="onCloseDialog()">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">{{.Polls.Title}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>您还不能参与{{.Polls.Title}}，请先关注公众号</p>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0)" onclick="onSubscribe()">关注公众号</a>
+      </div>
+    </div>
+    <!-- /.modal-content --> </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--弹出框-->
+{{template "pollfooter.html" .}}

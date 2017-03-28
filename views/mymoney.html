@@ -1,0 +1,45 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/usercenter"
+        });
+function onclik(){
+  var url = "/moneyinfo?openid="+{{.User.Uid}};
+  submitUrl(url); 
+}
+function onclik1(){
+  var url = "/moneyhelp?openid="+{{.User.Uid}};
+  submitUrl(url);
+}
+function onclik2(){
+  var url = "/mall?openid="+{{.User.Uid}};
+  submitUrl(url); 
+}
+function onclik3(){
+  var url = "/exchange?openid="+{{.User.Uid}};
+  submitUrl(url); 
+}
+function submitUrl(url){
+    var temp = document.createElement("form");
+    document.body.appendChild(temp);
+    temp.action = url;
+    temp.method = "post";   
+    temp.enctype = "multipart/form-data"
+    temp.submit(); 
+}
+</script>
+<div class="uplode_bg">
+  <div>
+    <button class="my_button my_gray"  style="text-decoration:none;color:#2ebb86" onclick="onclik2()">商城</button>
+    <button class="my_button my_gray"  style="text-decoration:none;color:#2ebb86" onclick="onclik3()">兑换列表</button>
+    <button class="my_button my_gray"  style="text-decoration:none;color:#2ebb86" onclick="onclik()">详情</button>
+    <button class="my_button my_gray"  style="text-decoration:none;color:#2ebb86" onclick="onclik1()">帮助</button>
+  </div>
+  {{ if .isLogin}}
+  <h4>帮帮币 {{.User.Money}}</h4>
+  {{else}}
+  获得用户信息失败！
+  {{end}}
+</div>
+{{template "footer.html" .}}

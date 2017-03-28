@@ -1,0 +1,19 @@
+{{template "pheader.html" .}}
+<script type="text/javascript">
+function onclikOrder(id){
+   window.location.href="/photo/orderdet?id="+id
+}
+</script>
+<div class="weui_cells_title"></div>
+<div class="weui_cells weui_cells_access">
+    {{range .Objs}}
+    <a class="weui_cell" href="javascript:;" onclick="onclikOrder({{.Id}})">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p>订单编号:{{.Pnumber}}</p>
+            {{timeformat2 .CreateTime}}
+        </div>
+        <div class="weui_cell_ft"></div>
+    </a>
+    {{end}}
+</div>
+{{template "pfooter.html" .}}

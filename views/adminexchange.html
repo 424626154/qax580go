@@ -1,0 +1,34 @@
+{{template "adminheader.html" .}}
+<ul class="list-group">
+  {{range .ShowOrders}}
+  <li class="list-group-item">
+    {{if eq .Commodity.Image ""}}
+     {{ .Commodity.Image}}
+     {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Commodity.Image}}" alt="{{isImgPath .Commodity.Image}}" width="320px" height="auto"></div>
+    {{end}}
+    <div>
+      <h1>{{.Commodity.Name}}</h1>
+    </div>
+    <div>{{.Commodity.Info}}</div>
+    <div>价格:{{.Commodity.Money}}帮帮币</div>
+    <div>
+        {{if eq .HeadImgurl ""}}
+     {{ .HeadImgurl}}
+     {{else}}
+    <div id="image_fnot" >
+      <img src="{{.HeadImgurl}}" alt="{{.HeadImgurl}}" width="60px" height="60px"></div>
+    {{end}}
+    <div>{{.NickeName}}</div>
+    {{if eq .State 0}}
+    <a href="/admin/exchange?op=state&id={{.Id}}" >待兑换</a>
+    {{else}}
+    <font href="" >已兑换</font>
+    {{end}}
+  </div>
+   <div class="time_font">{{timeformat1 .Time1}}</div>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

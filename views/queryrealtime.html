@@ -1,0 +1,138 @@
+{{template "trainheader.html" .}}
+<div>
+    <div class="uplode_bg">
+        <div class="container">
+            <form action="/queryrealtime" method="post" class="form-horizontal"  role="form" onSubmit="return mySubmit();">
+                <div class="form-group"> <font class="up_fnt" for="" style="color:#000">出发站</font>
+                    <input type="text" class="form-control" id="start" name="start" placeholder="输入出发站"></div>
+                <div class="form-group"> <font class="up_fnt" for="" style="color:#000">到达站</font>
+                    <input type="text" class="form-control" id="end" name="end" placeholder="输入到达站"></div>
+                <fieldset>
+                    <div class="form-group">
+                        <label for="dtp_input2" class="col-md-2 control-label">出发日期</label>
+                        <div class="input-group date form_date col-md-5" data-date="" data-date-format="" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                            <input class="form-control" size="16" type="text" value="" readonly id="data" name="data">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </span>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        <input type="hidden" id="dtp_input2" value="" />
+                        <br/>
+                    </div>
+                </fieldset>
+                <div class="body_right">
+                    <button type="submit" class="my_button my_gray">查询</button>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript" src="static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+        <script type="text/javascript">
+    $('.form_date').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          minView: 2,
+          forceParse: 0
+    });
+    $('.dropdown-toggle').dropdown()
+</script>
+        <script type="text/javascript">
+    function mySubmit(){
+                if(document.getElementById("start").value=="")
+         {
+          alert("请输入出发站");
+          return false;
+        }
+                if(document.getElementById("end").value=="")
+         {
+          alert("请输入到达站");
+          return false;
+        }
+        if(document.getElementById("data").value=="")
+         {
+          alert("请选择日期");
+          return false;
+        }
+    }
+</script>
+
+        <div>
+            {{if eq .IsShow "true"}}
+      {{if eq .ErrorCode 0}}
+            <ul class="list-group">
+                {{range .Results}}
+                <div class="list-group-item">
+                    <div>车次:{{.TrainNo}}</div>
+                    <div>车次始发站:{{.StartStationName}}</div>
+                    <div>车次终点站:{{.EndStationName}}</div>
+                    <div>出发站:{{.FromStationName}}</div>
+                    <div>到达站:{{.ToStationName}}</div>
+                    <div>出发时间:{{.StartTime}}</div>
+                    <div>到达时间:{{.ArriveTime}}</div>
+                    <div>车次类型:{{.TrainClassName}}</div>
+                    <div>历时天数:{{.DayDifference}}</div>
+                    <div>总历时时间:{{.Lishi}}</div>
+                    {{if eq .GrNum "--"}}
+            {{else}}
+                    <div>高级软卧:{{.GrNum}}</div>
+                    {{end}}
+            {{if eq .QtNum "--"}}
+            {{else}}
+                    <div>其他:{{.QtNum}}</div>
+                    {{end}}
+            {{if eq .RwNum "--"}}
+            {{else}}
+                    <div>软卧:{{.RwNum}}</div>
+                    {{end}}
+            {{if eq .RzNum "--"}}
+            {{else}}
+                    <div>软座:{{.RzNum}}</div>
+                    {{end}}
+            {{if eq .TzNum "--"}}
+            {{else}}
+                    <div>特等座:{{.TzNum}}</div>
+                    {{end}}
+            {{if eq .WzNum "--"}}
+            {{else}}
+                    <div>无座:{{.WzNum}}</div>
+                    {{end}}
+            {{if eq .YwNum "--"}}
+            {{else}}
+                    <div>硬卧:{{.YwNum}}</div>
+                    {{end}}
+            {{if eq .YzNum "--"}}
+            {{else}}
+                    <div>硬座:{{.YzNum}}</div>
+                    {{end}}
+            {{if eq .ZeNum "--"}}
+            {{else}}
+                    <div>二等座:{{.ZeNum}}</div>
+                    {{end}}
+            {{if eq .ZyNum "--"}}
+            {{else}}
+                    <div>一等座:{{.ZyNum}}</div>
+                    {{end}}
+            {{if eq .SwzNum "--"}}
+            {{else}}
+                    <div>商务座:{{.SwzNum}}</div>
+                    {{end}}
+                </div>
+                {{end}}
+            </ul>
+            {{else}}
+        {{.ErrorInfo}}
+      {{end}}
+    {{end}}
+        </div>
+    </div>
+</body>
+    {{template "trainfooter.html" .}}

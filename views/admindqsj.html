@@ -1,0 +1,15 @@
+{{template "adminheader.html" .}}
+	<h3>大签世界账户管理</h3>
+<div class="btn-group" role="group" aria-label="...">
+	<a type="button" class="btn btn-default" href="/admin/adddqsjuser">添加</a>
+</div>
+<ul class="list-group">
+	{{range .Admins}}
+	<li class="list-group-item">
+		<div>{{.Username}}</div>
+		<div>{{.Password}}</div>
+		<a href="/admin/dqsj?op=del&id={{.Id}}" >删除</a>
+	</li>
+	{{end}}
+</ul>
+{{template "adminfooter.html" .}}

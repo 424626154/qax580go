@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <link rel="shortcut icon" href="/static/img/logo32.png" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Stylesheets -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+  <title>咱这580</title>
+</head>
+
+  <script type="text/javascript">
+  
+  function closeErro(){
+    window.location.href="http://www.baoguangguang.cn/"; 
+  }
+    function onclikVote(id){
+    var url = "/poll/pollhomesearch?op=vote&pollsid="+{{.PollsId}}+"&pollid="+id+"&search="+{{.Search}}; 
+    // alert(url)
+    window.location.href = url
+  }
+  function onCon(id){
+    var url = "/poll/pollhomecon?pollsid="+{{.PollsId}}+"&pollid="+id; 
+    // alert(url)
+    window.location.href = url
+  }
+  function onBack(){
+    var url = "/poll/pollhome?pollsid="+{{.PollsId}};
+    // alert(url)
+    window.location.href = url
+  }
+</script>
+<body id="header_body">
+  <div id="cont_bg">
+  <ul class="nav nav-pills">
+  <li ><button class="btn btn-default" onclick="onBack()">返回</button></li>
+</ul>
+<br>
+    {{if eq .PollsId ""}}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeErro()">
+        <span aria-hidden="true">&times;</span>
+      </button> <strong>参数错误</strong>
+      请确保您的投票打开方式正确
+    </div>
+    {{else}}
+
+    <ul class="list-group">
+      {{range .Objs}}
+      <li class="list-group-item">
+      <div> <font class="poll_rankin">{{ranking .Ranking}}</font>    |  <font class="poll_title">{{pollnumber .Id .Title}}</font><font class="poll_vote_font poll_rankin_vote">{{.VoteNum}}票</font>
+        </div>
+      </li>
+      {{end}}
+    </ul>
+
+
+    <div id="poll_home_footer"></div>
+
+
+    {{end}}
+  </div>
+  <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

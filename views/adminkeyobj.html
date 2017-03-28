@@ -1,0 +1,45 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+            document.getElementById("title_font").href="/admin/keywords"
+        });
+  function onclick1(id){
+      document.location = "/admin/keyobj?op=state&id="+id+"&keyid="+{{.KeyId}}
+  }
+  function onclick2(id){
+      document.location = "/admin/keyobj?op=state1&id="+id+"&keyid="+{{.KeyId}}
+  }
+  function onclick3(id){
+      document.location = "/admin/keyobj?op=del&id="+id+"&keyid="+{{.KeyId}}
+  }
+</script>
+<div>
+  <a type="button" class="btn btn-default" href="/admin/addkeyobj?keyid={{.KeyId}}">添加关键字对象</a>
+</div>
+<ul class="list-group">
+  {{range .Objs}}
+  <li class="list-group-item">
+    {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+    {{end}}
+    <div>
+      <h1>{{.Title}}</h1>
+    </div>
+    <div>{{.Info}}</div>
+    <div>链接:{{.Url}}</div>
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .State 0}}
+    <a onclick="onclick1({{.Id}})">未上架</a>
+    {{else}}
+    <a onclick="onclick2({{.Id}})">已上架</a>
+    {{end}}
+    <a onclick="onclick3({{.Id}})">删除</a>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

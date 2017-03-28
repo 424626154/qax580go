@@ -1,0 +1,19 @@
+{{template "header.html" .}}
+<div class="qax_bg">
+	<div class="row">
+		{{range .Objs}}
+		<div class="col-xs-12 col-md-4 list_col"  onclick="window.location.href= '/caidans?id={{.Id}}'">
+			<img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" class="list_time_waimai" ></img>
+		<div class="list_time_waimai_info">
+			<h4>{{.Name}}</h4>
+			<div> <font class="info_fnot">{{.Address}}</font>
+			</div>
+			<div> <font class="info_fnot">营业时间：{{.Starthour}}点{{.Startminute}}分－{{.Endhour}}点{{.Endminute}}分</font> 
+			</div>
+			<a href="/caidans?id={{.Id}}">菜单</a>
+		</div>
+	</div>
+	{{end}}
+</div>
+</div>
+{{template "footer.html" .}}

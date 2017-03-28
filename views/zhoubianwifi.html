@@ -1,0 +1,30 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+	{{if eq .ErrorCode 0}}
+	<ul class="list-group">
+		{{range .WResults}}
+		<div class="list-group-item">
+			<div>
+				<span class="lable1_font">热点名称：</span>
+				{{.Name}}
+			</div>
+			<div>
+				<span class="lable1_font">热点介绍：</span>
+				{{.Intro}}
+			</div>
+			<div>
+				<span class="lable1_font">热点地址：</span>
+				{{.Address}}
+			</div>
+			<div>
+				<span class="lable1_font">距离：</span>
+				{{.Distance}}米
+			</div>
+		</div>
+		{{end}}
+	</ul>
+	{{else}}
+	        {{.ErrorInfo}}
+	      {{end}}
+</div>
+{{template "trainfooter.html" .}}

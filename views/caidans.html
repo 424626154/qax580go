@@ -1,0 +1,54 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script language="javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/waimailist";
+            $("#dialog").hide();
+        });
+function toPhone(){
+  $("#dialog").show();
+}
+function closePhone(){
+   $("#dialog").hide();
+}
+
+</script>
+<div class="qax_bg container-fluid">
+  <div class="col-xs-12 col-md-4 list_col">
+    <img src="{{isImgPath .Canting.Image}}" alt="{{isImgPath .Canting.Image}}" class="list_time_waimai" ></img>
+  <div class="list_time_waimai_info">
+    <h4>{{.Canting.Name}}</h4>
+  </div>
+</div>
+
+<div class="row">
+  {{range .Caidans}}
+  <div class="col-xs-12 col-md-4 list_col">
+    <div class="caidn_img_div">
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" class="list_time_caidan" ></img>
+  </div>
+  <div class="caidn_info_div"> <font class="info_fnot1">{{.Name}}</font>
+    <span class="label label-danger">{{.Mtype}}</span>
+    <div> <font class="info_fnot">{{.Info}}</font>
+    </div>
+    <div>
+      <font class="info_fnot1">¥{{.Price}}</font>
+    </div>
+  </div>
+</div>
+{{end}}
+</div>
+
+</div>
+
+<div id="dialog" class="dialog">
+<h5>订餐电话：</h5>
+<div>
+<a style="font-size:20px" href="tel:{{.Canting.Phonenumber}}">{{.Canting.Phonenumber}}</a>
+</div>
+<div style="padding:10px 10px;">
+<button type="button" onclick="closePhone()">关闭</button>
+</div>
+</div>
+<div class="canting_contact" style="background: url(./static/img/phone.png) no-repeat;" onclick="toPhone();"></div>
+{{template "footer.html" .}}

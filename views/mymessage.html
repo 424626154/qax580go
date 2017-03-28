@@ -1,0 +1,46 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+  <h4>发布内容将在12小时内审核,只有审核过的消息才可以在主页中查看到</h4>
+  <ul class="list-group">
+    {{range .Posts}}
+    <li class="list-group-item">
+      <div>
+        <h1>{{.Title}}</h1>
+      </div>
+      <div>{{.Info}}</div>
+      {{if eq .Image ""}}
+            {{.Image}}
+          {{else}}
+      <div id="image_fnot" >
+        <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="auto" height="60px"></div>
+      {{end}}
+          {{ if eq .OpenId ""}}
+
+        {{else}}
+      <div class="time_font">
+        <span > <font style="color: #000;font-size:12px;">{{ .NickeName}}</font>
+          <img src="{{.HeadImgurl}}" width="40px" height="40px">
+      </span>
+    </div>
+    {{ end}}
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .Examine 0}}
+    <span class="label label-success">待审核</span>
+    {{else}}
+    <span class="label label-success">已审核</span>
+    {{end}}
+        {{if eq .Label 1}}
+    <span class="label label-primary">个人</span>
+    {{end}} 
+        {{if eq .Label 2}}
+    <span class="label label-primary">官方</span>
+    {{end}}
+     {{if eq .State1 1}}
+    <span class="label label-danger">违规</span>
+    {{end}}
+    <a href="/mymessage?op=del&id={{.Id}}" >删除</a>
+  </li>
+  {{end}}
+</ul>
+</div>
+{{template "footer.html" .}}

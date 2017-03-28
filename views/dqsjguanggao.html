@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<!-- Stylesheets -->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	<title>大签世界</title>
+<head>
+<body>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript">
+	wx.config({
+	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	    appId: {{.AppId}}, // 必填，公众号的唯一标识
+	    timestamp: {{.TimesTamp}}, // 必填，生成签名的时间戳
+	    nonceStr: {{.NonceStr}}, // 必填，生成签名的随机串
+	    signature: {{.Ticket}},// 必填，签名，见附录1
+	    jsApiList: [
+	    	'onMenuShareTimeline',//朋友圈
+	    	'onMenuShareAppMessage'//微信好友
+	    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});
+	 wx.ready(function () {   //ready函数用于调用API，如果你的网页在加载后就需要自定义分享和回调功能，需要在此调用分享函数。//如果是微信游戏结束后，需要点击按钮触发得到分值后分享，这里就不需要调用API了，可以在按钮上绑定事件直接调用。因此，微信游戏由于大多需要用户先触发获取分值，此处请不要填写如下所示的分享API
+		wx.onMenuShareTimeline({
+		    title: {{.WxShareCon.Title}}, // 分享标题
+		    link: {{.WxShareCon.Link}}, // 分享链接
+		    imgUrl: {{.WxShareCon.ImgUrl}}, // 分享图标
+		    success: function () { 
+		        // 用户确认分享后执行的回调函数
+		    },
+		    cancel: function () { 
+		        // 用户取消分享后执行的回调函数
+		    }
+		});
+		wx.onMenuShareAppMessage({
+		    title: {{.WxShareCon.Title}}, // 分享标题
+		    desc: {{.WxShareCon.Title}}, // 分享描述
+		    link: {{.WxShareCon.Link}}, // 分享链接
+		    imgUrl: {{.WxShareCon.ImgUrl}}, // 分享图标
+		    type: '', // 分享类型,music、video或link，不填默认为link
+		    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		    success: function () { 
+		        // 用户确认分享后执行的回调函数
+		    },
+		    cancel: function () { 
+		        // 用户取消分享后执行的回调函数
+		    }
+		});
+	});
+	wx.error(function (res) {
+	 alert(res.errMsg);  //打印错误消息。及把 debug:false,设置为debug:ture就可以直接在网页上看到弹出的错误提示
+	});
+</script>
+	<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	  function onHome(){
+	  	  var url = "/dqsj/home"
+          window.location.href = url
+	  }
+	  function onCai(){
+	  		var url = "/dqsj/cai"
+          window.location.href = url
+	  }
+	  function onPan(){
+	  		var url = "/dqsj/pan"
+          window.location.href = url
+	  }
+</script>
+	<div class="qax_bg">
+	  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/home" id="title_font">
+          主页</a>
+       </div>
+   	</div>
+   </nav>
+	<div id="cont_bg">
+  {{if eq .Guanggao.BImage true}}
+    {{if eq .Guanggao.Image ""}}
+            {{.Guanggao.Image}}
+          {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.Image}}" alt="{{isImgPath .Guanggao.Image}}" width="320px" height="auto"></div>
+  {{end}}
+  {{end}}
+  <div > <font class="title_fnot" >{{.Guanggao.Title}}</font>
+  </div>
+  <div class="cont_info"> <font class="info_fnot">{{.Guanggao.Content}}</font>
+  </div>
+  {{if eq .Guanggao.ImageItem0 ""}}
+         {{.Guanggao.ImageItem0}}
+        {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.ImageItem0}}" alt="{{isImgPath .Guanggao.ImageItem0}}" width="320px" height="auto"></div>
+  {{end}}
+        {{if eq .Guanggao.ImageItem1 ""}}
+         {{.Guanggao.ImageItem1}}
+        {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.ImageItem1}}" alt="{{isImgPath .Guanggao.ImageItem1}}" width="320px" height="auto"></div>
+  {{end}}
+        {{if eq .Guanggao.ImageItem2 ""}}
+         {{.Guanggao.ImageItem2}}
+        {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.ImageItem2}}" alt="{{isImgPath .Guanggao.ImageItem2}}" width="320px" height="auto"></div>
+  {{end}}
+  <div class="time_font">{{timeformat .Guanggao.Time}}</div>
+  {{if eq .Guanggao.Blink true}}
+  <a href="{{ .Guanggao.Link}}">阅读原文</a>
+  {{end}}
+</div>
+
+	</div>
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

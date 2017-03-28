@@ -1,0 +1,155 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript">
+	function onclikDownl(url){
+		if(window.confirm("确认要导出信息？")) {
+		    window.open(url);
+		}
+	}
+
+
+function DownLoadReportIMG(imgPathURL) {  
+           
+        //如果隐藏IFRAME不存在，则添加  
+        if (!document.getElementById("IframeReportImg"))  
+            $('<iframe style="display:none;" id="IframeReportImg" name="IframeReportImg" onload="DoSaveAsIMG();" width="0" height="0" src="about:blank"></iframe>').appendTo("body");  
+        if (document.all.IframeReportImg.src != imgPathURL) {  
+            //加载图片  
+            document.all.IframeReportImg.src = imgPathURL;  
+        }  
+        else {  
+            //图片直接另存为  
+            DoSaveAsIMG();    
+        }  
+    }  
+    function DoSaveAsIMG() {  
+        if (document.all.IframeReportImg.src != "about:blank")  
+            // document.frames("IframeReportImg").document.execCommand("SaveAs");   
+            document.getElementById('IframeReportImg').contentWindow.document.execCommand("SaveAs");          
+    } 
+
+    function onclikState(type){
+    	  var post_map = { id:{{.Porder.Id}},state: type} 
+          var post_url = "/photo/postadminupstate";
+          $.ajax({
+                    url : post_url,
+                    data:post_map,
+                    cache : false, 
+                    async : true,
+                    type : "POST",
+                    dataType : 'json',
+                    success : function (result){
+                        
+                        if(result.errcode == 0){ 
+                          // alert(result.data)
+                          // upState(result.data)
+                           window.location.href="/photo/admindetails?id="+{{.Porder.Id}}
+                        }else{
+                            alert(result.errmsg)
+                        }
+                    },
+                   error: function(XMLHttpRequest, textStatus, errorThrown) {
+                   alert(XMLHttpRequest.status);
+                   alert(XMLHttpRequest.readyState);
+                   alert(textStatus);
+                   }
+                });
+    }
+    function upState(state){
+    	 $('#state_id').empty();
+             if(state == 1){
+              var $preview = $('<span class="label label-primary">用户提交订单</span>-><button class="label label-default" onclick="onclikState(2)">客服确认订单</button>-><span class="label label-default">客服发送物流</span>-><span class="label label-default">订单完成</span>');
+              $('#state_id').append($preview);
+            }else if(state == 2){
+              var $preview = $('<span class="label label-primary">用户提交订单</span>-><span class="label label-primary">客服确认订单</span>-><button class="label label-default" onclick="onclikState(3)">客服发送物流</button>-><span class="label label-default">订单完成</span>');
+             $('#state_id').append($preview);
+            }else if(state == 3){
+            	 var $preview = $('<span class="label label-primary">用户提交订单</span>-><span class="label label-primary">客服确认订单</span>-><span class="label label-primary">客服发送物流</span>-><button class="label label-default" onclick="onclikState(4)">订单完成</button>');
+             $('#state_id').append($preview);
+            }else if(state == 4){
+            	 var $preview = $('<span class="label label-primary">用户提交订单</span>-><span class="label label-primary">客服确认订单</span>-><span class="label label-primary" >客服发送物流</span>-><span class="label label-primary">订单完成</span>');
+             $('#state_id').append($preview);
+            }
+
+    }
+</script>
+<div style="padding: 40px 20px;">
+	<div>
+		<h4>{{.Porder.Pnumber}}</h4>
+	</div>
+
+	<h5>{{.Psize.Title}}</h5>
+	<h5>{{.Ptemp.Title}}</h5>
+	<div class="row">
+		{{range .Photos}}
+		<div class="col-xs-3 col-sm-3 col-md-1" >
+			<img style="width: 100px;height: 100px;" src="{{isImgServerPath .Image}}" alt="{{isImgServerPath .Image}}">
+			<button class="btn btn-default" type="DownLoadReportIMG({{isImgServerPath .Image}})">下载</button>
+		</div>
+		{{end}}
+	</div>
+	<div style="padding: 10px 0px;" id="state_id">
+		{{if eq .Porder.State 1}}
+		<span class="label label-primary">用户提交订单</span>
+		->
+		<button class="label label-default" onclick="onclikState(2)">客服确认订单</button>
+		->
+		<span class="label label-default">客服发送物流</span>
+		->
+		<span class="label label-default">订单完成</span>
+		{{else if eq .Porder.State 2}}
+		<span class="label label-primary">用户提交订单</span>
+		->
+		<span class="label label-primary">客服确认订单</span>
+		->
+		<button class="label label-default" onclick="onclikState(3)">客服发送物流</button>
+		->
+		<span class="label label-default">订单完成</span>
+		{{else if eq .Porder.State 3}}
+		<span class="label label-primary">用户提交订单</span>
+		->
+		<span class="label label-primary">客服确认订单</span>
+		->
+		<span class="label label-primary">客服发送物流</span>
+		->
+		<button class="label label-default"  onclick="onclikState(4)">订单完成</button>
+		{{else if eq .Porder.State 4}}
+		<span class="label label-primary">用户提交订单</span>
+		->
+		<span class="label label-primary">客服确认订单</span>
+		->
+		<span class="label label-primary">客服发送物流</span>
+		->
+		<span class="label label-primary">订单完成</span>
+		{{else}}
+		<button class="label label-default" onclick="onclikState(1)">订单完善</button>
+		{{end}}
+	</div>
+	<!-- 	<div>
+	<span>
+		<a class="label label-default">用户提交订单</a>
+	</span>
+	->
+	<span>
+		<a class="label label-default">客服确认订单</a>
+	</span>
+	->
+	<span>
+		<a class="label label-default">客服发送物流</a>
+	</span>
+	->
+	<span>
+		<a class="label label-default">订单完成</a>
+	</span>
+</div>
+-->
+<div class="time_font">{{timeformat2 .Porder.CreateTime}}</div>
+</div>
+<ul class="list-group">
+{{range .Pdetails}}
+<li class="list-group-item">
+	<div >{{.Ddetails}}</div>
+	{{timeformat2 .CreateTime}}
+</li>
+{{end}}
+</ul>
+{{template "adminfooter.html" .}}

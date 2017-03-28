@@ -1,0 +1,39 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script language="javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/admin/waimailist"
+        });
+function ocnliDel(id){
+  var url = "/admin/caidans?op=del&id="+id+"&fid={{.Canting.Id}}";
+  window.open(url);
+}
+</script>
+<div class="qax_bg container-fluid">
+  <div class="col-xs-12 col-md-4 list_col">
+    <img src="{{isImgPath .Canting.Image}}" alt="{{isImgPath .Canting.Image}}" class="list_time_waimai" >
+  <div class="list_time_waimai_info">
+    <h4>{{.Canting.Name}}</h4>
+  </div>
+</div>
+<div class="list_but">
+  <a class="btn btn-default" href="/admin/addcaidan?fid={{.Canting.Id}}">添加菜单</a>
+</div>
+
+<div class="row">
+  {{range .Caidans}}
+  <div class="col-xs-12 col-md-4 list_col"  onclick="window.location.href= '/admin/caidans?id={{.Id}}'">
+    <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" class="list_time_caidan" >
+  <div class="list_time_waimai_info">
+    <h4>{{.Name}}</h4>
+    <h5>{{.Info}}</h5>
+    <h5>{{.Mtype}}</h5>
+    <button onclick="ocnliDel({{.Id}})">删除</button>
+    <div class="time_font">{{timeformat 10000000}}</div>
+  </div>
+</div>
+{{end}}
+</div>
+
+</div>
+{{template "adminfooter.html" .}}

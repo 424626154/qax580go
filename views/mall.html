@@ -1,0 +1,43 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+           document.getElementById("title_font").href="/mymoney"
+        });
+    function onclikExchange(id,name,money){
+      if({{.WxUser.Money}} < money){
+        alert("帮帮币不足")
+        return
+      }
+      var url = "/mall?op=exchange&id="+id+"&openid="+{{.WxUser.OpenId}};
+              // alert(url)
+     document.getElementById("onclikhelp").action = url;
+     document.getElementById("onclikhelp").method = "post";   
+     document.getElementById("onclikhelp").enctype = "multipart/form-data"
+     document.getElementById("onclikhelp").submit(); 
+     alert("您的"+name+"兑换已生成，可在兑换列表中查看")
+    }
+</script>
+<ul class="list-group">
+    <form id="onclikhelp"class="form-inline" method="post" action="" enctype="multipart/form-data"> </form> 
+  {{range .Commoditys}}
+  <li class="list-group-item">
+    {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+    {{end}}
+    <div>
+      <h1>{{.Name}}</h1>
+    </div>
+    <div>{{.Info}}</div>
+    <div>价格:{{.Money}}帮帮币</div>
+    <div class="time_font">{{timeformat .Time}}</div>
+
+    <button class="label label-default" onclick="onclikExchange({{.Id}},{{.Name}},{{.Money}})">我要兑换</button>
+  
+  </li>
+  {{end}}
+</ul>
+{{template "footer.html" .}}

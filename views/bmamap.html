@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<!-- Stylesheets -->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/beermap.css">
+	<script type="text/javascript" src="/static/js/beermap/beeramap.js"></script>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=7e05480c6e215af60a470d0f7fa265c3"></script>
+	<title>BeerMap</title>
+<head>
+<body id="bg" onload="initMap()">
+   <div id="beermap" class="beermap"></div>
+   <div id="tip">
+    <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
+  </div>
+  <div id="save_bg" hidden="true">
+    <div >
+      <h4 id="save_title">标题</h4>
+    </div>
+    <div >
+      <h5 id="save_lng">纬度:</h5>
+    </div>
+    <div >
+      <h5 id="save_lat">纬度:</h5>
+    </div>
+    <div >
+      <label >扩展信息</label>
+      <div >
+        <textarea id="save_text" class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+    <div >
+      <div >
+        <button id="save"  class="btn btn-default">保存</button>
+        <button id="close" onclick="closeInfo()" class="btn btn-default">取消</button>
+      </div>
+    </div>
+  </div>
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

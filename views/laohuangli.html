@@ -1,0 +1,70 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+	{{if eq .RLErrorCode 0}}
+	<div class="page-header">
+		<div >
+			<span class="lable1_font">阳历：</span>
+			{{.RLResult.Yangli}}
+		</div>
+		<div >
+			<span class="lable1_font">阴历：</span>
+			{{.RLResult.Yinli}}
+		</div>
+		<div >
+			<span class="lable1_font">五行：</span>
+			{{.RLResult.Wuxing}}
+		</div>
+		<div >
+			<span class="lable1_font">冲煞：</span>
+			{{.RLResult.Chongsha}}
+		</div>
+		<div >
+			<span class="lable1_font">彭祖百忌：</span>
+			{{.RLResult.Baiji}}
+		</div>
+		<div >
+			<span class="lable1_font">吉神宜趋：</span>
+			{{.RLResult.Jishen}}
+		</div>
+		<div >
+			<span class="lable1_font">宜：</span>
+			{{.RLResult.Yi}}
+		</div>
+		<div >
+			<span class="lable1_font">凶神宜忌：</span>
+			{{.RLResult.Xiongshen}}
+		</div>
+		<div >
+			<span class="lable1_font">忌：</span>
+			{{.RLResult.Ji}}
+		</div>
+	</div>
+	{{else}}
+	        {{.RLErrorInfo}}
+	      {{end}}
+
+	      {{if eq .SCErrorCode 0}}
+	<ul class="list-group">
+		{{range .SCResults}}
+		<div class="list-group-item">
+			<div>
+				<span class="lable1_font">时段：</span>
+				{{.Hours}}
+			</div>
+			<div>
+				<span class="lable1_font">宜：</span>
+				{{.Yi}}
+			</div>
+			<div>
+				<span class="lable1_font">忌：</span>
+				{{.Ji}}
+			</div>
+			<div>{{.Des}}</div>
+		</div>
+		{{end}}
+	</ul>
+	{{else}}
+	        {{.SCErrorInfo}}
+	      {{end}}
+</div>
+{{template "trainfooter.html" .}}

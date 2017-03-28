@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <link rel="shortcut icon" href="/static/img/logo32.png" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Stylesheets -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+  <title>咱这580</title>
+</head>
+<body id="header_body">
+  <script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+  <script type="text/javascript">
+var img_path = "";
+  function setImage(obj){  
+    var value = obj.value;  
+    img_path = value;
+  } 
+    function addObj(){
+    if(img_path == ""){
+      alert("请选择图片");
+      return;
+    }
+    var title = document.getElementById("title").value;
+    var info = document.getElementById("info").value;
+    var contactway = document.getElementById("contactway").value;
+    if(title == ""){
+      alert("请输入名称");
+      return;
+    }
+    if(info == ""){
+      alert("请输入内容");
+      return;
+    }
+    if(contactway == ""){
+      alert("请输入微信号");
+      return;
+    }
+    var url = "/poll/addpoll?title="+title+"&info="+info+"&image="+img_path+"&contactway="+contactway+"&pollsid="+{{.PollsId}};
+    // alert(url)
+     document.getElementById("add").action = url;
+     document.getElementById("add").method = "post";   
+     document.getElementById("add").enctype = "multipart/form-data";
+     document.getElementById("add").submit();
+  }
+    function onBack(){
+    var url = "/poll/pollhome?pollsid="+{{.PollsId}};
+    // alert(url)
+    window.location.href = url
+  }
+    function onDelete(id){
+         var url = "/poll/addpoll?op=del&pollsid="+{{.PollsId}}+"&id="+id;
+    // alert(url)
+    window.location.href = url
+    }
+    </script>
+  <div id="cont_bg">
+    <ul class="nav nav-pills">
+       <li ><button class="btn btn-default" onclick="onBack()">返回</button></li>
+    </ul>
+    {{if eq .PollsId ""}}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeErro()">
+        <span aria-hidden="true">&times;</span>
+      </button> <strong>参数错误</strong>
+      请确保您的投票打开方式正确
+    </div>
+    {{else}}
+      {{if eq .IsAdd true}}
+    <div>
+      {{if eq .Poll.Image ""}}
+         {{.Poll.Image}}
+        {{else}}
+      <div id="image_fnot" >
+        <img src="{{isImgPath .Poll.Image}}" alt="{{isImgPath .Poll.Image}}" width="320px" height="auto"></div>
+      {{end}}
+      <div> <font class="poll_title">{{pollnumber .Poll.Id .Poll.Title}}</font>
+      </div>
+      <br>
+
+      {{if eq .Poll.State 0}}
+      <span class="label label-primary">未上架</span>
+      {{else}}
+      <span class="label label-success">已上架</span>
+      {{end}}
+      <br><br>
+      <div class="poll_vote"> <font class="poll_vote_font">{{.Poll.VoteNum}}票</font>
+        <span class="poll_but">
+          <button type="button" class="btn btn-success" onclick="onDelete({{.Poll.Id}})">删除</button>
+        </span>
+      </div>
+      <h5>温馨提示:如果想重新上传可先删除现有参与作品</h5>
+    </div>
+    {{else}}
+    <h3>参与投票活动</h3>
+    <form id = "add" name="add" class="form-inline" method="post" action="/poll/adminaddpoll" enctype="multipart/form-data">
+      <div class="">
+        <label for="">投票名称</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="输入标题"></div>
+      <div class="">
+        <label for="">投票内容内容</label>
+        <textarea class="form-control" rows="5" placeholder="输入内容" id="info" name="info"></textarea>
+      </div>
+      <div class="">
+        <label for="">微信号</label>
+        <input type="text" class="form-control" id="contactway" name="contactway" placeholder="输入微信号"></div>
+      <div class="my_select_img">
+        <div>
+          <h5>商品：尺寸为 450*250</h5>
+          <input type="file" class="form-control my_file" name="image" id="image" accept="image/*" onchange="setImage(this)"></div>
+      </div>
+      <button type="button" class="my_button my_gray" onclick="addObj();">报名</button>
+    </form>
+    {{end}}
+    {{end}}
+    <div id="poll_home_footer"></div>
+  </div>
+  <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

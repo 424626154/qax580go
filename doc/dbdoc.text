@@ -1,0 +1,12 @@
+create table `wx_app_post` 
+    -- --------------------------------------------------
+    --  Table Structure for `qax580go/models.WxAppPost`
+    -- --------------------------------------------------
+    CREATE TABLE IF NOT EXISTS `wx_app_post` (
+        `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        `title` varchar(255) NOT NULL DEFAULT '' ,
+        `content` varchar(255) NOT NULL DEFAULT '' ,
+        `images` varchar(255) NOT NULL DEFAULT '' ,
+        `time` bigint NOT NULL DEFAULT 0 
+    ) ENGINE=InnoDB;
+

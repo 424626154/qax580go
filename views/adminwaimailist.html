@@ -1,0 +1,26 @@
+w{{template "adminheader.html" .}}
+<div class="qax_bg container-fluid">
+	<div class="list_but">
+		<a class="btn btn-default" href="/admin/addwaimai">添加餐厅</a>
+	</div>
+	<div class="row">
+		{{range .Objs}}
+		<div class="col-xs-12 col-md-4 list_col"  onclick="window.location.href= '/admin/caidans?id={{.Id}}'">
+			<img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" class="list_time_waimai" >
+		<div class="list_time_waimai_info">
+			<h4>{{.Name}}</h4>
+			<h5>{{.Address}}</h5>
+			{{if eq .State 0}}
+			<a href="/admin/waimailist?op=state&id={{.Id}}" >上线</a>
+			{{else}}
+			<a href="/admin/waimailist?op=state1&id={{.Id}}" >下线</a>
+			{{end}}
+		  	｜
+			<a href="/admin/waimailist?op=del&id={{.Id}}">删除</a>
+			<div class="time_font">{{timeformat 10000000}}</div>
+		</div>
+	</div>
+	{{end}}
+</div>
+</div>
+{{template "adminfooter.html" .}}

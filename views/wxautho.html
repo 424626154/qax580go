@@ -1,0 +1,22 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+	<div>
+		<img src="{{ .Uij.HeadImgurl}}" height="200px" width="200px"></img>
+</div>
+<div> <font class="up_fnt">{{ .Uij.NickeName}}</font>
+</div>
+<div>
+	{{if eq .Uij.Sex 1}}
+	<span class="up_fnt">男</span>
+	{{end}} 
+         {{if eq .Uij.Sex 2}}
+	<span class="up_fnt">女</span>
+	{{end}}
+</div>
+<div> <font class="up_fnt">{{ .Uij.Province}}</font>
+</div>
+<div>
+	<font class="up_fnt">{{ .Uij.City}}</font>
+</div>
+</div>
+{{template "footer.html" .}}

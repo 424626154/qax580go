@@ -1,0 +1,29 @@
+{{template "adminheader.html" .}}
+<form class="form-inline" method="post" action="/admin/newskey" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="">新闻关键词</label>
+    <input type="text" class="form-control" id="key" name="key" placeholder="输入新闻关键词"></div>
+  <button type="submit" class="btn btn-default">添加</button>
+</form>
+<div>
+  <h5>新闻搜索关键字为:{{.NewsKey}}</h5>
+  <ul class="list-group">
+    {{range .NewsKeys}}
+    <li class="list-group-item">
+      <div>
+        <a href="">
+          <h1>{{.Info}}</h1>
+        </a>
+      </div>
+      <div>{{.CreateTime}}</div>
+      {{if eq .Op 0}}
+      <a href="/admin/newskey?op=add&id={{.Id}}" >添加</a>
+      {{else}}
+      <a href="/admin/newskey?op=remove&id={{.Id}}" >已添加</a>
+      {{end}}
+      <a href="/admin/newskey?op=del&id={{.Id}}" >删除</a>
+    </li>
+    {{end}}
+  </ul>
+</div>
+{{template "adminfooter.html" .}}

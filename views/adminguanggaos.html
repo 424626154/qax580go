@@ -1,0 +1,56 @@
+{{template "adminheader.html" .}}
+<div>
+  <a type="button" class="btn btn-default" href="/admin/addguanggao">添加广告</a>
+</div>
+<ul class="list-group">
+  {{range .Guanggaos}}
+  <li class="list-group-item">
+    {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .BImage true}}
+          内容中显示广告页
+        {{end}}
+    <div>
+      <a href="/admin/guanggaocontent?op=con&id={{.Id}}">
+        <h1>{{.Title}}</h1>
+      </a>
+    </div>
+    <div>{{.Content}}</div>
+    {{if eq .ImageItem0 ""}}
+         {{.ImageItem0}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .ImageItem0}}" alt="{{isImgPath .ImageItem0}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .ImageItem1 ""}}
+         {{.ImageItem1}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .ImageItem1}}" alt="{{isImgPath .ImageItem1}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .ImageItem2 ""}}
+         {{.ImageItem2}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .ImageItem2}}" alt="{{isImgPath .ImageItem2}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .Blink true}}
+    <a href="{{ .Link}}">{{ .Link}}</a>
+    {{end}}
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .State 0}}
+    <a href="/admin/guanggaos?op=state&id={{.Id}}" >发布</a>
+    {{else}}
+    <a href="/admin/guanggaos?op=state1&id={{.Id}}" >已发布</a>
+    {{end}}
+    <a href="/admin/upguanggaoinfo?id={{.Id}}" >修改内容</a>
+    <a href="/admin/upguanggaoimg?id={{.Id}}" >修改图片</a>
+    <a href="/admin/guanggaos?op=del&id={{.Id}}" >删除</a>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

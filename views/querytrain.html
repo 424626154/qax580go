@@ -1,0 +1,88 @@
+{{template "trainheader.html" .}}
+<div class="uplode_bg">
+  <form class="form-inline" method="post" action="/querytrain" enctype="multipart/form-data">
+    <div class="form-group"> <font class="up_fnt" for="" style="color:#000">车次查询</font>
+      <input type="text" class="form-control" id="name" name="name" placeholder="输入车次"></div>
+    <div> <font class="info_fnot">请输入需要查询的车次</font>
+    </div>
+    <div class="body_right">
+      <button type="submit" class="my_button my_gray">查询</button>
+    </div>
+  </form>
+  {{if eq .IsShow "true"}}
+      {{if eq .ErrorCode 0}}
+  <div>列次名称:{{ .TrainInfo.Name}}</div>
+  <div>起点站:{{ .TrainInfo.Start}}</div>
+  <div>终点站:{{ .TrainInfo.End}}</div>
+  <div>发车时间:{{ .TrainInfo.Starttime}}</div>
+  <div>到达时间:{{ .TrainInfo.Endtime}}</div>
+  <div>里程:{{ .TrainInfo.Mileage}}</div>
+  <ul class="list-group">
+    {{range .StationList}}
+    <div class="list-group-item">
+      <div>站点名称:{{.StationName}}</div>
+      {{if eq .ArrivedTime "-"}}
+            {{else}}
+      <div>到达时间:{{.ArrivedTime}}</div>
+      {{end}}
+            {{if eq .LeaveTime "-"}}
+            {{else}}
+      <div>发车时间:{{.LeaveTime}}</div>
+      {{end}}
+            {{if eq .Stay "-"}}
+            {{else}}
+      <div>停留:{{.Stay}}</div>
+      {{end}}
+            {{if eq .Mileage "-"}}
+            {{else}}
+      <div>里程:{{.Mileage}}</div>
+      {{end}}
+            {{if eq .SsoftSeat "-"}}
+            {{else}}
+      <div>二等座:{{.SsoftSeat}}</div>
+      {{end}}
+            {{if eq .FsoftSeat "-"}}
+            {{else}}
+      <div>一等座:{{.FsoftSeat}}</div>
+      {{end}}
+            {{if eq .HardSead "-"}}
+            {{else}}
+      <div>硬座:{{.HardSead}}</div>
+      {{end}}
+            {{if eq .SoftSeat "-"}}
+            {{else}}
+      <div>软座:{{.SoftSeat}}</div>
+      {{end}}
+            {{if eq .HardSleep "-"}}
+            {{else}}
+      <div>硬卧:{{.HardSleep}}</div>
+      {{end}}
+            {{if eq .SoftSleep "-"}}
+            {{else}}
+      <div>软卧:{{.SoftSleep}}</div>
+      {{end}}
+            {{if eq .Wuzuo "-"}}
+            {{else}}
+      <div>无座:{{.Wuzuo}}</div>
+      {{end}}
+            {{if eq .Swz "-"}}
+            {{else}}
+      <div>商务座:{{.Swz}}</div>
+      {{end}}
+            {{if eq .Tdz "-"}}
+            {{else}}
+      <div>特等座:{{.Tdz}}</div>
+      {{end}}
+            {{if eq .Gjrw "-"}}
+            {{else}}
+      <div>高级软卧:{{.Gjrw}}</div>
+      {{end}}
+    </div>
+    {{end}}
+  </ul>
+  {{else}}
+        {{.ErrorInfo}}
+      {{end}}
+    {{end}}
+</div>
+{{template "trainfooter.html" .}}

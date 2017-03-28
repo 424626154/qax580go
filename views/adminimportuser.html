@@ -1,0 +1,19 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/admin/wxuserlist"
+        });
+  </script>
+<div id="cont_bg">
+  <ul class="qax_list_bg">
+    {{range .ImportUsers}}
+    <div class="cont_info"> <font class="info_fnot">{{.OpenId}}</font>
+    </div>
+    {{if eq .IsImport false}}
+    <a href="/admin/importuser?op=import&openid={{.OpenId}}">导入</a>
+    {{end}}
+      {{end}}
+  </ul>
+</div>
+{{template "adminfooter.html" .}}

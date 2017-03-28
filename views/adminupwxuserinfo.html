@@ -1,0 +1,35 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            initData();
+        });
+function initData(){
+	document.getElementById("title_font").href="/admin/wxuserlist"
+  document.getElementById("subscribe").value = {{ .User.Subscribe}}
+}
+  function onclikBtn(){
+    var subscribe = document.getElementById("subscribe").value;
+    if(!(subscribe == "0"||subscribe == "1")){
+      alert("请输入正确注册状态");
+      return;
+    }
+    var url = "/admin/upwxuserinfo?op=up&openid="+{{.User.OpenId}}+"&subscribe="+subscribe;
+    // alert(url)
+    document.getElementById("upusermoney").action = url;
+     document.getElementById("upusermoney").method = "post";   
+     document.getElementById("upusermoney").enctype = "multipart/form-data";
+     document.getElementById("upusermoney").submit(); 
+  }
+	</script>
+{{if eq .IsOpenid true}}
+<form id="upusermoney"class="form-inline" method="post" action="/admin/upwxuserinfo" enctype="multipart/form-data">
+	<h4>{{.User.NickeName}}</h4>
+    <div class="form-group">
+    <label for="">输入注册状态</label>
+    <input type="text" class="form-control" id="subscribe" name="subscribe" placeholder="输入注册状态">
+    </div>
+	<button type="button" class="my_button my_gray" onclick="onclikBtn();">修改信息</button>
+</form>
+{{end}}
+{{template "adminfooter.html" .}}

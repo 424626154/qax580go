@@ -1,0 +1,22 @@
+{{template "adminheader.html" .}}
+
+<ul class="list-group">
+  {{range .Objs}}
+  <li class="list-group-item">
+    <div>
+      <h1>{{.Msg}}</h1>
+    </div>
+    <div>扩展信息:{{.Ext}}</div>
+    <div>消息类型:{{.NType}}</div>
+    	<div>管理员:{{.FromId}}发送至用户:{{.ToId}} 接收者读取(0 未读 1 已读):{{.ToRead}} 接收者删除(0 未删除 1 已删除):{{.ToDel}}</div>
+    <div class="time_font">{{timeformat3 .CreateTime}}</div>
+    {{if eq .State 0}}
+    <a href="/admin/mall?op=state&id={{.Id}}" >未发送</a>
+    {{else}}
+    <font >已发送</font>
+    {{end}}
+    <a href="/admin/notice?op=del&id={{.Id}}" >删除</a>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

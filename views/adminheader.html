@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <link rel="shortcut icon" href="/static/img/logo32.png" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Stylesheets -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+  <title>咱这580</title>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/admin/home" id="title_font">
+          <img alt="Brand" src="/static/img/logo32.png" >咱这580</a>
+       </div>
+        <!-- /.navbar-header --> </div>
+      <!-- /.container-fluid --> </nav>
+    {{if .isUser}}
+    <div style="width:100%;height:60px">
+      <div style="float:right;padding:10px">
+        <p class="navbar-text">{{ .User}} &nbsp&nbsp</p>
+        <a type="button" class="btn btn-default navbar-btn" href="/admin/home?op=back">注销</a>
+      </div>
+    </div>
+    {{end}}

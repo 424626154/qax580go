@@ -1,0 +1,22 @@
+{{template "adminheader.html" .}}
+<div>
+  <a type="button" class="btn btn-default" href="/admin/addkeywords">添加关键字</a>
+</div>
+<ul class="list-group">
+  {{range .Objs}}
+  <li class="list-group-item">
+    <div>
+      <h1>{{.KeyName}}</h1>
+    </div>
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .State 0}}
+    <a href="/admin/keywords?op=state&id={{.Id}}" >未上架</a>
+    {{else}}
+    <a href="/admin/keywords?op=state1&id={{.Id}}" >已上架</a>
+    {{end}}
+    <a href="/admin/keywords?op=del&id={{.Id}}" >删除</a>
+    <a href="/admin/keyobj?keyid={{.Id}}" >关键字内容</a>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

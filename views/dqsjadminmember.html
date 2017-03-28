@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	  <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	  <!-- Stylesheets -->
+	  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	  <title>大签世界</title>
+<body>
+<script type="text/javascript">
+	function onDeduction( num ,id){
+		var post_map = {op:"beer_ded",num:num,id:id} 
+      var post_url = "/dqsj/post";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                     window.location.href="/dqsj/adminmember";  
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+	}
+
+	function onSearch(search){
+		window.location.href="/dqsj/adminmember?like="+search; 
+	}
+</script>
+
+<div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/admin" id="title_font">
+          返回</a>
+       </div>
+   	</div>
+   </nav>
+
+<div class="btn-group" role="group" aria-label="...">
+  <a type="button" class="btn btn-default" href="/dqsj/adminaddmember">添加会员</a>
+  <a type="button" class="btn btn-default" href="/dqsj/adminmemberset">会员设置</a>
+</div>
+ <div class="input-group">
+      <input type="text" class="form-control" placeholder="输入会员ID/姓名/手机号" id="search" name="search">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="onSearch(document.getElementById('search').value)">搜索</button>
+      </span>
+    </div>
+<h5>会员列表</h5>
+<ul class="list-group">
+	{{range .Objs}}
+	<li class="list-group-item">
+		<div>会员账号:{{.Account}}</div>	
+		<div>姓名:{{.Name}}  电话:{{.Phone}}</div>
+		<div>啤酒数量:{{.BeerNum}}</div>	
+    {{if eq .Del 1}}
+    <div><span class="label label-danger">删除状态</span></div>  
+    {{end}} 
+		<div style="padding:10px 0px">
+		<a class="btn btn-danger" href="/dqsj/adminupmember?pid={{.Id}}" >修改</a>
+		<a class="btn btn-danger"  href="/dqsj/adminmember?op=del&id={{.Id}}" >删除</a></div>
+		<div style="padding:10px 0px">
+		<input type="text" class="form-control" id="{{.Id}}" name="{{.Id}}" placeholder="输入扣除数量" style="width:80px"><button class="btn btn-danger"  onclick="onDeduction(document.getElementById('{{.Id}}').value,{{.Id}})">扣除</button>
+		</div>
+		<div class="time_font">{{timeformat .Time}}</div>
+	</li>
+	{{end}}
+</ul>
+
+
+</div>
+
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

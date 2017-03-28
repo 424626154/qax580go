@@ -1,0 +1,37 @@
+{{template "pheader.html" .}}
+<script type="text/javascript">
+	function addPhotos(){
+		window.location.href="/photo/upload"
+	}
+	function initData(){
+
+	}
+  function selectPhotos(){
+    window.location.href="/photo/select"
+  }
+</script>
+{{if eq .Parameter true}}
+<div class="button_sp_area">
+  <button class="weui_btn weui_btn_primary" onclick="addPhotos()">上传相册</button>
+  <button class="weui_btn weui_btn_primary" onclick="selectPhotos()">创建订单</button>
+</div>
+<div class="weui_cells_title">我的相册</div>
+<div class="weui_cells">
+<div class="weui_uploader_bd">
+              <ul class="weui_uploader_files">
+                <!-- 预览图插入到这 -->
+                {{range .Objs}}
+                <img class="weui_uploader_file weui_uploader_status" src="{{isImgServerPath .Image}}">
+                {{end}}
+              </ul>
+
+            </div>
+</div>
+{{else}}
+<!--参数错误-->
+<div class="home_err_div"> <i class="weui_icon_msg weui_icon_warn"></i>
+  <h2 class="title">参数错误</h2>
+</div>
+<!--参数错误-->
+{{end}}
+{{template "pfooter.html" .}}

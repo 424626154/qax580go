@@ -1,0 +1,155 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    analyticalData();
+        });
+  function analyticalData(){
+    var citys = new Array()
+    citys[0] = "庆安县"
+    citys[1] = "铁力市"
+    citys[2] = "北林市"
+    citys[3] = "安达市"
+    citys[4] = "肇东市"
+    citys[5] = "海伦市"
+    citys[6] = "望奎市"
+    citys[7] = "兰西县"
+    citys[8] = "青冈县"
+    citys[9] = "明水县"
+    citys[10] = "绥棱县"
+    citys[11] = "绥化市"
+    citys[12] = "茂县"
+    // alert(JSON.stringify(citys))
+        document.getElementById("city").options.length=0;
+        for(var i = 0 ; i < citys.length ; i ++ ){
+             document.getElementById("city").options.add(new Option(citys[i],citys[i]));
+          } 
+  }
+  var img_path = "";
+  function setImage(obj){  
+    var value = obj.value;  
+    img_path = value;
+  } 
+  function addPost(){
+    // if(img_path == ""){
+    //   alert("请选择图片");
+    //   return;
+    // }
+    var title = document.getElementById("title").value;
+    var info = document.getElementById("info").value;
+    var fromshow = document.getElementById("fromshow").value;
+    var fromurl = document.getElementById("fromurl").value;
+    var bfrom = document.getElementById("bfrom").checked;
+    var city = document.getElementById("city").value
+    if(title == ""){
+      alert("请输入标题");
+      return;
+    }
+    if(info == ""){
+      alert("请输入内容");
+      return;
+    }
+    if(bfrom){
+      if(fromshow == ""){
+        alert("请输入来源显示");
+        return;
+      }else if(fromurl == ""){
+        alert("请输入来源链接");
+        return;
+      }else if(!checkURL(fromurl)){
+        alert("请输入有效的来源链接");
+        return;
+      }
+    }
+    var url = "/admin/uplode?title="+title+"&info="+info+"&image="+img_path+"&city="+city+"&bfrom="+bfrom
+    +"&fromshow="+fromshow+"&fromurl="+fromurl;
+    // alert(url)
+     document.getElementById("add").action = url;
+     document.getElementById("add").method = "post";   
+     document.getElementById("add").enctype = "multipart/form-data";
+     document.getElementById("add").submit();       
+      //调用方法 如        
+      // var post_map = { title: title, info: info , image: img_path ,city:city,"bfrom":bfrom,fromshow:fromshow,fromurl:fromurl} 
+      // var post_url = "/adminpost/addpost";
+      // $.ajax({
+      //           url : post_url,
+      //           data: post_map,
+      //           cache : false, 
+      //           async : false,
+      //           type : "POST",
+      //           enctype: 'multipart/form-data',
+      //           dataType : 'json',
+      //           success : function (result){
+      //               // alert(result.errcode)
+      //               if(result.errcode == 0){
+      //                   window.location.href="/admin";  
+      //               }else{
+      //                   alert(result.errmsg)
+      //               }
+      //           },
+      //          error: function(XMLHttpRequest, textStatus, errorThrown) {
+      //          // alert(XMLHttpRequest.status);
+      //          // alert(XMLHttpRequest.readyState);
+      //          // alert(textStatus);
+      //          }
+      //       });
+  }
+  function post(URL, PARAMS) {        
+            var temp = document.createElement("form");        
+            temp.action = URL;        
+            temp.method = "post";        
+            temp.style.display = "none";        
+            for (var x in PARAMS) {        
+                var opt = document.createElement("textarea");        
+                opt.name = x;        
+                opt.value = PARAMS[x];        
+                // alert(opt.name)      
+                temp.appendChild(opt);        
+            }        
+            alert(document.body)
+            document.body.appendChild(temp);   
+            // alert(PARAMS)     
+            temp.submit();        
+            return temp;        
+        }
+function checkURL(URL){
+    var str=URL;
+    //判断URL地址的正则表达式为:http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?
+    //下面的代码中应用了转义字符"\"输出一个字符"/"
+    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+    var objExp=new RegExp(Expression);
+    if(objExp.test(str)==true){
+    return true;
+    }else{
+    return false;
+    }
+} 
+</script>
+<form id = "add" name="add" class="form-inline" method="post" action="/admin/uplode" enctype="multipart/form-data" onsubmit="return false">
+
+  <div class="">
+    <label for="">标题</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="输入标题"></div>
+  <div class="">
+    <label for="">内容</label>
+    <textarea class="form-control" rows="10" placeholder="输入内容" id="info" name="info"></textarea>
+  </div>
+  <div class="">
+    <label>选择图片：(上传图片会让你的消息阅读量增加)</label>
+    <input type="file" class="form-control my_file" name="image" id="image" accept="image/*" onchange="setImage(this)"></div>
+  <div>
+    <label>设置来源</label>
+    <input type="checkbox" name="bfrom" id="bfrom">
+    显示来源
+    <input type="text" class="form-control"  placeholder="输入来源显示" id="fromshow" name="fromshow">
+    <input type="text" class="form-control"  placeholder="输入来源链接" id="fromurl" name="fromurl"></div>
+  <div class="form-group"> <font class="up_fnt" for="" style="color:#000">选择区域:</font>
+    <select style="width:100px;font-size:20px" id="city" name="city"></select>
+  </div>
+  <!--富文本-->
+  <!--富文本-->
+  <button class="btn btn-default" onclick="addPost();">发布</button>
+</form>
+
+<script type="text/javascript"></script>
+{{template "adminfooter.html" .}}

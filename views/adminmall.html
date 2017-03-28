@@ -1,0 +1,31 @@
+{{template "adminheader.html" .}}
+<div>
+  <a type="button" class="btn btn-default" href="/admin/addcommodity">添加商品</a>
+</div>
+<ul class="list-group">
+  {{range .Commoditys}}
+  <li class="list-group-item">
+    {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+    {{end}}
+    <div>
+      <h1>{{.Name}}</h1>
+    </div>
+    <div>{{.Info}}</div>
+    <div>价格:{{.Money}}帮帮币</div>
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .State 0}}
+    <a href="/admin/mall?op=state&id={{.Id}}" >未上架</a>
+    {{else}}
+    <a href="/admin/mall?op=state1&id={{.Id}}" >已上架</a>
+    {{end}}
+    <a href="/admin/upcommodityinfo?id={{.Id}}" >修改内容</a>
+    <a href="/admin/upcommodityimg?id={{.Id}}" >修改图片</a>
+    <a href="/admin/mall?op=del&id={{.Id}}" >删除</a>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

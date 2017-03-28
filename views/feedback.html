@@ -1,0 +1,25 @@
+{{template "header.html" .}}
+<script language="javascript">
+  function toVaild(){
+    var info = document.getElementById("info").value;
+    if(info == ""){
+      alert("反馈信息不能为空");
+      return false;
+    }else{
+      return true;
+    }
+  }
+</script>
+<div class="uplode_bg">
+	<form class="form-inline" method="GET" action="/feedback" onsubmit="return toVaild()">
+		<div class="form-group"> <font class="up_fnt" for="">意见反馈</font>
+			<textarea class="form-control" rows="5" placeholder="输入反馈信息" id="info" name="info"></textarea>
+		</div>
+		<div> <font class="info_fnot">您的宝贵意见是对我们最大的帮助</font>
+		</div>
+		<div class="body_right">
+			<button type="submit" class="my_button my_gray">提交</button>
+		</div>
+	</form>
+</div>
+{{template "footer.html" .}}

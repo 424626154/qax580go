@@ -1,0 +1,60 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+        document.getElementById("info").value={{.Post.Info}}
+        analyticalData();
+        initData();
+        });
+  function analyticalData(){
+    var citys = new Array()
+    citys[0] = "庆安县"
+    citys[1] = "铁力市"
+    citys[2] = "北林市"
+    citys[3] = "安达市"
+    citys[4] = "肇东市"
+    citys[5] = "海伦市"
+    citys[6] = "望奎市"
+    citys[7] = "兰西县"
+    citys[8] = "青冈县"
+    citys[9] = "明水县"
+    citys[10] = "绥棱县"
+    citys[11] = "绥化市"
+    // alert(JSON.stringify(citys))
+    var select_city = {{ .Post.City}};
+        // alert(select_city)
+        document.getElementById("city").options.length=0;
+        document.getElementById("city").options.add(new Option(select_city,select_city));
+        for(var i = 0 ; i < citys.length ; i ++ ){
+          if(citys[i] != {{ .Post.City}}){
+              document.getElementById("city").options.add(new Option(citys[i],citys[i]));
+          }             
+        } 
+  }
+  function initData(){
+    document.getElementById("fromshow").value = {{ .Post.Fromshow}};
+    document.getElementById("fromurl").value = {{ .Post.Fromurl}};
+    document.getElementById("bfrom").checked = {{ .Post.Bfrom}};
+  }
+</script>
+<form class="form-inline" method="GET" action="/admin/modify">
+  <div class="">
+    <input name="id" id="id" type=hidden value="{{ .Post.Id}}">
+    <label for="">标题</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="输入标题" value="{{ .Post.Title}}"></div>
+  <div class="">
+    <label for="">内容</label>
+    <textarea class="form-control" rows="10" placeholder="输入内容" id="info" name="info"></textarea>
+  </div>
+    <div>
+    <label>设置来源</label>
+    <input type="checkbox" name="bfrom" id="bfrom">显示来源
+    <input type="text" class="form-control"  placeholder="输入来源显示" id="fromshow" name="fromshow">
+    <input type="text" class="form-control"  placeholder="输入来源链接" id="fromurl" name="fromurl">
+    </div>
+  <div class="form-group"> <font class="up_fnt" for="" style="color:#000">选择区域:</font>
+    <select style="width:100px;font-size:20px" id="city" name="city"></select>
+  </div>
+  <button type="submit" class="btn btn-default">修改</button>
+</form>
+{{template "adminfooter.html" .}}

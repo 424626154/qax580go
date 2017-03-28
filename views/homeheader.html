@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="庆安，庆安县，免费信息发布">
+  <meta name="description" content="有情怀的免费信息发布网站">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <link rel="shortcut icon" href="/static/img/logo32.png" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Stylesheets -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+  <title>咱这580</title>
+</head>
+<body id="header_body">
+
+  <div class="navbar navbar-default">
+    <div class="navbar-header">
+      <!-- 自适应隐藏导航展开按钮 -->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- 导航条LOGO -->
+      <a class="navbar-brand" href="#">咱这580</a>
+      {{ if .isUser}}
+      <a class="navbar-brand" href="javascript:void(0)" onclick="onNotice()"><span class="glyphicon glyphicon-comment"></span><i class="red_dot" id="notice"></i></a>
+      <a class="navbar-brand" href="javascript:void(0)" onclick="onBack()"><span style="font-size:14px">退出登陆</span><i class="red_dot" id="back"></i></a>
+      {{end}}
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      {{ if .isUser}}
+        <li>
+          <h5 style="padding-left:20px;
+          width:160px;overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;"> 
+          <font style="color: #000">{{.WxUser.Name}}</font>
+          </h5>
+        </li>
+        <li>
+          <a href="/usercenter">个人中心</a>
+        </li>
+      {{else }}
+      <li>
+        <a href="/login">登录</a>
+      </li>
+      <li>
+        <a href="/register">注册</a>
+      </li>
+      {{ end}}
+      <li>
+        <a href="/uplode">发布消息</a>
+      </li>
+      <li>
+        <a href="/mymessage">我的消息</a>
+      </li>
+      <li>
+        <a href="/feedback">意见反馈</a>
+      </li>
+ <!--      <li>
+        <a href="/myextension">我的推广</a>
+      </li> -->
+      <li>
+        <a href="/about">关于我们</a>
+      </li>
+    </ul>
+  </div>
+</div>

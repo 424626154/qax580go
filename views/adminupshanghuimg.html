@@ -1,0 +1,37 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+           document.getElementById("title_font").href="/admin/shanghus"
+        });
+var img_path = "";
+  function onclikBtn(){
+    if(img_path == ""){
+      alert("请选择图片");
+      return;
+    }
+    var url = "/admin/upshanghuimg?id="+{{.Obj.Id}}+"&originalimg="+{{.Obj.Image}};
+    // alert(url)
+     document.getElementById("upimg").action = url;
+     document.getElementById("upimg").method = "post";   
+     document.getElementById("upimg").enctype = "multipart/form-data"
+     document.getElementById("upimg").submit(); 
+  }
+    function setImage(obj){  
+    var value = obj.value;  
+    img_path = value;
+  } 
+</script>
+<form id="upimg" class="form-inline" method="post" action="/admin/upshanghuimg" enctype="multipart/form-data">
+  <div class="my_select_img">
+    <div>
+      <h5>广告主页：尺寸为 450*250</h5>
+    </div>
+    {{if eq .Obj.Image ""}}
+      {{else}}
+    <img src="{{isImgPath .Obj.Image}}" alt="{{isImgPath .Obj.Image}}" width="320px" height="auto">
+    {{end}}
+    <input type="file" class="form-control my_file" name="image" id="image" accept="image/*" onchange="setImage(this)"></div>
+  <button type="button" class="my_button my_gray" onclick="onclikBtn();">修改图片</button>
+</form>
+{{template "adminfooter.html" .}}

@@ -1,0 +1,15 @@
+{{template "pheader.html" .}}
+<script type="text/javascript">
+	
+</script>
+{{if eq .Code ""}}
+
+{{else}}
+	<h3>Code:{{.Code}}</h3>
+{{end}}
+{{if eq .State ""}}
+
+{{else}}
+	<h3>State:{{.State}}</h3>
+{{end}}
+{{template "pfooter.html" .}}

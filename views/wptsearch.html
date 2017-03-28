@@ -1,0 +1,108 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/wpt/home"
+        });
+  function onCloseDialog(){
+    $('#mymodal').hide();
+        // alert("onCloseDialog")
+  }
+  function showDialog(img,wid){
+  	// alert(info)
+    $('#mymodal').show();
+    $("#modalimg").attr('src',img); 
+    $('#modalwid').html("微信号："+wid)
+     // alert("showDialog")
+  }
+   function onCloseDialog1(){
+    $('#mymodal1').hide();
+        // alert("onCloseDialog")
+  }
+  function showDialog1(info){
+  	// alert(info)
+    $('#mymodal1').show();
+    $('#modalinfo').html(info)
+     // alert("showDialog")
+  }
+</script>
+<div class="wpt_bg">
+	<div class="wpt_title">
+		<h4>微平台</h4>
+		<hr/>
+	</div>
+	<!--常规-->
+
+	<div class="row">
+		{{range .Objs}}
+		<div class="col-xs-6 col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<img data-src="holder.js/100%x200" src="{{isImgPath .Qrcode}}" alt="{{isImgPath .Qrcode}}">
+				<div class="caption">
+					<h3>{{.Title}}</h3>
+					<h5>微信号：{{.Wid}}</h5>
+					<p>
+						<button class="btn btn-default" role="button" onclick="showDialog({{isImgPath .Qrcode}},{{.Wid}})">关注</button>
+						<button class="btn btn-default" role="button" onclick="showDialog1({{.Info}})">介绍</button>
+					</p>
+				</div>
+			</div>
+		</div>
+		{{end}}
+	</div>
+	<!--常规-->
+
+	<!--弹出框-->
+	<div class="modal" id="mymodal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">关注微平台</h4>
+				</div>
+				<div class="modal-body">
+					<div class="thumbnail">
+						<img data-src="holder.js/100%x200" src="" alt="" id="modalimg">
+						<div class="caption">
+							<h5 id="modalwid">微信号：{{.Wid}}</h5>
+							<p>
+								<button class="btn btn-default" role="button" onclick="onCloseDialog()">关闭</button>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<!--弹出框-->
+	<!--弹出框-->
+	<div class="modal" id="mymodal1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">微平台介绍</h4>
+				</div>
+				<div class="modal-body">
+					<div class="thumbnail">
+						<img data-src="holder.js/100%x200" src="" alt="" id="modalimg">
+						<div class="caption">
+							<p id="modalinfo"></p>
+							<p>
+								<button class="btn btn-default" role="button" onclick="onCloseDialog1()">关闭</button>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<!--弹出框-->
+</div>
+{{template "footer.html" .}}

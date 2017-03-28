@@ -1,0 +1,23 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+  {{if eq .ErrorCode 0}}
+  <ul class="list-group">
+    {{range .HResults}}
+    <a id="list_bg" href="/historycon?id={{.Id}}" class="list-group-item">
+      <h4>{{.Title}}</h4>
+      <div>{{.Des}}</div>
+      {{if eq .Pic ""}}
+                {{.Pic}}
+            {{else}}
+      <div id="image_fnot" >
+        <img src="{{.Pic}}" alt="{{.Pic}}" width="auto" height="60px"></div>
+      {{end}}
+      <div style="text-align:right">{{.Year}}-{{.Month}}-{{.Day}}</div>
+    </a>
+    {{end}}
+  </ul>
+  {{else}}
+        {{.ErrorInfo}}
+      {{end}}
+</div>
+{{template "trainfooter.html" .}}

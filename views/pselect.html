@@ -1,0 +1,216 @@
+{{template "pheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-2.1.4.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+              initData();
+
+});
+   var map = new Map();
+  function addPhotos(){
+    window.location.href="/photo/upload"
+  }
+  var sData ;
+  function initData(){
+    sData = {{.Objs}}
+    var len = sData.length;
+    for (var i=0;i<len;i++)
+    {
+      if(sData[i].Select){
+        var $preview = $('<div id="li_'+sData[i].Id+'" onclick="select('+sData[i].Id+')"><div class="weui_uploader_file weui_uploader_status" style="background-image: url(http://127.0.0.1:8080/imageserver/'+sData[i].Image+');"><i class="weui_icon_success"></i></div></div>');
+        $('#obj_ul').append($preview);
+      }else{
+        var $preview = $('<div id="li_'+sData[i].Id+'" onclick="select('+sData[i].Id+')"><img class="weui_uploader_file weui_uploader_status"  src="http://127.0.0.1:8080/imageserver/'+sData[i].Image+'"></div>');
+        $('#obj_ul').append($preview);
+      }
+    }
+  }
+  function select(id){
+    // alert("select"+id)
+    var len = sData.length;
+    for (var i=0;i<len;i++)
+    {
+      if(sData[i].Id == id){
+        // alert(sData[i].Select)
+        if(sData[i].Select ){//删除
+            for(var j = selectArry.length ; j >= 0  ;j--){
+                if(selectArry[j] == sData[i].Id ){
+                    selectArry.splice(j,1);
+                }
+            }
+        }else{//添加
+          selectArry.push(sData[i].Id);
+
+        }
+        sData[i].Select = !sData[i].Select
+        // alert(sData[i].Select)
+        $('#li_'+id+'').empty();
+             if(sData[i].Select){
+              var $preview = $('<div class="weui_uploader_file weui_uploader_status" style="background-image: url(http://127.0.0.1:8080/imageserver/'+sData[i].Image+');"><i class="weui_icon_success"></i></div>');
+              $('#li_'+id+'').append($preview);
+            }else{
+              var $preview = $('<img class="weui_uploader_file weui_uploader_status"  src="http://127.0.0.1:8080/imageserver/'+sData[i].Image+'">');
+              $('#li_'+id+'').append($preview);
+            }
+      }
+    }
+    if(b_confirm){
+      b_confirm = false;
+      refreshConfirm(b_confirm)
+    }
+  }
+  function addOrder(){
+    if(size_id == 0){
+      alert("请选择尺寸");
+      return;
+    }
+    if(temp_id == 0){
+      alert("请选择模版");
+      return;
+    }
+    if(selectArry.length == 0){
+      alert("请选择图片");
+      return;
+    }
+    b_confirm = true;
+    refreshConfirm(b_confirm)
+  }
+  function checkSize(id,obj){
+      var radioss= obj.value
+      if(radioss == "on"){
+        size_id = id;
+      }
+     if(b_confirm){
+      b_confirm = false;
+      refreshConfirm(b_confirm)
+    }
+  }
+  function checkTemp(id,obj){
+      var radioss= obj.value
+      if(radioss == "on"){
+        temp_id = id;
+      }
+    if(b_confirm){
+      b_confirm = false;
+      refreshConfirm(b_confirm)
+    }
+  }
+  /**
+  确定订单提交
+  */
+  function confirmOrder(){
+      if(b_confirm){
+        var json = [];
+          for(var i=0;i<selectArry.length;i++)
+          {
+              json[i]=selectArry[i];
+          }
+          // alert(JSON.stringify(json));
+          var post_map = { size_id:size_id,temp_id: temp_id,photos:"["+json+"]"} 
+          var post_url = "/photo/postaddorder";
+          $.ajax({
+                    url : post_url,
+                    data:post_map,
+                    cache : false, 
+                    async : true,
+                    type : "POST",
+                    dataType : 'json',
+                    success : function (result){
+                        // alert(result.errcode)
+                        if(result.errcode == 0){ 
+                          window.location.href="/photo/order"
+                        }else{
+                            alert(result.errmsg)
+                        }
+                    },
+                   error: function(XMLHttpRequest, textStatus, errorThrown) {
+                   alert(XMLHttpRequest.status);
+                   alert(XMLHttpRequest.readyState);
+                   alert(textStatus);
+                   }
+                });
+      }else{
+        alert("请先确认生成订单")
+      }
+  }
+
+  function refreshConfirm(b_confirm){
+    if(b_confirm){
+      $("#confirm").removeClass("weui_btn_default");
+      $("#confirm").addClass("weui_btn_primary");
+    }else{
+      $("#confirm").removeClass("weui_btn_primary");
+      $("#confirm").addClass("weui_btn_default");
+
+    }
+  }
+  var size_id = 0;//尺寸
+  var temp_id = 0;//模版
+  var selectArry = new Array();//图片
+  var b_confirm = false;//是否已经生成订单
+  var money = 0;
+</script>
+{{if eq .Parameter true}}
+<div class="button_sp_area">
+  <button class="weui_btn weui_btn_primary" onclick="addOrder()">生成订单</button>
+  <button  id="confirm" class="weui_btn weui_btn_default" onclick="confirmOrder()">提交订单</button>
+</div>
+
+<div class="weui_cells_title">选择尺寸</div>
+<div class="weui_cells weui_cells_radio">
+  {{range .Sizes}}
+  <label class="weui_cell weui_check_label" for="check_{{.Id}}">
+    <div class="weui_cell_bd weui_cell_primary">
+      <p>{{.Title}}</p>
+      {{.Money}}
+    </div>
+    <div class="weui_cell_ft">
+      <input type="radio" class="weui_check" name="size" id="check_{{.Id}}" onclick="checkSize({{.Id}},this)">
+      <span class="weui_icon_checked"></span>
+    </div>
+  </label>
+  {{end}}
+</div>
+
+<div class="weui_cells_title">选择模版</div>
+<div class="weui_cells weui_cells_radio">
+  {{range .Temps}}
+  <label class="weui_cell weui_check_label" for="temp_{{.Id}}">
+    <div class="weui_cell_bd weui_cell_primary">
+      <p>{{.Title}}</p>
+      {{.Money}}
+    </div>
+    <div class="weui_cell_ft">
+      <input type="radio" class="weui_check" name="temp" id="temp_{{.Id}}" onclick="checkTemp({{.Id}},this)">
+      <span class="weui_icon_checked"></span>
+    </div>
+  </label>
+  {{end}}
+</div>
+
+<div class="weui_cells_title">选择照片</div>
+<div class="weui_cells">
+  <div class="weui_uploader_bd">
+    <ul class="weui_uploader_files" id="obj_ul">
+      <!-- 预览图插入到这 -->
+      <!--       {{range .Objs}}
+      <div onclick="select({{.Id}})">
+      {{if eq .Select false}}
+      <img class="weui_uploader_file weui_uploader_status"  src="{{isImgServerPath .Image}}">
+      {{else}}
+      <div class="weui_uploader_file weui_uploader_status" style="background-image: url({{isImgServerPath .Image}});"> <i class="weui_icon_success"></i>
+      </div>
+      {{end}}
+    </div>
+    {{end}} -->
+  </ul>
+
+</div>
+</div>
+{{else}}
+<!--参数错误-->
+<div class="home_err_div"> <i class="weui_icon_msg weui_icon_warn"></i>
+<h2 class="title">参数错误</h2>
+</div>
+<!--参数错误-->
+{{end}}
+{{template "pfooter.html" .}}

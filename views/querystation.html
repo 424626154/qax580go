@@ -1,0 +1,43 @@
+{{template "trainheader.html" .}}
+<div class="uplode_bg">
+  <form class="form-inline" method="post" action="/querystation" enctype="multipart/form-data">
+    <div class="form-group"> <font class="up_fnt" for="" style="color:#000">起点</font>
+      <input type="text" class="form-control" id="start" name="start" placeholder="输入起点"></div>
+    <div class="form-group"> <font class="up_fnt" for="" style="color:#000">终点</font>
+      <input type="text" class="form-control" id="end" name="end" placeholder="输入终点"></div>
+    <div>
+      <font class="info_fnot">请输入起点和终点</font>
+    </div>
+    <div class="body_right">
+      <button type="submit" class="my_button my_gray">查询</button>
+    </div>
+  </form>
+  <div>
+    {{if eq .IsShow "true"}}
+      {{if eq .ErrorCode 0}}
+    <ul class="list-group">
+      {{range .Datas}}
+      <div class="list-group-item">
+        <div>列次名称:{{.TrainNo}}</div>
+        <div>列车类型:{{.TrainType}}</div>
+        <div>起点:{{.StartStaion}}</div>
+        <div>起点类型:{{.StartStationType}}</div>
+        <div>终点:{{.EndStation}}</div>
+        <div>终点类型:{{.EndStationType}}</div>
+        <div>发车时间:{{.StartTime}}</div>
+        <div>到达时间:{{.EndTime}}</div>
+        <div>行驶时间:{{.RunTime}}</div>
+        <div>里程:{{.RunDistance}}</div>
+        {{range .Price}}
+        <div>{{.PriceType}}:￥{{.Price}}</div>
+        {{end}}
+      </div>
+      {{end}}
+    </ul>
+    {{else}}
+        {{.ErrorInfo}}
+      {{end}}
+    {{end}}
+  </div>
+</div>
+{{template "trainfooter.html" .}}

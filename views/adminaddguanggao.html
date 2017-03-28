@@ -1,0 +1,120 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/admin/guanggaos"
+        });
+
+var img_path = "";
+  function setImage(obj){  
+    var value = obj.value;  
+    img_path = value;
+  } 
+  function addGuangao(){
+    if(img_path == ""){
+      alert("请选择图片");
+      return;
+    }
+    var title = document.getElementById("title").value;
+    var info = document.getElementById("info").value;
+    var imageitem0 = document.getElementById("imageitem0").value;
+    var imageitem1 = document.getElementById("imageitem1").value;
+    var imageitem2 = document.getElementById("imageitem2").value;
+    var bimg = document.getElementById("bimg").checked;
+    if(title == ""){
+      alert("请输入标题");
+      return;
+    }
+    if(info == ""){
+      alert("请输入内容");
+      return;
+    }
+    var blink = document.getElementById("blink").checked;
+    if(blink){
+      var link = document.getElementById("link").value;
+      if(link == ""){
+        alert("请输入链接");
+        return;
+      }else if(!checkURL(link)){
+        alert("请输入有效的地址");
+        return;
+      }
+    }
+    var url = "/admin/addguanggao?title="+title+"&info="+info+"&blink="+blink+"&link="+link+"&bimg="+bimg+"&imageitem0="+imageitem0+"&imageitem1="+imageitem1+"&imageitem2="+imageitem2;
+    // alert(url)
+    document.getElementById("add").action = url;
+     document.getElementById("add").method = "post";   
+     document.getElementById("add").enctype = "multipart/form-data";
+     document.getElementById("add").submit(); 
+  }
+  function IsURL(str_url){
+        var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+        + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
+        + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+        + "|" // 允许IP和DOMAIN（域名）
+        + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+        + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+        + "[a-z]{2,6})" // first level domain- .com or .museum
+        + "(:[0-9]{1,4})?" // 端口- :80
+        + "((/?)|" // a slash isn't required if there is no file name
+        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+        var re=new RegExp(strRegex);
+        //re.test()
+        if (re.test(str_url)){
+            return (true);
+        }else{
+            return (false);
+        }
+  }
+function checkURL(URL){
+    var str=URL;
+    //判断URL地址的正则表达式为:http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?
+    //下面的代码中应用了转义字符"\"输出一个字符"/"
+    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+    var objExp=new RegExp(Expression);
+    if(objExp.test(str)==true){
+    return true;
+    }else{
+    return false;
+    }
+} 
+</script>
+<form id = "add" name="add" class="form-inline" method="post" action="/admin/addguanggao" enctype="multipart/form-data">
+  <div class="">
+    <label for="">标题</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="输入标题"></div>
+  <div class="">
+    <label for="">内容</label>
+    <textarea class="form-control" rows="20" placeholder="输入内容" id="info" name="info"></textarea>
+  </div>
+  <div class="checkbox">
+      <input type="checkbox" name="blink" id="blink">添加链接
+    <input type="text" class="form-control" id="link" name="link" placeholder="输入链接地址"></div>
+  <div>
+    <div class="my_select_img">
+      <div>
+        <h5>广告主页：尺寸为 450*250</h5>
+      </div>
+      <input type="file" class="form-control my_file" name="image" id="image" accept="image/*" onchange="setImage(this)">
+      <label>
+        <input type="checkbox" name="bimg" id="bimg">正文显示</label>
+    </div>
+  </div>
+  <div class="my_select_img">
+    <div>
+      <h5>详情图片0</h5>
+    </div>
+    <input type="file" class="form-control my_file" name="imageitem0" id="imageitem0" accept="image/*"></div>
+  <div class="my_select_img">
+    <div>
+      <h5>详情图片1</h5>
+    </div>
+    <input type="file" class="form-control my_file" name="imageitem1" id="imageitem1" accept="image/*" ></div>
+  <div class="my_select_img">
+    <div>
+      <h5>详情图片2</h5>
+    <input type="file" class="form-control my_file" name="imageitem2" id="imageitem2" accept="image/*"></div>
+</div>
+<button type="button" class="my_button my_gray" onclick="addGuangao();">发布</button>
+</form>
+{{template "adminfooter.html" .}}

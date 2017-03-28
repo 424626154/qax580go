@@ -1,0 +1,117 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+
+<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/poll/adminpolls"
+            initData();
+        });
+function initData(){
+  // alert({{.Obj}})
+  document.getElementById("title").value = {{.Obj.Title}};
+  document.getElementById("info").value = {{.Obj.Info}};
+  document.getElementById("more").value = {{.Obj.More}};
+  document.getElementById("appid").value = {{.Obj.Appid}};
+  document.getElementById("secret").value = {{.Obj.Secret}};
+  document.getElementById("end_time").value = {{timeformat2 .Obj.EndTimeLong}};
+  document.getElementById("prize").value = {{.Obj.Prize}};
+  document.getElementById("ext").value = {{.Obj.Ext}};
+}
+
+    function addObj(){
+
+    var title = document.getElementById("title").value;
+    var info = document.getElementById("info").value;
+    var end_time = document.getElementById("end_time").value;
+    var more = document.getElementById("more").value;
+    var appid = document.getElementById("appid").value;
+    var secret = document.getElementById("secret").value;
+    var prize = document.getElementById("prize").value;
+    var ext = document.getElementById("ext").value;
+    if(title == ""){
+      alert("请输入名称");
+      return;
+    }
+    if(info == ""){
+      alert("请输入内容");
+      return;
+    }
+    if(more == ""){
+      alert("请输入更多链接");
+      return;
+    }
+        if(appid == ""){
+      alert("请输入appid");
+      return;
+    }
+    if(secret == ""){
+      alert("请输入secret");
+      return;
+    }
+    var url = "/poll/adminuppollsinfo?title="+title+"&info="+info+"&more="+stringToBytes(more)+"&endtime="+end_time+"&id="+{{.Id}}+"&appid="+appid+"&secret="+secret+"&prize="+prize+"&ext="+ext;
+    // alert(url)
+     document.getElementById("add").action = url;
+     document.getElementById("add").method = "post";   
+     document.getElementById("add").enctype = "multipart/form-data";
+     document.getElementById("add").submit();
+  }
+  function stringToBytes ( str ) {  
+  var ch, st, re = [];  
+  for (var i = 0; i < str.length; i++ ) {  
+    ch = str.charCodeAt(i);  // get char   
+    st = [];                 // set up "stack"  
+    do {  
+      st.push( ch & 0xFF );  // push byte to stack  
+      ch = ch >> 8;          // shift value down by 1 byte  
+    }    
+    while ( ch );  
+    // add stack contents to result  
+    // done because chars have "wrong" endianness  
+    re = re.concat( st.reverse() );  
+  }  
+  // return an array of bytes  
+  return re;  
+}  
+    </script>
+
+<form id = "add" name="add" class="form-inline" method="post" action="/poll/adminaddpoll" enctype="multipart/form-data">
+  <div >
+    {{if eq .Obj.Image ""}}
+      {{else}}
+    <img src="{{isImgPath .Obj.Image}}" alt="{{isImgPath .Obj.Image}}" width="320px" height="auto">{{end}}</div>
+  <div>
+    <label for="">结束时间</label>
+    <input type="text" value="2016-05-05 01:00" id="end_time" name="end_time" data-link-format="yyyy-mm-dd hh:ii"></div>
+  <div class="">
+    <label for="">投票名称</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="输入标题"></div>
+  <div class="">
+    <label for="">投票内容内容</label>
+    <textarea class="form-control" rows="5" placeholder="输入内容" id="info" name="info"></textarea>
+  </div>
+  <div class="">
+    <label for="">授权公众号</label>
+    <input type="text" class="form-control" placeholder="输入授权公众号appid" id="appid" name="appid">
+    <input type="text" class="form-control" placeholder="输入授权公众号secret" id="secret" name="secret"></div>
+  <div class="">
+    <label for="">活动奖品</label>
+    <textarea class="form-control" rows="5" placeholder="输入活动奖品" id="prize" name="prize"></textarea>
+  </div>
+  <div class="">
+    <label for="">扩展信息</label>
+    <textarea class="form-control" rows="5" placeholder="输入扩张信息" id="ext" name="ext"></textarea>
+  </div>
+  <div class="">
+    <label for="">更多链接</label>
+    <input type="text" class="form-control" placeholder="输入更多链接" id="more" name="more"></div>
+  <button type="button" class="my_button my_gray" onclick="addObj();">修改</button>
+</form>
+<script type="text/javascript">
+  $('#end_time').datetimepicker({
+            language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii'
+});
+</script>
+{{template "adminfooter.html" .}}

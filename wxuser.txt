@@ -1,0 +1,23 @@
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx570bbcc8cf9fdd80&redirect_uri=http%3a%2f%2fwww.baoguangguang.cn%2fwxautho&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+
+ {"openid":"o3AhEuB_wdTELvlErL4F1Em4Nck4","nickname":"寰","sex":2,"language":"zh_CN","city":"","province":"","country":"涓","headimgurl":"http:\/\/wx.qlogo.cn\/mmopen\/lQyhZL8HdN24nyDtggslekaRNoUEApk3pNpPUk6Ahw5iadM8CEZU5g7s0wYDY3voMN6jfOGvvtBglicPNYJHFQXqwYGaiaVbN5F\/0","privilege":[]}
+
+
+ https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx570bbcc8cf9fdd80&redirect_uri=http%3a%2f%2fwww.baoguangguang.cn%2fwxhome&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+
+
+ https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx570bbcc8cf9fdd80&redirect_uri= http%3a%2f%2fwww.baoguangguang.cn%2fwxfeedback&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+
+  https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx570bbcc8cf9fdd80&redirect_uri= http%3a%2f%2fwww.baoguangguang.cn%2fwxuplode&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+
+    https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx570bbcc8cf9fdd80&redirect_uri= http%3a%2f%2fwww.baoguangguang.cn%2fweather&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+
+    https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=OezXcEiiBSKSxW0eoylIeBi41LCMXB3CIcfHmiGnplZnI6CKeguWxsYMHLyn5fVEA7ZWEcbZRjIi8pIfnSHP0jIEl5qySIyMfa-ktw_7HNf7904QYJKPQIT6zmqx1E6MKqQfygmLrAC0Sywfguy4Fg&type=jsapi
+
+    OezXcEiiBSKSxW0eoylIeBi41LCMXB3CIcfHmiGnplZaD0szG9ApSYHOCHlToQWV59720rZQeuiuTscWhUxz
+    OezXcEiiBSKSxW0eoylIeBi41LCMXB3CIcfHmiGnplZaD0szG9ApSYHOC
+    {"access_token":"OezXcEiiBSKSxW0eoylIeBi41LCMXB3CIcfHmiGnplZaD0szG9ApSYHOCHlToQWVdnLVkzD2HgKPsScxJy_gfW0MhIC1l024N44mrr3o_lI6BjnVcXgxeBwx15dfyKXuML1VY10R-2r9KcMTIDXTZg","expires_in":7200,"refresh_token":"OezXcEiiBSKSxW0eoylIeBi41LCMXB3CIcfHmiGnplZaD0szG9ApSYHOCHlToQWVlNMNqRgCdGsDiRSZaO_9dpj56tfooqoYi40atnUB3mDuKZeAUfxZ4OaiPbMVZhqZQWmfCJFKdc-COme91tWZ9g","openid":"o3AhEuBQDmU1BE77UQREd8Z-9F44","scope":"snsapi_userinfo"}
+
+     http://v.juhe.cn/weather/geo?format=2&key=f99ee0d9fe9af2a3ae272c33331a61dc]&lon=116.3677&lat=40.08061 
+
+     http://v.juhe.cn/weather/geo?format=2&key=f99ee0d9fe9af2a3ae272c33331a61dc&lon=116.39277&lat=39.933748

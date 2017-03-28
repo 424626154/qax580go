@@ -1,0 +1,33 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            // document.getElementById("title_font").href="/admin/home";
+            // alert({{.Key0}})
+        });
+
+  function addKey0(){
+    var key0 = document.getElementById("key0").value;
+    if(key0 == ""){
+      alert("请输入关键字");
+      return;
+    }
+    var url = "/admin/wxtest?op=key0&key0="+key0;
+    // alert(url)
+    var fromobg = document.getElementById("fromkey0");
+    fromobg.action = url;
+    fromobg.method = "post";   
+    fromobg.enctype = "multipart/form-data";
+    fromobg.submit(); 
+  }
+</script>
+<div>
+  <form id = "fromkey0" name="fromkey0" class="form-inline" method="post" action="/admin/addguanggao" enctype="multipart/form-data">
+    <div class="" onsubmit = "return checkUser();" >
+      <label for="">关键字</label>
+      <h4>{{.Key0}}</h4>
+      <input type="text" class="form-control" id="key0" name="key0" placeholder="输入关键字"></div>
+    <button type="button" class="my_button my_gray" onclick="addKey0();">庆安县580关键字测试</button>
+  </form>
+</div>
+{{template "adminfooter.html" .}}

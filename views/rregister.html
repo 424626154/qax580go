@@ -1,0 +1,91 @@
+{{template "rheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	function onRegister(){
+		var phone = document.getElementById("phone").value;
+    var pwd = document.getElementById("pwd").value;
+    var verify = document.getElementById("verify").value;
+    	if( phone == ""){
+    		showDialog("请输入正确的手机号");
+    		return;
+    	}
+    	if( pwd == ""){
+    		showDialog("请输入正确的密码");
+    		return;
+    	}
+    	if( verify == ""){
+    		showDialog("请输入正确的验证码");
+    		return;
+    	}
+    	var url = "/rinse/requestajax";
+    	var data = "rtype=register&phone="+phone+"&pwd="+pwd+"&verify="+verify;
+    	requestAjax(url,data);
+	}
+
+	function showDialog(title){
+		 $("#dialog").show();
+		 $("#dialog_title").html(title); 
+	}
+	function hideDialog(){
+		$("#dialog").hide();
+	}
+	function requestAjax(url,data){
+		$.ajax({
+		   type: "POST",
+		   url: url,
+		   data: data,
+		   dataType : 'json',
+		   success: function(obj){
+		   	// alert(obj)
+		   	// alert(obj.rtype )
+		   	if (obj.rtype == "register"){
+		   		if(obj.errcode == 0){
+		   				// 跳转
+		   				window.location.href="/rinse/home"
+		   		}else{
+					showDialog(obj.errmsg)
+		   		}
+		   	}
+		   }
+		});
+	}
+</script>
+<div class="weui_cells_title">注册</div>
+<div class="weui_cells weui_cells_form">
+	<div class="weui_cell">
+		<div class="weui_cell_hd">
+			<label class="weui_label">手机号</label>
+		</div>
+		<div class="weui_cell_bd weui_cell_primary">
+			<input class="weui_input" type="tel" placeholder="请输入手机号" id="phone"></div>
+	</div>
+	<div class="weui_cell">
+		<div class="weui_cell_hd">
+			<label class="weui_label">密码</label>
+		</div>
+		<div class="weui_cell_bd weui_cell_primary">
+			<input class="weui_input" type="tel" placeholder="请输入密码" id="pwd"></div>
+	</div>
+	<div class="weui_cell">
+		<div class="weui_cell_hd">
+			<label class="weui_label">验证码</label>
+		</div>
+		<div class="weui_cell_bd weui_cell_primary">
+			<input class="weui_input" type="tel" placeholder="请输入验证码" id="verify"></div>
+	</div>
+</div>
+
+<div class="weui_dialog_alert" id="dialog" style="display: none">
+	<div class="weui_mask"></div>
+	<div class="weui_dialog">
+		<div class="weui_dialog_hd"> <strong class="weui_dialog_title"><font id="dialog_title">dialog_info</font></strong> 
+		</div>
+		<div class="weui_dialog_ft">
+			<a href="javascript:void(0);" onclick="hideDialog()" class="weui_btn_dialog primary">确定</a>
+		</div>
+	</div>
+</div>
+
+<button class="weui_btn weui_btn_primary" onclick="onRegister()">注册</button>
+<button class="weui_btn weui_btn_default">取消</button>
+{{template "rfooter.html" .}}

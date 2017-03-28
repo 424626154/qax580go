@@ -1,0 +1,33 @@
+select * from qax580.user
+INSERT INTO qax580.admin (username,password) VALUES('3','3');
+ CREATE TABLE IF NOT EXISTS `wxuserinfo` (
+        `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        `open_id` varchar(255) NOT NULL DEFAULT '' ,
+        `nicke_name` varchar(255) NOT NULL DEFAULT '' ,
+        `sex` integer NOT NULL DEFAULT '0' ,
+        `province` varchar(255) NOT NULL DEFAULT '' ,
+        `city` varchar(255) NOT NULL DEFAULT '' ,
+        `country` varchar(255) NOT NULL DEFAULT '' ,
+        `head_imgurl` varchar(255) NOT NULL DEFAULT '' ,
+        `unionid` varchar(255) NOT NULL DEFAULT '' ,
+        `err_code` bigint NOT NULL DEFAULT '0' ,
+        `err_msg` varchar(255) NOT NULL DEFAULT '' 
+    ) ENGINE=InnoDB;
+
+    create table `weixin_number` 
+    -- --------------------------------------------------
+    --  Table Structure for `qax580go/models.WeixinNumber`
+    -- --------------------------------------------------
+    CREATE TABLE IF NOT EXISTS `weixin_number` (
+        `id` bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        `name` varchar(100) NOT NULL DEFAULT '' ,
+        `info` varchar(1000) NOT NULL DEFAULT '' ,
+        `num` varchar(100) NOT NULL DEFAULT '' ,
+        `evaluate` varchar(1000) NOT NULL DEFAULT '' ,
+        `image` varchar(255) NOT NULL DEFAULT '' ,
+        `time` bigint NOT NULL DEFAULT '0' ,
+        `state` tinyint NOT NULL DEFAULT '0' 
+    ) ENGINE=InnoDB;
+
+    alter table qax580.cai_item modify price varchar(255)
+

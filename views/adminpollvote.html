@@ -1,0 +1,19 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/poll/adminpollscon?pollsid="+{{.PollsId}}
+        });
+    </script>
+
+<ul class="list-group">
+  {{range .Objs}}
+  <li class="list-group-item">
+    <div>
+      <h1>{{.OpneId}}</h1>
+    </div>
+    <div >{{timeformat2 .CreateTime}}</div>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

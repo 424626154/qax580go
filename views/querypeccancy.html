@@ -1,0 +1,155 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript"> 
+var url = "http://v.juhe.cn/wz/citys?key=6bd5c3ffa52bca14090b62833e5bfc05"
+var json = "";
+$(document).ready(function(){
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: 'JSONP',
+                success: function(result){
+                    analyticalData(result)
+                }
+            });
+            initSelect();
+        });
+
+function analyticalData(result){
+    json = result;
+    if(json.error_code == 0){
+        var result = json.result;
+        var key = "";
+         for (var i in result) { 
+             key = i;
+             if(key != ""){
+                break;
+             }
+          } 
+        document.getElementById("province").options.length=0;
+        for (var i in result) { 
+             document.getElementById("province").options.add(new Option(result[i].province,i));
+          } 
+
+         document.getElementById("city").options.length=0;
+         if(key != ""){
+          var citys = result[key].citys;
+          for(var i = 0 ; i < citys.length ; i ++ ){
+               document.getElementById("city").options.add(new Option(citys[i].city_name,citys[i].city_code));
+           }
+         }
+    }
+}
+
+function initSelect(){
+  var city_chat_json = [{"city":"北京","city_chat":"京"},{"city":"上海","city_chat":"沪"},{"city":"天津","city_chat":"津"},{"city":"重庆","city_chat":"渝"},{"city":"河北","city_chat":"冀"},{"city":"山西","city_chat":"晋"},{"city":"内蒙古","city_chat":"蒙"},{"city":"辽宁","city_chat":"辽"},{"city":"吉林","city_chat":"吉"},{"city":"黑龙江","city_chat":"黑"},{"city":"江苏","city_chat":"苏"},{"city":"浙江","city_chat":"浙"},{"city":"安徽","city_chat":"皖"},{"city":"福建","city_chat":"闽"},{"city":"江西","city_chat":"赣"},{"city":"山东","city_chat":"鲁"},{"city":"河南","city_chat":"豫"},{"city":"湖北","city_chat":"鄂"},{"city":"湖南","city_chat":"湘"},{"city":"广东","city_chat":"粤"},{"city":"广西","city_chat":"桂"},{"city":"海南","city_chat":"琼"},{"city":"四川","city_chat":"川"},{"city":"贵州","city_chat":"贵"},{"city":"云南","city_chat":"云"},{"city":"西藏","city_chat":"藏"},{"city":"陕西","city_chat":"陕"},{"city":"甘肃","city_chat":"甘"},{"city":"青海","city_chat":"青"},{"city":"宁夏","city_chat":"宁"},{"city":"新疆","city_chat":"新"}];
+  document.getElementById("citychat").options.length=0;
+  for (var i in city_chat_json) { 
+          document.getElementById("citychat").options.add(new Option(city_chat_json[i].city_chat,city_chat_json[i].city));
+          } 
+
+         var city_eng_json = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","空"];
+          document.getElementById("cityeng").options.length=0;
+  for (var i in city_eng_json) { 
+          document.getElementById("cityeng").options.add(new Option(city_eng_json[i],i));
+          } 
+}
+
+/*
+选择城市
+*/
+function onclikProvince(key){
+    document.getElementById("city").options.length=0;
+         if(key != ""){
+        var result = json.result;
+          var citys = result[key].citys;
+          for(var i = 0 ; i < citys.length ; i ++ ){
+               document.getElementById("city").options.add(new Option(citys[i].city_name,citys[i].city_code));
+           }
+         }
+}
+
+function onclikBtn(){
+      var province=document.getElementById("province");
+        var provinceinfo =province.options[province.selectedIndex].text; 
+        var city=document.getElementById("city");
+        var cityinfo =city.options[city.selectedIndex].text; 
+        var cityvalue =city.options[city.selectedIndex].value; 
+        var citychat=document.getElementById("citychat");
+        var citychatinfo =citychat.options[citychat.selectedIndex].text; 
+        var cityeng=document.getElementById("cityeng");
+        var cityenginfo =cityeng.options[cityeng.selectedIndex].text; 
+        var cph = document.getElementById("cph").value;
+        var fdj = document.getElementById("fdj").value;
+      var hphm = citychatinfo;
+      if(cityenginfo != "空"){
+      hphm += cityenginfo;
+      }
+      hphm += cph;
+      if(cph == ""){
+        alert("请填写车牌号")
+        return;
+      }
+      if(fdj == ""){
+        alert("请填写发动机号")
+        return;
+      }
+      document.getElementById("queryForm").action = "/querypeccancy?city="+cityvalue+"&hphm="+hphm+"&engineno="+fdj;
+     document.getElementById("queryForm").method = "post";   
+     document.getElementById("queryForm").enctype= "multipart/form-data"
+     document.getElementById("queryForm").submit(); 
+}
+    
+</script>
+<div class="uplode_bg">
+  <form action="" method="post" id="queryForm">
+    <div class="form-group"> <font class="up_fnt" for="" style="color:#000">查询城市:</font>
+      <select style="width:100px;font-size:20px" id="province" name="province"onchange="onclikProvince(this[selectedIndex].value);"></select>
+      <select style="width:100px;font-size:20px" id="city" name="city"></select>
+    </div>
+    <div class="form-group"> <font class="up_fnt" for="" style="color:#000">车牌号码:</font>
+      <select style="width:100px;font-size:20px" id="citychat" name="citychat"></select>
+      <select style="width:100px;font-size:20px" id="cityeng" name="cityeng"></select>
+      <input type="text" class="form-control" id="cph" name="cph" placeholder="车牌号码后5位"></div>
+    <div class="form-group">
+      <font class="up_fnt" for="" style="color:#000">发动机号码:</font>
+      <input type="text" class="form-control" id="fdj" name="fdj" placeholder="请输入发动机号码后6位"></div>
+    <div class="body_right">
+      <button type="button" class="my_button my_gray" onclick="onclikBtn();">查询</button>
+    </div>
+    <!-- <button type="submit">点击</button>
+  -->
+</form>
+<div>
+  {{if eq .IsShow "true"}}
+      {{if eq .ErrorCode 0}}
+  <h3>查询车辆:{{ .Hphm}}</h3>
+  <div>{{.Tips}}</div>
+  <ul class="list-group">
+    {{range .Peccancys}}
+    <div class="list-group-item">
+      <div>违章时间: {{.Date}}</div>
+      <div>违章地点: {{.Area}}</div>
+      <div>违章行为: {{.Act}}</div>
+      <div>违章扣分: {{.Fen}}</div>
+      <div>违章罚款: ￥{{.Money}}</div>
+      <div>
+        处理情况:
+        {{if eq .Handled "0"}}
+        未处理
+        {{else if eq .Handled "1"}}
+        已处理
+        {{else}}
+        未知
+        {{end}}
+      </div>
+    </div>
+    {{end}}
+  </ul>
+  {{else}}
+        {{.ErrorInfo}}
+      {{end}}
+    {{end}}
+</div>
+</div>
+{{template "trainfooter.html" .}}

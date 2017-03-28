@@ -1,0 +1,173 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+		document.getElementById("title_font").href="/photo/adminhome"
+        });
+      function addPost(){
+      	var title = document.getElementById("title").value;
+      	var money = document.getElementById("money").value;
+      	if(title == ""){
+      			alert("请输入描述")
+      			return
+      	}
+      	if(money == ""){
+      			alert("请输入价格")
+      			return
+      	}
+      	    //调用方法 如        
+      var post_map = { op:"add",title: title, money: money} 
+      var post_url = "/photo/postpsize";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+           				window.location.href="/photo/adminsize";  
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+      }
+	function delPost(id){
+      	if(id == ""){
+      			alert("id错误")
+      			return
+      	}
+
+      	    //调用方法 如        
+      var post_map = { op:"del",id: id} 
+      var post_url = "/photo/postpsize";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+           				window.location.href="/photo/adminsize";  
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+      }
+function upPost0(id){
+        if(id == ""){
+            alert("id错误")
+            return
+        }
+
+            //调用方法 如        
+      var post_map = { op:"state0",id: id} 
+      var post_url = "/photo/postpsize";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                  window.location.href="/photo/adminsize";  
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+      }
+function upPost1(id){
+        if(id == ""){
+            alert("id错误")
+            return
+        }
+
+            //调用方法 如        
+      var post_map = { op:"state1",id: id} 
+      var post_url = "/photo/postpsize";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                  window.location.href="/photo/adminsize";  
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+      }
+</script>
+
+<div>
+	<div class="appid">
+		<label for="">输入描述</label>
+		<input type="text" class="form-control" id="title" name="title" placeholder="输入描述"></div>
+	<div class="">
+		<label for="">输入价格</label>
+		<input type="text" class="form-control" id="money" name="money" placeholder="输入价格"></div>
+	<br/>
+	<button class="btn btn-default" onclick="addPost();">添加新尺寸</button>
+</div>
+
+<ul class="list-group">
+	{{range .Objs}}
+	<li class="list-group-item">
+		<div >
+			<label for="">ID:</label>
+			{{.Id}}
+		</div>
+		<div >
+			<label for="">描述:</label>
+			{{.Title}}
+		</div>
+    <div >
+      <label for="">价格:</label>
+      {{.Money}}
+    </div>
+		<button class="btn btn-default" onclick="delPost({{.Id}});">删除</button>
+    {{if eq .State 0}}
+    <button class="btn btn-default" onclick="upPost0({{.Id}});">上线</button>
+    {{else}}
+    <button class="btn btn-success" onclick="upPost1({{.Id}});">下线</button>
+    {{end}}
+	</li>
+	{{end}}
+</ul>
+{{template "adminfooter.html" .}}

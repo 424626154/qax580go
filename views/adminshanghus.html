@@ -1,0 +1,35 @@
+{{template "adminheader.html" .}}
+<div>
+  <a type="button" class="btn btn-default" href="/admin/addshanghu">添加商户</a>
+</div>
+<ul class="list-group">
+  {{range .Objs}}
+  <li class="list-group-item">
+    {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+    {{end}}
+    <div>
+      <h1>{{.Name}}</h1>
+    </div>
+    <div>{{.Info}}</div>
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .State 0}}
+    <a href="/admin/shanghus?op=state&id={{.Id}}" >未上线</a>
+    {{else}}
+    <a href="/admin/shanghus?op=state1&id={{.Id}}" >已上线</a>
+    {{end}}
+    {{if eq .Recommend 0}}
+    <a href="/admin/shanghus?op=recommend&id={{.Id}}" >未推荐</a>
+    {{else}}
+    <a href="/admin/shanghus?op=recommend1&id={{.Id}}" >已推荐</a>
+    {{end}}   
+    <a href="/admin/upshanghuinfo?id={{.Id}}" >修改内容</a>
+    <a href="/admin/upshanghuimg?id={{.Id}}" >修改图片</a>
+    <a href="/admin/shanghus?op=del&id={{.Id}}" >删除</a>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

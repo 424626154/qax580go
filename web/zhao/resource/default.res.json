@@ -1,0 +1,65 @@
+{
+	"resources": [
+		{
+			"name": "bgImage",
+			"type": "image",
+			"url": "assets/bg.jpg"
+		},
+		{
+			"name": "egretIcon",
+			"type": "image",
+			"url": "assets/egret_icon.png"
+		},
+		{
+			"name": "description",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "ok",
+			"type": "image",
+			"url": "assets/i_ok.png"
+		},
+		{
+			"name": "x",
+			"type": "image",
+			"url": "assets/i_x.png"
+		},
+		{
+			"name": "s_ok",
+			"type": "sound",
+			"soundType":"effct",
+			"url": "assets/s_ok.mp3"
+		},
+		{
+			"name": "s_x",
+			"type": "sound",
+			"soundType":"effct",
+			"url": "assets/s_x.mp3"
+		},
+		{
+			"name": "s_click",
+			"type": "sound",
+			"soundType":"effct",
+			"url": "assets/button_click.mp3"
+		},
+		{
+			"name": "s_time",
+			"type": "sound",
+			"soundType":"effct",
+			"url": "assets/time_warning.mp3"
+		},
+		{
+			"name": "s_dialog",
+			"type": "sound",
+			"soundType":"effct",
+			"url": "assets/dialog_open.mp3"
+		}
+	],
+	"groups": [
+		{
+			"name": "preload",
+			"keys": "bgImage,egretIcon,ok,x,s_ok,s_x,s_click,s_time,s_dialog"
+		}
+	]
+}

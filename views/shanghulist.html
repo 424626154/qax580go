@@ -1,0 +1,36 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/shanghus"
+        });
+</script>
+<div id="cont_bg">
+	<div class="list_page_bg">
+
+		<ul class="qax_list_bg">
+			{{range .Objs}}
+			<a href="" style="text-decoration:none;">
+				<div  id="list_item">
+					<div class="list_item_1">
+						<div class="caidn_img_div">
+							{{if eq .Image ""}}
+                    {{.Image}}
+                {{else}}
+							<img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" class="list_time_caidan" >{{end}}</div>
+						<div class="caidn_info_div">
+							<div> <font class="info_fnot1">{{.Name}}</font>
+							</div>
+							<div> <font class="info_fnot">{{.Info}}</font>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</a>
+			{{end}}
+		</ul>
+	</div>
+
+</div>
+{{template "footer.html" .}}

@@ -1,0 +1,95 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+	{{if eq .ErrorCode 0}}
+	<div>
+		<h4>实况天气</h4>
+		<div >
+			<span class="lable1_font">当前温度：</span>
+			{{.Sk.Temp}}
+		</div>
+		<div >
+			<span class="lable1_font">当前风向：</span>
+			{{.Sk.WindDirection}}
+		</div>
+		<div >
+			<span class="lable1_font">当前风力：</span>
+			{{.Sk.WindStrength}}
+		</div>
+		<div >
+			<span class="lable1_font">当前湿度：</span>
+			{{.Sk.Humidity}}
+		</div>
+		<div >
+			<span class="lable1_font">更新时间：</span>
+			{{.Sk.Time}}
+		</div>
+	</div>
+	<div>
+		<h4>今日{{.Today.City}}天气</h4>
+		<div >
+			<span class="lable1_font">温度：</span>
+			{{.Today.Temperature}}
+		</div>
+		<div >
+			<span class="lable1_font">天气：</span>
+			{{.Today.Weather}}
+		</div>
+		<div >
+			<span class="lable1_font">风向：</span>
+			{{.Today.Wind}}
+		</div>
+		<div >
+			<span class="lable1_font">穿衣指数：</span>
+			{{.Today.Dressingindex}}
+		</div>
+		<div >
+			<span class="lable1_font">穿衣建议：</span>
+			{{.Today.DressingAdvice}}
+		</div>
+		<div >
+			<span class="lable1_font">紫外线强度：</span>
+			{{.Today.UvIndex}}
+		</div>
+		<div >
+			<span class="lable1_font">洗车指数：</span>
+			{{.Today.WashIndex}}
+		</div>
+		<div >
+			<span class="lable1_font">旅游指数：</span>
+			{{.Today.TravelIndex}}
+		</div>
+		<div >
+			<span class="lable1_font">晨练指数：</span>
+			{{.Today.ExerciseIndex}}
+		</div>
+	</div>
+	<div>
+		<h4>未来几天天气</h4>
+		<ul class="list-group">
+			{{range .Future}}
+			<div class="list-group-item">
+				<div >
+					<span class="lable1_font">日起：</span>
+					{{.Date}}
+				</div>
+				<div >
+					<span class="lable1_font">温度：</span>
+					{{.Temperature}}
+				</div>
+				<div >
+					<span class="lable1_font">天气状况：</span>
+					{{.Weather}}
+				</div>
+				<div >
+					<span class="lable1_font">风向：</span>
+					{{.Wind}}
+				</div>
+			</div>
+			{{end}}
+		</ul>
+	</div>
+	{{else}}
+	{{.ErrorInfo}}
+{{end}}
+</div>
+{{template "trainfooter.html" .}}

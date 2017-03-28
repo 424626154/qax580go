@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	  <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	  <!-- Stylesheets -->
+	  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	  <title>大签世界</title>
+<body>
+<div>
+<form class="form-inline" method="post" action="/dqsj/adminlogin" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="">用户名:</label>
+    <input type="text" class="form-control" id="user" name="user" placeholder="输入用户名"></div>
+  <div class="form-group">
+    <label for="">密码:</label>
+    <input type="password" class="form-control" id="password" name="password" placeholder="输入密码"></div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="autologin">自动登录</label>
+  </div>
+  <button type="submit" class="btn btn-default">登陆</button>
+</form>
+</div>
+
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

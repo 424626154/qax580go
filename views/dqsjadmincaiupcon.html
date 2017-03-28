@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <!-- Stylesheets -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+    <title>大签世界</title>
+<body>
+<div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/admincai" id="title_font">
+          返回</a>
+       </div>
+    </div>
+   </nav>
+
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script language="javascript">
+$(document).ready(function(){
+            initData();
+        });
+function initData(){
+  document.getElementById("name").value = {{.CaiItem.Name}};
+  document.getElementById("price").value = {{.CaiItem.Price}};
+  document.getElementById("pricedesc").value = {{.CaiItem.PriceDesc}};
+}
+  function toVaild(){
+    var name = document.getElementById("name").value;
+    var price = document.getElementById("price").value;
+    var pricedesc = document.getElementById("pricedesc").value;
+    if(name == ""){
+      alert("菜品名称不能为空");
+      return false;
+    }else if(price == ""){
+      alert("菜品价格不能为空");
+      return false;
+    }else if(pricedesc == ""){
+      alert("菜品计量单位不能为空");
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  function upInfo(){
+   var name = document.getElementById("name").value;
+    var price = document.getElementById("price").value;
+    var pricedesc = document.getElementById("pricedesc").value;
+    if(name == ""){
+      alert("菜品名称不能为空");
+      return;
+    }
+    if(price == ""){
+      alert("菜品价格不能为空");
+      return;
+    }
+    if(pricedesc == ""){
+      alert("菜品计量单位不能为空");
+      return;
+    }
+    var url = "/dqsj/admincaiupcon?&name="+name+"&price="+price+"&pricedesc="+pricedesc+"&id="+{{.CaiItem.Id}};
+    // alert(url)
+    document.getElementById("upinfo").action = url;
+     document.getElementById("upinfo").method = "post";   
+     document.getElementById("upinfo").enctype = "multipart/form-data";
+     document.getElementById("upinfo").submit(); 
+  }
+</script>
+
+  <form id = "upinfo" method="post" action="/dqsj/admincaiupcon" enctype="multipart/form-data" onsubmit="return toVaild()">
+    <div class=""> <font class="up_fnt" for="" style="color:#000">菜品名称</font>
+      <input type="text" class="form-control" id="name" name="name" placeholder="输入菜品名称"></div>
+    <div class=""> <font class="up_fnt" for="" style="color:#000">菜品价格</font>
+      <input type="text" class="form-control" id="price" name="price" placeholder="输入菜品价格"></div>
+    <div class=""> <font class="up_fnt" for="" style="color:#000">菜品计量单位</font>
+      <input type="text" class="form-control" id="pricedesc" name="pricedesc" placeholder="输入菜品计量单位"></div>
+    <div class="">
+      <font class="up_fnt">选择图片：(上传菜品的宣传图片)</font>
+      <input type="file" class="form-control" name="image" id="image" accept="image/*" ></div>
+    <div class="body_right">
+      <button type="button" class="btn btn-default" onclick="upInfo();">修改</button>
+    </div>
+  </form>
+</div>
+
+  <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

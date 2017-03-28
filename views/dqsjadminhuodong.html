@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	  <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	  <!-- Stylesheets -->
+	  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	  <title>大签世界</title>
+<body>
+<script type="text/javascript">
+    function addHuoDongTitle(){
+    var huodong = document.getElementById("huodong").value;
+    if(huodong == ""){
+      alert("请输入修改活动标题");
+      return;
+    }
+    var url = "/dqsj/adminhuodong?op=uphuodong"+"&huodong="+huodong;
+    // alert(url)
+    document.getElementById("add").action = url;
+     document.getElementById("add").method = "post";   
+     document.getElementById("add").enctype = "multipart/form-data";
+     document.getElementById("add").submit(); 
+  }
+      function addHuoDongItem(){
+    var content = document.getElementById("content").value;
+    if(content == ""){
+      alert("请输入添加活动内容");
+      return;
+    }
+    var url = "/dqsj/adminhuodong?op=additem"+"&content="+content;
+    // alert(url)
+    document.getElementById("addItem").action = url;
+     document.getElementById("addItem").method = "post";   
+     document.getElementById("addItem").enctype = "multipart/form-data";
+     document.getElementById("addItem").submit(); 
+  }
+</script>
+<div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/admin" id="title_font">
+          返回</a>
+       </div>
+   	</div>
+   </nav>
+<!---->
+<form id="add" class="form-inline" method="post" action="/dqsj/adminguanggao" enctype="multipart/form-data">
+   <h3>{{.HuoDong}}</h3>
+  <div class="form-group">
+    <input type="text" class="form-control" id="huodong" name="huodong" placeholder="输入活动标题"></div>
+    <div>
+    <div style="height:4px"></div>
+  <button type="button" class="btn btn-danger" onclick="addHuoDongTitle();" >修改</button>
+  </div>
+</form>
+
+
+<form id="addItem" class="form-inline" method="post" action="/dqsj/adminguanggao" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="">增加活动内容:</label>
+    <input type="text" class="form-control" id="content" name="content" placeholder="输入增加活动内容"></div>
+    <div>
+    <div style="height:4px"></div>
+  <button type="button" class="btn btn-default" onclick="addHuoDongItem();" >添加活动</button>
+  <div style="height:4px"></div>
+  </div>
+</form>
+
+<ul class="list-group">
+  {{range .DqsjHuoDong}}
+  <li class="list-group-item">
+  <div >{{.Content}}</div>
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .State 0}}
+    <a class="btn btn-default" href="/dqsj/adminhuodong?op=state&id={{.Id}}" >上线</a>
+    {{else}}
+    <a class="btn btn-info" href="/dqsj/adminhuodong?op=state1&id={{.Id}}" >下线</a>
+    {{end}}
+    <a class="btn btn-danger" href="/dqsj/adminhuodong?op=del&id={{.Id}}" >删除</a>
+  </li>
+  {{end}}
+</ul>
+<!---->
+   </div>
+
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

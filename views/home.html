@@ -1,0 +1,266 @@
+{{template "homeheader.html" .}}
+<script type="text/javascript" src="static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/js/bootstrap-paginator.min.js"></script>
+<!--广告栏-->
+<script type="text/javascript">
+  $(document).ready(function(){
+           $('#myCarousel').carousel({
+              interval: 4000
+            })
+           initGuanggao();
+           analyticalData();
+           initNotice();
+        });
+  function initGuanggao(){
+      var gaunggaos = {{.Guanggaos}}
+      if(gaunggaos == null){
+        return;
+      }
+      // alert(gaunggaos.length)
+      var guangao_ol =document.getElementById("guangao_ol");     
+      var guangao_div =document.getElementById("guangao_div")
+      for( var i = 0 ; i < gaunggaos.length ; i++){
+         var guangao_ol_item = "<li data-target=\"#myCarousel\" data-slide-to=\""+i+"\"";
+         if(i == 0 ){
+          guangao_ol_item += "class=\"active\"";
+         } 
+         guangao_ol_item+= "></li>";
+        $(guangao_ol_item).appendTo(guangao_ol);
+
+        var guangao_div_tiem = "<div class=\"item";
+        if(i == 0){
+          guangao_div_tiem += " active"
+        }
+        var url = "/guanggaocontent?op=con&id="+gaunggaos[i].Id;
+        if(gaunggaos[i].Blink){
+          url = gaunggaos[i].Link;
+        }
+        var img_src = {{.ImgUrlPath}}+gaunggaos[i].Image;
+        var img_alt = {{.ImgUrlPath}}+gaunggaos[i].Image;
+        guangao_div_tiem += "\" onclick=\"location.href='"+url+"';\"><img src=\""+img_src+"\" alt=\""+img_alt+"\"><div class=\"carousel-caption\"><h3>"+gaunggaos[i].Title+"</h3></div></div>";
+        $(guangao_div_tiem).appendTo(guangao_div);
+      }
+  }
+  function initNotice(){
+    var notice =document.getElementById("notice");   
+    if({{.NoticeNum}} > 0) {
+    notice.style.visibility="visible"
+    }else{
+    notice.style.visibility="hidden" 
+    }
+  }
+  function myscroll(){
+    h = $(window).height();
+    t = $(document).scrollTop();
+    if(t > h){
+        $('#gotop').show();
+      }else{
+        $('#gotop').hide();
+      }
+    }
+
+    $(document).ready(function(e) {
+      myscroll();
+        $('#gotop').click(function(){
+            $(document).scrollTop(0); 
+        });
+    // $('#release').click(function(){
+    //     alert("发布信息");
+    // });
+    // $('#qrcode_info').hide();
+      // $('#qrcode').hover(function(){
+      //   $(this).attr('id','qrcode_hover');
+      //   $('#qrcode_info').show();
+      // },function(){
+      //   $(this).attr('id','qrcode');
+      //   $('#qrcode_info').hide();
+      // });
+      });
+
+    $(window).scroll(function(e){
+        myscroll();  
+    });
+      function analyticalData(){
+    var citys = new Array()
+    var fromtype = {{.FromType}}
+    // alert(fromtype)
+    citys[0] = "全部"
+    if(fromtype == "from_qingan"){
+      citys[1] = "庆安县"
+      citys[2] = "北林市"
+      citys[3] = "安达市"
+      citys[4] = "肇东市"
+      citys[5] = "海伦市"
+      citys[6] = "望奎市"
+      citys[7] = "兰西县"
+      citys[8] = "青冈县"
+      citys[9] = "明水县"
+      citys[10] = "绥棱县"
+      citys[11] = "绥化市"
+    }else if(fromtype == "from_tieli"){
+      citys[1] = "铁力市"
+    }else if(fromtype == "from_maoxian"){
+      citys[1] = "茂县"
+    }else{
+      citys[1] = "庆安县"
+      citys[2] = "北林市"
+      citys[3] = "安达市"
+      citys[4] = "肇东市"
+      citys[5] = "海伦市"
+      citys[6] = "望奎市"
+      citys[7] = "兰西县"
+      citys[8] = "青冈县"
+      citys[9] = "明水县"
+      citys[10] = "绥棱县"
+      citys[11] = "绥化市"
+      citys[12] = "铁力市"
+      citys[13] = "茂县"
+    }
+
+    var select_city = {{.City}};
+        document.getElementById("city").options.length=0;
+        document.getElementById("city").options.add(new Option(select_city,select_city));
+        for(var i = 0 ; i < citys.length ; i ++ ){
+          if(citys[i] != select_city){
+              document.getElementById("city").options.add(new Option(citys[i],citys[i]));
+          }             
+        } 
+  }
+  /*
+选择城市
+*/
+function onclikProvince(key){
+    // alert(key)
+    var url = "/?op=city&city="+key;
+    var temp = document.createElement("form");        
+    temp.action = url;        
+    temp.method = "post";        
+    temp.enctype = "multipart/form-data";             
+    temp.submit();
+}
+function onNotice(){
+  var url = "/mynotice";
+  // alert(url)
+  window.location.href = url
+}
+function onBack(){
+  var url = "/?op=back";
+  // alert(url)
+  window.location.href = url
+}
+</script>
+<div id="myCarousel" class="carousel slide">
+  <!-- 轮播（Carousel）指标 -->
+  <ol class="carousel-indicators" id="guangao_ol"></ol>
+  <!-- 轮播（Carousel）项目 -->
+  <div class="carousel-inner" id="guangao_div"></div>
+  <!-- 轮播（Carousel）导航 -->
+  <a class="carousel-control left" href="#myCarousel"
+      data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel"
+      data-slide="next">&rsaquo;</a>
+</div>
+<!--广告栏-->
+<div class="qax_bg">
+  <div>
+    <a class="my_button my_gray"  style="text-decoration:none;color:#2ebb86"href="/wxlist">推荐公众号</a>
+    <a class="my_button my_gray"  style="text-decoration:none;color:#2ebb86"href="/weixinnumberlist">推荐微信号</a>
+    <a class="my_button my_gray"  style="text-decoration:none;color:#2ebb86"href="/wpt/home">推荐微平台</a>
+    {{if eq .IsCanting "true"}}
+    <a class="my_button my_gray"  style="text-decoration:none;color:#2ebb86"href="/waimailist">外卖订餐</a>
+    {{end}}
+  </div>
+  <div class="list_page_bg">
+    <div class="time_font">
+      <select style="width:120px;font-size:20px" id="city" name="city"onchange="onclikProvince(this[selectedIndex].value);"></select>
+    </div>
+    <ul class="qax_list_bg">
+      {{range .Posts}}
+      <a href="/content?op=con&id={{.Id}}" style="text-decoration:none;">
+        <div  id="list_item">
+          <!--list_item-->
+          <div class="list_item_1">
+            <div> <font  class="title_fnot" >{{.Title}}</font>
+            </div>
+            <!--     <div class="cont_info"> <font class="info_fnot" >{{.Info}}</font>
+          </div>
+          -->
+          <div class="cont_info" id="info{{.Id}}"></div>
+          <script type="text/javascript">
+    load({{.Id}},{{.Info}})
+    function load(pid,info){
+      var id = "info"+pid;
+        var info = document.getElementById(id).innerHTML = "<font class='info_fnot' >"+info+"</font>";
+    }
+  </script>
+          {{if eq .Image ""}}
+                    {{.Image}}
+                {{else}}
+          <div id="image_fnot" >
+            <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="auto" height="120px"></div>
+          {{end}}
+          <div id="my_label">
+            <span class="label label-success">已审核</span>
+            {{if eq .Label 1}}
+            <span class="label label-primary">个人</span>
+            {{end}} 
+                {{if eq .Label 2}}
+            <span class="label label-primary">官方</span>
+            {{end}}
+              {{if eq .City ""}}
+              {{else}}
+            <span class="label label-info">{{.City}}</span>
+            {{end}}
+          </div>
+          {{if eq .Bfrom true}}
+          <div>
+            <a class="from_a" href="{{.Fromurl}}">来自{{.Fromshow}}</a>
+          </div>
+          {{end}}
+        </div>
+        <div class="time_font">{{timeformat .Time}}</div>
+      </div>
+    </div>
+    <!--list_item--> </a>
+  {{end}}
+</ul>
+<div style="text-align:center">
+  <div id="example"></div>
+  <script type='text/javascript'>  
+          var options = {  
+              currentPage: {{.CurrentPage}},//当前页
+              totalPages: {{.CotalPages}},//总页数
+              numberofPages: {{.NumberofPages}},//显示的页数
+              itemTexts: function (type, page, current) {
+                switch (type) {
+                  case "first":
+                    return "<<";
+                  case "prev":
+                    return "<";
+                  case "next":
+                    return ">";
+                  case "last":
+                    return ">>";
+                  case "page":
+                    return page;
+                }
+              },  
+              onPageClicked: function (e, originalEvent, type, page) {  
+                  // alert("type:" + type + ",Page:" + page);  
+                  window.location.href = "?type="+type+"&page="+page
+              }  
+          }  
+          $('#example').bootstrapPaginator(options);  
+  </script>
+</div>
+</div>
+
+<!--   <a id="release" href="/uplode" class="home_font">发布信息</a>
+<a id="qrcode" class="home_font">公众帐号</a>
+<div id="qrcode_info">
+<font>扫描二维码
+<br>关注咱这580</font>
+<img src="./static/img/qrcode.png"></div>
+-->
+<a id="gotop" class="home_font">返回顶部</a>
+{{template "footer.html" .}}

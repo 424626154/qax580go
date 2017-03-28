@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	  <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	  <!-- Stylesheets -->
+	  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	  <title>大签世界</title>
+<body>
+<script type="text/javascript">
+  function onReset(){
+        var post_map = {op:"wx"} 
+      var post_url = "/dqsj/post";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                     alert("重置时间成功")
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+  }
+</script>
+<div>
+    {{if .isUser}}
+    <div style="width:100%;height:60px">
+      <div style="float:right;padding:10px">
+        <p class="navbar-text">{{ .User}} &nbsp&nbsp</p>
+        <a type="button" class="btn btn-default navbar-btn" href="/dqsj/admin?op=back">注销</a>
+      </div>
+    </div>
+    {{end}}
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/home" id="title_font">
+          <img alt="Brand" src="/static/img/dqsjicon.jpg" style="width:40px;height:40px">大签世界后台</a>
+       </div>
+   	</div>
+   </nav>
+
+<div class="btn-group" role="group" aria-label="...">
+<a type="button" class="btn btn-default" href="/dqsj/admingg">主页广告</a>
+<a type="button" class="btn btn-default" href="/dqsj/adminhuodong">主页活动</a>
+  <a type="button" class="btn btn-default" href="/dqsj/admincai">菜单系统</a>
+    <a type="button" class="btn btn-default" href="/dqsj/adminpan">幸运转盘</a>
+    <!-- <a type="button" class="btn btn-default" href="/dqsj/admingua">刮刮乐</a> -->
+    <a type="button" class="btn btn-default" onclick="onReset()">分享时间重置</a>
+    <a type="button" class="btn btn-default" href="/dqsj/adminshare">分享内容设置</a>
+    <a type="button" class="btn btn-default" href="/dqsj/adminmember">会员系统</a>
+</div>
+
+</div>
+
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+      document.getElementById("title_font").href="/photo/adminhome"
+			$('#url_div').hide();
+
+        });
+
+ 
+      function addPost(){
+      	var appid = document.getElementById("appid").value;
+      	var redirect_uri = document.getElementById("redirect_uri").value;
+      	if(appid == ""){
+      			alert("请输入appid")
+      			return
+      	}
+      	if(redirect_uri == ""){
+      			alert("请输入redirect_uri")
+      			return
+      	}
+      	    //调用方法 如        
+      var post_map = { appid: appid, redirect_uri: redirect_uri} 
+      var post_url = "/photo/posturl";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                       $('#url_div').show();
+                       $('#url').val(result.data);
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+      }
+</script>
+
+
+<div>
+	<div class="appid">
+    <label for="">输入app</label>
+    <input type="text" class="form-control" id="appid" name="appid" placeholder="输入appid"></div>
+   <div class="">
+    <label for="">输入redirect_uri</label>
+    <input type="text" class="form-control" id="redirect_uri" name="redirect_uri" placeholder="输入redirect_uri"></div>
+        <br/>
+    <button class="btn btn-default" onclick="addPost();">生成链接</button>
+    <div class="" id="url_div">
+    <label for="">生成链接</label>
+    <input type="text" class="form-control" id="url" name="url" placeholder="输入redirect_uri"></div>
+</div>
+
+{{template "adminfooter.html" .}}

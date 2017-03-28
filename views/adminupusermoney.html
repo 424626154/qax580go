@@ -1,0 +1,35 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            initData();
+        });
+function initData(){
+  document.getElementById("title_font").href="/admin/userlist"
+}
+  function onclikBtn(){
+    var moneytype = document.getElementById("moneytype").value;
+    if(!(moneytype == "1"||moneytype == "2"||moneytype == "3")){
+      alert("请输入正确修改金钱类型");
+      return;
+    }
+    var url = "/admin/upusermoney?op=up&id="+{{.User.Id}}+"&moneytype="+moneytype;
+    // alert(url)
+    document.getElementById("upusermoney").action = url;
+     document.getElementById("upusermoney").method = "post";   
+     document.getElementById("upusermoney").enctype = "multipart/form-data";
+     document.getElementById("upusermoney").submit(); 
+  }
+  </script>
+{{if eq .IsId true}}
+<h4>关注 1 ,发帖 2, 被关注 3</h4>
+<form id="upusermoney"class="form-inline" method="post" action="/admin/upusermoney" enctype="multipart/form-data">
+  <h4>{{.User.Name}}</h4>
+  <div class="form-group">
+      <label for="">输入修改金钱类型</label>
+      <input type="text" class="form-control" id="moneytype" name="moneytype" placeholder="输入修改金钱类型">
+    </div>
+    <button type="button" class="my_button my_gray" onclick="onclikBtn();">修改金钱</button>
+  </form>
+  {{end}}
+{{template "adminfooter.html" .}}

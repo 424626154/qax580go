@@ -1,0 +1,14 @@
+{{template "adminheader.html" .}}
+<div class="btn-group" role="group" aria-label="...">
+	<a type="button" class="btn btn-default" href="/admin/adduser">添加</a>
+</div>
+<ul class="list-group">
+	{{range .Admins}}
+	<li class="list-group-item">
+		<div>{{.Username}}</div>
+		<div>{{.Password}}</div>
+		<a href="/admin/userlist?op=del&id={{.Id}}" >删除</a>
+	</li>
+	{{end}}
+</ul>
+{{template "adminfooter.html" .}}

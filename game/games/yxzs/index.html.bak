@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>测测你的野心指数</title>
+    <meta name="baidu-site-verification" content="QIQ6KC1oZ6" />
+
+
+
+<!-- <div class="web_root"  style="display:none">http://c.lagou.com</div> -->
+
+<script type="text/javascript">
+
+var ctx = "http://c.lagou.com";
+
+var lctx = "http://www.lagou.com";
+
+</script>    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<img src="images/icon_share.jpg" width="0" height="0">
+	<div class="wrap">
+		<div class="enter_wrap">
+			<div class="wrap_top">
+				<img class="top_img" src="images/img_top.png">
+			</div>
+			<div class="wrap_center">
+				<div class="enter_btn">开始测试</div>
+			</div>
+			<div class="wrap_bottom">
+			</div>
+		</div><!-- /.enter_wrap -->
+		<div class="topic_wrap">
+			<div class="fade_wrap">
+				<div class="wrap_top">
+					<div class="topic_no">
+						<span class="curr_no" id="curr_no">1</span>/<span class="count">10</span>
+					</div>
+				</div>
+				<div class="wrap_top1">
+					<div class="topic_title" id="topic_title"></div>
+				</div>
+				<div class="wrap_center">
+					<table class="topic_option" id="topic_option">
+					</table>
+				</div>
+			</div>
+			<div class="wrap_bottom">
+			</div>
+		</div><!-- /.topic_wrap -->
+		<div class="over_wrap">
+			<div class="wrap_top">
+				<div class="over_grade">
+					<span class="grade_title">您的野心指数是</span>
+					<span class="grade">
+						<div class="grade_detail_wrap">
+							<b class="grade_detail"></b>分
+						</div>
+					</span>
+				</div>
+			</div>
+			<div class="wrap_center">
+				<div class="over_des">
+					<span class="des_title">野心关键词</span>
+					<div class="des_content">
+						<div class="des_keyword"></div>
+						<div class="des_detail"></div>
+					</div>
+				</div> 
+				<div class="over_btn">
+					<div class="over_btn_detail over_share">分享结果</div>
+					<div class="over_btn_detail back"><a href="http://www.qlm918.com/shop/xnq/">为自己祈福2015</a></div>
+					<div class="over_btn_detail over_share">告诉朋友</div><div class="over_btn_detail back"><a href="http://mp.weixin.qq.com/s?__biz=MzA5MzE3NDI2NQ==&mid=203799929&idx=1&sn=dea144fc81db70efca4325e6b29c670a#rd">关注我们</a></div>
+				</div>
+			</div>
+			<div class="wrap_bottom">
+			</div>
+		</div><!-- /.over_wrap -->
+		<div class="share_wrap">
+			<div class="share_text">
+				<img class="share_img" src="images/share.png">
+			</div>
+		</div>
+	</div><!-- /.wrap -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript">
+	careerism.init();
+</script>
+<script type="text/javascript" src="js/analytics.js?v=1.5.5.7_0113"></script>
+
+<script type="text/javascript" src="js/tongji.js?v=1.5.5.7_0113"></script>
+
+<script type="text/javascript" src="other/.com/stats?sId=40177703" charset="UTF-8"></script></body>
+</html> 

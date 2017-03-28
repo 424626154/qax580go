@@ -1,0 +1,88 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            // document.getElementById("verify").value={{.Verify}}
+        });
+  	function backToHome() {
+  		window.location.href = "/";
+  		return false;
+  	}
+
+function toVaild() {
+	var pwd = document.getElementById("pwd");
+	if (pwd.value.length == 0) {
+		alert("请输入密码");
+		return false;
+	}
+	var con_pwd = document.getElementById("con_pwd");
+	if (con_pwd.value.length == 0) {
+		alert("请再次输入密码");
+		return false;
+	}
+	if(pwd.value != con_pwd.value){
+		alert("请确认两次输入的密码一致");
+		return false;
+	}
+	if(pwd.value.length < 4 || pwd.value.length > 11){
+		alert("输入密码过短或过长");
+		return false;
+	}
+	return true;
+}
+function onModify(){
+	var pwd = document.getElementById("pwd");
+	var con_pwd = document.getElementById("con_pwd");
+	if (pwd.value.length == 0) {
+		alert("请输入密码");
+		return ;
+	}
+	var con_pwd = document.getElementById("con_pwd");
+	if (con_pwd.value.length == 0) {
+		alert("请再次输入密码");
+		return ;
+	}
+	if(pwd.value != con_pwd.value){
+		alert("请确认两次输入的密码一致");
+		return ;
+	}
+	if(pwd.value.length < 4 || pwd.value.length > 11){
+		alert("输入密码过短或过长");
+		return ;
+	}
+    var url = "/forgetpwdverify?pwd="+pwd.value+"&verify="+{{.Verify}};
+    document.getElementById("formid").action = url;
+    document.getElementById("formid").method = "post";   
+    document.getElementById("formid").enctype = "multipart/form-data";
+    document.getElementById("formid").submit();
+}
+</script>
+<div style="background-color: #fff;padding : 10px ">
+	{{if eq .Alert ""}}
+    {{else}}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeErro()">
+	        <span aria-hidden="true">&times;</span>
+	      </button> <strong>找回密码失败</strong>
+	      {{.Alert}}
+	    </div>
+    {{end}}
+	<form class="form-horizontal" method="POST" action="/forgetpwdverify"  id="formid">
+		<div class="form-group">
+			<label class="col-lg-4 control-label">新密码：</label>
+			<div class="col-lg-6">
+				<input id="pwd" type="pwd" class="form-control" name="pwd" placeholder="请输入密码"></div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label">确认密码：</label>
+			<div class="col-lg-6">
+				<input id="con_pwd" type="con_pwd" class="form-control" name="con_pwd" placeholder="请再次输入密码"></div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+					<button type="button" class="btn btn-default" onclick="onModify();">修改密码</button>
+			</div>
+		</div>
+	</form>
+</div>
+{{template "footer.html" .}}

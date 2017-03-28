@@ -1,0 +1,33 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+           document.getElementById("title_font").href="/wpt/adminhome"
+        });
+var qrcode_path = ""
+  function onclikBtn(){
+    var url = "/wpt/adminupimg?id="+{{.Obj.Id}}+"&originalqrcode="+{{.Obj.Qrcode}}+"&image1="+qrcode_path;
+    // alert(url)
+     document.getElementById("upimg").action = url;
+     document.getElementById("upimg").method = "post";   
+     document.getElementById("upimg").enctype = "multipart/form-data"
+     document.getElementById("upimg").submit(); 
+  }
+      function setImage1(obj){  
+    var value = obj.value;  
+    qrcode_path = value;
+  } 
+</script>
+<form id="upimg" class="form-inline" method="post" action="/admin/upcommodityimg" enctype="multipart/form-data">
+  <div class="my_select_img">
+ 
+      <h5>二维码图片 尺寸 512*512</h5>
+    {{if eq .Obj.Qrcode ""}}
+      {{else}}
+    <img src="{{isImgPath .Obj.Qrcode}}" alt="{{isImgPath .Obj.Qrcode}}" width="200px" height="200px">
+    {{end}}
+    <input type="file" class="form-control my_file" name="image1" id="image1" accept="image/*" onchange="setImage1(this)">
+    </div>
+  <button type="button" class="my_button my_gray" onclick="onclikBtn();">修改图片</button>
+</form>
+{{template "adminfooter.html" .}}

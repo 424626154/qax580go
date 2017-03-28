@@ -1,0 +1,22 @@
+{{template "pheader.html" .}}
+<div class="weui_cells_title"></div>
+<div class="weui_cells weui_cells_access">
+	<a class="weui_cell" href="javascript:;">
+		<div class="weui_cell_bd weui_cell_primary">
+			<p>订单编号:{{.Porder.Pnumber}}</p>
+			{{timeformat2 .Porder.CreateTime}}
+		</div>
+	</a>
+</div>
+<div class="weui_cells_title"></div>
+<div class="weui_cells weui_cells_access">
+	{{range .Pdetails}}
+	<a class="weui_cell" href="javascript:;">
+		<div class="weui_cell_bd weui_cell_primary">
+			<p>{{.Ddetails}}</p>
+			{{timeformat2 .CreateTime}}
+		</div>
+	</a>
+	{{end}}
+</div>
+{{template "pfooter.html" .}}

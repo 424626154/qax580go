@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	  <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	  <!-- Stylesheets -->
+	  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	  <title>大签世界</title>
+<body>
+<script type="text/javascript">
+	function onSet(){
+		var vbpan = false
+		if( {{.Bpan}} == true ){
+			vbpan = false
+		}else{
+			vbpan = true
+		}
+
+		var post_map = {op:"pan",bpan:vbpan} 
+      var post_url = "/dqsj/post";
+      $.ajax({
+                url : post_url,
+                data:post_map,
+                cache : false, 
+                async : true,
+                type : "POST",
+                dataType : 'json',
+                success : function (result){
+                    // alert(result.errcode)
+                    if(result.errcode == 0){
+                     window.location.href="/dqsj/adminpan";  
+                    }else{
+                        alert(result.errmsg)
+                    }
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+               alert(XMLHttpRequest.status);
+               alert(XMLHttpRequest.readyState);
+               alert(textStatus);
+               }
+            });
+	}
+</script>
+<div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/admin" id="title_font">
+          返回</a>
+       </div>
+   	</div>
+   </nav>
+
+<div >
+  <a type="button" class="btn btn-default" href="/dqsj/adminaddpan">添加转盘元素</a>
+  {{if eq .Bpan true}}
+    <a id="set" type="button" class="btn btn-info" onclick="onSet()">下线</a>
+  {{else}}
+    <a id="set" type="button" class="btn btn-default" onclick="onSet()">上线</a>
+  {{end}}
+</div>
+<div style="height:4px"></div>
+<ul class="list-group">
+	{{range .PanItem}}
+	<li class="list-group-item">
+		<div>{{.Name}}</div>	
+		<div><span class="label label-default">概率:{{.Probability}}/{{.AllProbability}}</span></div>	
+		<div style="height:10px"></div>
+		<div>
+		 {{if eq .State 0}}
+	    	<a class="btn btn-default" href="/dqsj/adminpan?op=state0&id={{.Id}}" >上线</a>
+	    {{else}}
+	    	<a class="btn btn-info" href="/dqsj/adminpan?op=state1&id={{.Id}}" >下线</a>
+	    {{end}}	
+		<a class="btn btn-danger" href="/dqsj/adminuppan?pid={{.Id}}" >修改</a>
+		<a class="btn btn-danger" href="/dqsj/adminpan?op=del&id={{.Id}}" >删除</a></div>
+	</li>
+	{{end}}
+</ul>
+
+
+</div>
+
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

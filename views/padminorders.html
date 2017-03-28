@@ -1,0 +1,30 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript">
+	function onDet(id){
+		window.location.href="/photo/admindetails?id="+id
+	}
+</script>
+<ul class="list-group">
+	{{range .Objs}}
+	<li class="list-group-item">
+		<div >
+			<label for="">订单标号:</label>
+			{{.Pnumber}}
+		</div>
+		{{timeformat2 .CreateTime}}
+		<button class="btn btn-default" onclick="onDet({{.Id}});">详情</button>
+		{{if eq .State 0}}
+		<a class="label label-default">未提交订单</a>
+		{{else if eq .State 1}}
+		<a class="label label-primary">用户提交订单</a>
+		{{else if eq .State 2}}
+		<a class="label label-primary">客服确认订单</a>
+		{{else if eq .State 3}}
+		<a class="label label-primary">客服发送物流</a>
+		{{else if eq .State 4}}
+		<a class="label label-primary">订单完成</a>
+		{{end}}
+	</li>
+	{{end}}
+</ul>
+{{template "adminfooter.html" .}}

@@ -1,0 +1,85 @@
+{{template "header.html" .}}
+<script type="text/javascript">
+function backToHome() {
+	window.location.href = "/";
+	return false;
+}
+
+function toVaild() {
+	var email = document.getElementById("email");
+	if (email.value.length == 0) {
+		alert("请输入邮箱");
+		return false;
+	}else{
+		           //对电子邮件的验证
+      var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if(!myreg.test(email.value))
+	    {
+	          alert('提示\n\n请输入有效的E_mail！');
+	          myreg.focus();
+	          return false;
+	    }
+	}
+
+	var pwd = document.getElementById("pwd");
+	if (pwd.value.length == 0) {
+		alert("请输入密码");
+		return false;
+	}
+	var con_pwd = document.getElementById("con_pwd");
+	if (con_pwd.value.length == 0) {
+		alert("请再次输入密码");
+		return false;
+	}
+	if(pwd.value != con_pwd.value){
+		alert("请确认两次输入的密码一致");
+		return false;
+	}
+	if(pwd.value.length < 4 || pwd.value.length > 11){
+		alert("输入密码过短或过长");
+		return false;
+	}
+	return true;
+}
+</script>
+<div style="background-color: #fff;padding : 10px ">
+	{{if eq .isTips ""}}
+	{{if eq .Alert ""}}
+    {{else}}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeErro()">
+	        <span aria-hidden="true">&times;</span>
+	      </button> <strong>注册失败</strong>
+	      {{.Alert}}
+	    </div>
+    {{end}}
+	<form class="form-horizontal" method="POST" action="/register" onsubmit="return toVaild()">
+		<div class="form-group">
+			<label class="col-lg-4 control-label">邮箱：</label>
+			<div class="col-lg-6">
+				<input id="email" class="form-control" name="email" placeholder="请输入邮箱"></div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-lg-4 control-label">密码：</label>
+			<div class="col-lg-6">
+				<input id="pwd" type="password" class="form-control" name="pwd" placeholder="请输入密码"></div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label">确认密码：</label>
+			<div class="col-lg-6">
+				<input id="con_pwd" type="password" class="form-control" name="con_pwd" placeholder="请再次输入密码"></div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+				<button type="submit" class="btn btn-default">注册</button>
+			</div>
+		</div>
+	</form>
+	{{else}}
+	<h3>{{.isTips}}</h3>
+	<a href="/">返回首页</a>
+	{{end}}
+</div>
+{{template "footer.html" .}}

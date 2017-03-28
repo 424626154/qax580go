@@ -1,0 +1,24 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+	<div>
+		<a  class="btn btn-default" href="/history" >返回列表</a>
+	</div>
+	{{if eq .ErrorCode 0}}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ .HCResult.Title}}</h3>
+		</div>
+		<div class="panel-body">{{ .HCResult.Content}}</div>
+		{{if eq .HCResult.Pic ""}}
+              	{{.HCResult.Pic}}
+	          {{else}}
+		<div id="image_fnot" style="text-align:center">
+			<img src="{{.HCResult.Pic}}" alt="{{.HCResult.Pic}}" width="auto" height="120px"></div>
+		{{end}}
+		<div style="text-align:right">{{.HCResult.Year}}-{{.HCResult.Month}}-{{.HCResult.Day}}</div>
+	</div>
+	{{else}}
+        {{.ErrorInfo}}
+      {{end}}
+</div>
+{{template "trainfooter.html" .}}

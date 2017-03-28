@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	  <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	  <!-- Stylesheets -->
+	  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	  <title>大签世界</title>
+<body>
+<div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/admin" id="title_font">
+          返回</a>
+       </div>
+   	</div>
+   </nav>
+
+<div class="btn-group" role="group" aria-label="...">
+  <a type="button" class="btn btn-default" href="/dqsj/adminaddcaigroup">添加菜单分组</a>
+  <a type="button" class="btn btn-default" href="/dqsj/adminaddcaitips">添加菜单提示</a>
+</div>
+	<h5>菜单提示</h5>
+	<ul class="list-group">
+	{{range .CaiTips}}
+	<li class="list-group-item">
+		<div>
+			<span class="label label-default">id：{{.Id}}</span><h5> {{.Info}} </h5>
+	</div>
+	<div style="height:4px"></div>
+	<div>
+		 {{if eq .State 0}}
+	    	<a class="btn btn-default" href="/dqsj/admincai?op=tipsstate0&id={{.Id}}" >上线</a>
+	    {{else}}
+	    	<a class="btn btn-info" href="/dqsj/admincai?op=tipsstate1&id={{.Id}}" >下线</a>
+	    {{end}}	
+		<a class="btn btn-danger" href="/dqsj/admincai?op=tipsdel&id={{.Id}}" >删除</a>
+		</div>
+	</li>
+	{{end}}
+</ul>
+	<h5>菜单列表</h5>
+<ul class="list-group">
+	{{range .ShowCaiGroup}}
+	<li class="list-group-item">
+		<div><span class="label label-danger" >{{.Name}}</span> <span class="label label-default">排序id：{{.OrderId}}</span> 	
+		</div>
+		<div style="height:10px"></div>
+		<div>
+		 {{if eq .State 0}}
+	    	<a class="btn btn-default" href="/dqsj/admincai?op=state0&id={{.Id}}" >上线</a>
+	    {{else}}
+	    	<a class="btn btn-info"  href="/dqsj/admincai?op=state1&id={{.Id}}" >下线</a>
+	    {{end}}	
+		<a class="btn btn-primary" href="/dqsj/adminaddcaiitem?groupid={{.Id}}" >添加</a>
+		<a class="btn btn-danger" href="/dqsj/admincai?op=del&id={{.Id}}" >删除</a>
+		</div>
+		<ul class="list-group">
+		<div style="height:10px"></div>
+		{{range .CaiItems}}
+		<li class="list-group-item">
+		      {{if eq .Image ""}}
+                    {{.Image}}
+                {{else}}
+          <div id="image_fnot" >
+            <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="auto" height="120px"></div>
+          {{end}}
+			<div>{{.Name}}</div>
+			<div>价格:{{.Price}}</div>
+			<div>显示内容:{{.PriceDesc}}</div>
+			<div>
+			{{if eq .State 0}}
+	    	<a class="btn btn-default" href="/dqsj/admincai?op=itemstate0&id={{.Id}}" >上线</a>
+		    {{else}}
+		    	<a class="btn btn-info" href="/dqsj/admincai?op=itemstate1&id={{.Id}}" >下线</a>
+		    {{end}}	
+		    <a class="btn btn-danger" href="/dqsj/admincai?op=itemdel&id={{.Id}}" >删除</a> 
+		    <a class="btn btn-danger" href="/dqsj/admincaiupcon?id={{.Id}}" >修改</a>
+		    </div>
+		</li>
+		{{end}}
+		</ul>
+	</li>
+	{{end}}
+</ul>
+
+
+</div>
+
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

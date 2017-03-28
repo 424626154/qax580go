@@ -1,0 +1,45 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/admin"
+        });
+    </script>
+  <div>
+  <a type="button" class="btn btn-default" href="/poll/adminaddpoll">添加投票</a>
+</div>
+
+<ul class="list-group">
+  {{range .Objs}}
+  <li class="list-group-item">
+    <input type="text" class="form-control" value="http://www.baoguangguang.cn/poll/pollwx?id={{.Id}}">
+    {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+    {{end}}
+    <div>
+      <h1>{{.Title}}</h1>
+    </div>
+    <div>{{.Info}}</div>
+    <div>授权公众号Appid:{{.Appid}}</div>
+    <div>授权公众号Secret:{{.Secret}}</div>
+    <div>活动奖品:{{.Prize}}</div>
+    <div>扩展信息:{{.Ext}}</div>
+    <div ><a href="{{.More}}">更多链接：{{.More}}</a></div>
+    <div >开始时间：{{timeformat2 .StartTimeLong}}</div>
+    <div >结束时间：{{timeformat2 .EndTimeLong}}</div>
+    {{if eq .State 0}}
+    <a href="/poll/adminpolls?op=state&id={{.Id}}" >未上架</a>
+    {{else}}
+    <a href="/poll/adminpolls?op=state1&id={{.Id}}" >已上架</a>
+    {{end}}
+    <a href="/poll/adminuppollsinfo?id={{.Id}}" >修改内容</a>
+    <a href="/poll/adminuppollsimg?id={{.Id}}" >修改图片</a>
+    <a href="/poll/adminpolls?op=del&id={{.Id}}" >删除</a>
+    <a href="/poll/adminpollscon?pollsid={{.Id}}" >详情</a>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

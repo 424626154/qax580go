@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<!-- Stylesheets -->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	<title>大签世界</title>
+<head>
+<body>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript">
+	wx.config({
+	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	    appId: {{.AppId}}, // 必填，公众号的唯一标识
+	    timestamp: {{.TimesTamp}}, // 必填，生成签名的时间戳
+	    nonceStr: {{.NonceStr}}, // 必填，生成签名的随机串
+	    signature: {{.Ticket}},// 必填，签名，见附录1
+	    jsApiList: [
+	    	'onMenuShareTimeline',//朋友圈
+	    	'onMenuShareAppMessage'//微信好友
+	    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});
+	 wx.ready(function () {   //ready函数用于调用API，如果你的网页在加载后就需要自定义分享和回调功能，需要在此调用分享函数。//如果是微信游戏结束后，需要点击按钮触发得到分值后分享，这里就不需要调用API了，可以在按钮上绑定事件直接调用。因此，微信游戏由于大多需要用户先触发获取分值，此处请不要填写如下所示的分享API
+		wx.onMenuShareTimeline({
+		    title: {{.WxShareCon.Title}}, // 分享标题
+		    link: {{.WxShareCon.Link}}, // 分享链接
+		    imgUrl: {{.WxShareCon.ImgUrl}}, // 分享图标
+		    success: function () { 
+		        // 用户确认分享后执行的回调函数
+		    },
+		    cancel: function () { 
+		        // 用户取消分享后执行的回调函数
+		    }
+		});
+		wx.onMenuShareAppMessage({
+		    title: {{.WxShareCon.Title}}, // 分享标题
+		    desc: {{.WxShareCon.Title}}, // 分享描述
+		    link: {{.WxShareCon.Link}}, // 分享链接
+		    imgUrl: {{.WxShareCon.ImgUrl}}, // 分享图标
+		    type: '', // 分享类型,music、video或link，不填默认为link
+		    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		    success: function () { 
+		        // 用户确认分享后执行的回调函数
+		    },
+		    cancel: function () { 
+		        // 用户取消分享后执行的回调函数
+		    }
+		});
+	});
+	wx.error(function (res) {
+	 alert(res.errMsg);  //打印错误消息。及把 debug:false,设置为debug:ture就可以直接在网页上看到弹出的错误提示
+	});
+</script>
+	<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+  $(document).ready(function(){
+           $('#myCarousel').carousel({
+              interval: 4000
+            })
+           initGuanggao();
+        });
+	function initGuanggao(){
+	      var gaunggaos = {{.Guanggaos}}
+	      if(gaunggaos == null){
+	        return;
+	      }
+	      // alert(gaunggaos.length)
+	      var guangao_ol =document.getElementById("guangao_ol");     
+	      var guangao_div =document.getElementById("guangao_div")
+	      for( var i = 0 ; i < gaunggaos.length ; i++){
+	         var guangao_ol_item = "<li data-target=\"#myCarousel\" data-slide-to=\""+i+"\"";
+	         if(i == 0 ){
+	          guangao_ol_item += "class=\"active\"";
+	         } 
+	         guangao_ol_item+= "></li>";
+	        $(guangao_ol_item).appendTo(guangao_ol);
+
+	        var guangao_div_tiem = "<div class=\"item";
+	        if(i == 0){
+	          guangao_div_tiem += " active"
+	        }
+	            var url = "/dqsj/guanggao?op=con&id="+gaunggaos[i].Id;
+        if(gaunggaos[i].Blink){
+          url = gaunggaos[i].Link;
+        }
+        var img_src = {{.ImgUrlPath}}+gaunggaos[i].Image;
+        var img_alt = {{.ImgUrlPath}}+gaunggaos[i].Image;
+	        guangao_div_tiem += "\" onclick=\"location.href='"+url+"';\"><img src=\""+img_src+"\" alt=\""+img_alt+"\"><div class=\"carousel-caption\"><h3>"+gaunggaos[i].Title+"</h3></div></div>";
+	        $(guangao_div_tiem).appendTo(guangao_div);
+	      }
+	  }
+	  function onHome(){
+	  	  var url = "/dqsj/home"
+          window.location.href = url
+	  }
+	  function onCai(){
+	  		var url = "/dqsj/cai"
+          window.location.href = url
+	  }
+	  function onPan(){
+	  		var url = "/dqsj/pan"
+          window.location.href = url
+	  }
+</script>
+	<div class="qax_bg">
+		<div class="page-header" style="	padding-left: 10px;
+	padding-right: 10px;">
+			<h1>
+				大签世界
+				<small>火盆烤肉</small>
+			</h1>
+		</div>
+
+		<div id="myCarousel" class="carousel slide">
+			<!-- 轮播（Carousel）指标 -->
+			<ol class="carousel-indicators" id="guangao_ol"></ol>
+			<!-- 轮播（Carousel）项目 -->
+			<div class="carousel-inner" id="guangao_div"></div>
+			<!-- 轮播（Carousel）导航 -->
+			<a class="carousel-control left" href="#myCarousel"
+      data-slide="prev">&lsaquo;</a>
+			<a class="carousel-control right" href="#myCarousel"
+      data-slide="next">&rsaquo;</a>
+		</div>
+		<div style="	padding-left: 10px;
+	padding-right: 10px;">
+			<h3>{{.HuoDong}}</h3>
+			<ul class="list-group">
+				{{range .DqsjHuoDong}}
+				<li class="list-group-item">{{.ShowId}}.{{.Content}}</li>
+				{{end}}
+			</ul>
+<div class="row" style="	padding-left: 10px;
+	padding-right: 10px;">
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#" class="thumbnail">
+						<img src="/static/img/dqsj/haixian1.jpg" alt="/static/img/dqsj/haixian1.jpg"></a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#" class="thumbnail">
+						<img src="/static/img/dqsj/haixian2.jpg" alt="/static/img/dqsj/haixian2.jpg"></a>
+				</div>
+			</div>
+
+			<div class="row" style="	padding-left: 10px;
+	padding-right: 10px;">
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#" class="thumbnail">
+						<img src="/static/img/dqsj/small0.jpg" alt="/static/img/dqsj/small0.jpg"></a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#" class="thumbnail">
+						<img src="/static/img/dqsj/small1.jpg" alt="/static/img/dqsj/small1.jpg"></a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#" class="thumbnail">
+						<img src="/static/img/dqsj/small2.jpg" alt="/static/img/dqsj/small2.jpg"></a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#" class="thumbnail">
+						<img src="/static/img/dqsj/small3.jpg" alt="/static/img/dqsj/small3.jpg"></a>
+				</div>
+			</div>
+
+			<h3>店面概况</h3>
+			<p class="text-muted">
+				大签世界聘请高级腌肉技师亲手为您打造二十多种口味的串品，其料选材更是十分讲究，本店使用木炭均为菊花炭，它与机制木炭最大的区别在于每块菊花炭都是整棵的天人桦栗树，通过高温，真空，脱硫炭化而成，特点在于它燃烧时间长，无烟，燃烧时不产生有毒物质，最大限度保留肉的原汁原味，而肉类则选自天然无污染的西旗优质羊肉，纯天然绿色食品，而且还采用时下最流行的自助模式，自己动手烧制佳肴，味美更乐在其中，还设有六人雅间，20人包房，可供您选择，无论是家庭聚会，朋友相聚还是招待客户，商务宴请都是您最理想的选择，在家的价位，工薪的消费更让您无法挑剔。
+			</p>
+
+			<p class="text-success">选料精，用料足，秉承最原始的口味，纯天然食材，碰撞您的味蕾，食后令您唇齿留香，流连忘返，让您高兴而来满意而归</p>
+
+			<p class="text-danger">此味只能天上有，人间能有几回尝</p>
+			<h4>地址：河东三中南门蓝景丽苑6号门市</h4>
+			<h4>电话：0470－829611 手机：15046593555</h4>
+		</div>
+
+		<div style="height: 60px;"></div>
+
+		<!-- 底部菜单栏-->
+		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<div class="container-fluid">
+				<div class="row">
+					{{if eq .Bpan true}}
+					<button class="col-xs-4 col-md-4 poll_home_but" onclick="onHome()"> <font class="poll_nav_font">主页</font>
+					</button>
+					<button class="col-xs-4 col-md-4 footer_div poll_home_but" onclick="onCai()"> <font class="poll_nav_font">菜单</font>
+					</button>
+					<button class="col-xs-4 col-md-4 footer_div poll_home_but" onclick="onPan()">
+						<font class="poll_nav_font">转盘</font>
+					</button>
+					{{else}}
+					<button class="col-xs-6 col-md-6 poll_home_but" onclick="onHome()">
+						<font class="poll_nav_font">主页</font>
+					</button>
+					<button class="col-xs-6 col-md-6 footer_div poll_home_but" onclick="onCai()">
+						<font class="poll_nav_font">菜单</font>
+					</button>
+					{{end}}
+				</div>
+			</div>
+		</nav>
+
+	</div>
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

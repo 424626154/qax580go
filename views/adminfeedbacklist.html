@@ -1,0 +1,23 @@
+{{template "adminheader.html" .}}
+<ul class="list-group">
+  {{range .Feedbacks}}
+  <li class="list-group-item">
+    <div>
+      <a href="/admin/feedbackcontent?op=con&id={{.Id}}">
+        <h1>{{.Info}}</h1>
+      </a>
+    </div>
+    {{ if eq .OpenId ""}}
+
+        {{else}}
+    <div>
+      <span > <font style="color: #000">{{ .NickeName}}</font>
+        <img src="{{.HeadImgurl}}" width="40px" height="40px">
+    </span>
+  </div>
+  {{ end}}
+  <div class="time_font">{{timeformat .Time}}</div>
+</li>
+{{end}}
+</ul>
+{{template "adminfooter.html" .}}

@@ -1,0 +1,95 @@
+{{template "rheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	function onLogin(){
+		var phone = document.getElementById("phone").value;
+    	var pwd = document.getElementById("pwd").value;
+    	if( phone == ""){
+    		showDialog("请输入正确的手机号");
+    		return;
+    	}
+    	if( pwd == ""){
+    		showDialog("请输入正确的密码");
+    		return;
+    	}
+    	var url = "/rinse/requestajax";
+    	var data = "rtype=login&phone="+phone+"&pwd="+pwd;
+    	requestAjax(url,data);
+	}
+
+	function showDialog(title){
+		 $("#dialog").show();
+		 $("#dialog_title").html(title); 
+	}
+	function hideDialog(){
+		$("#dialog").hide();
+	}
+	function requestAjax(url,data){
+		$.ajax({
+		   type: "POST",
+		   url: url,
+		   data: data,
+		   dataType : 'json',
+		   success: function(obj){
+		   	// alert(obj)
+		   	// alert(obj.rtype )
+		   	if (obj.rtype == "login"){
+		   			// alert(obj.errcode)
+		   		if(obj.errcode == 0){
+		   				// 跳转
+		   				// window.location.href="/rinse/home"
+			   				 var temp = document.createElement("form");        
+							    temp.action = "/rinse/home";        
+							    temp.method = "post";        
+							    temp.style.display = "none";  					      
+							 var opt = document.createElement("textarea");        
+							     opt.name = "phone";        
+							     opt.value = obj.phone;      
+							     temp.appendChild(opt);  
+							 var opt = document.createElement("textarea");        
+							     opt.name = "pwd";        
+							     opt.value = obj.phone;      
+							     temp.appendChild(opt); 						     
+							    document.body.appendChild(temp);        
+							    temp.submit();   
+							    return temp;
+		   		}else{
+					showDialog(obj.errmsg)
+		   		}
+		   	}
+		   }
+		});
+	}
+</script>
+<div class="weui_cells_title">登录</div>
+<div class="weui_cells weui_cells_form">
+	<div class="weui_cell">
+		<div class="weui_cell_hd">
+			<label class="weui_label">手机号</label>
+		</div>
+		<div class="weui_cell_bd weui_cell_primary">
+			<input class="weui_input" type="tel" placeholder="请输入手机号" id="phone"></div>
+	</div>
+	<div class="weui_cell">
+		<div class="weui_cell_hd">
+			<label class="weui_label">密码</label>
+		</div>
+		<div class="weui_cell_bd weui_cell_primary">
+			<input class="weui_input" type="tel" placeholder="请输入密码" id="pwd"></div>
+	</div>
+</div>
+
+<div class="weui_dialog_alert" id="dialog" style="display: none">
+	<div class="weui_mask"></div>
+	<div class="weui_dialog">
+		<div class="weui_dialog_hd"> <strong class="weui_dialog_title"><font id="dialog_title">dialog_info</font></strong> 
+		</div>
+		<div class="weui_dialog_ft">
+			<a href="javascript:void(0);" onclick="hideDialog()" class="weui_btn_dialog primary">确定</a>
+		</div>
+	</div>
+</div>
+
+<button class="weui_btn weui_btn_primary" onclick="onLogin()">登录</button>
+<button class="weui_btn weui_btn_default">取消</button>
+{{template "rfooter.html" .}}

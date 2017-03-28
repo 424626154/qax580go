@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	  <link rel="shortcut icon" href="/static/img/dqsjicon.jpg" />
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	  <!-- Stylesheets -->
+	  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+	  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+	  <title>大签世界</title>
+<body>
+<div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/dqsj/admin" id="title_font">
+          返回</a>
+       </div>
+   	</div>
+   </nav>
+<!---->
+<div>
+  <a type="button" class="btn btn-default" href="/dqsj/adminaddgg">添加广告</a>
+</div>
+<div style="height:4px"></div>
+<ul class="list-group">
+  {{range .Guanggaos}}
+  <li class="list-group-item">
+    {{if eq .Image ""}}
+         {{.Image}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .BImage true}}
+          内容中显示广告页
+        {{end}}
+    <div>
+        <h1>{{.Title}}</h1>
+    </div>
+    <div>{{.Content}}</div>
+    {{if eq .ImageItem0 ""}}
+         {{.ImageItem0}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .ImageItem0}}" alt="{{isImgPath .ImageItem0}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .ImageItem1 ""}}
+         {{.ImageItem1}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .ImageItem1}}" alt="{{isImgPath .ImageItem1}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .ImageItem2 ""}}
+         {{.ImageItem2}}
+        {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .ImageItem2}}" alt="{{isImgPath .ImageItem2}}" width="320px" height="auto"></div>
+    {{end}}
+        {{if eq .Blink true}}
+    <a href="{{ .Link}}">{{ .Link}}</a>
+    {{end}}
+    <div class="time_font">{{timeformat .Time}}</div>
+    {{if eq .State 0}}
+    <a class="btn btn-default" href="/dqsj/admingg?op=state&id={{.Id}}" >上线</a>
+    {{else}}
+    <a class="btn btn-info" href="/dqsj/admingg?op=state1&id={{.Id}}" >下线</a>
+    {{end}}
+    <a class="btn btn-danger" href="/dqsj/admingg?op=del&id={{.Id}}" >删除</a>
+     <a class="btn btn-danger" href="/dqsj/adminupggcon?id={{.Id}}" >修改内容</a>
+     <a  class="btn btn-danger" href="/dqsj/adminupggimg?id={{.Id}}" >修改图片</a>
+  </li>
+  {{end}}
+</ul>
+<!---->
+   </div>
+
+
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

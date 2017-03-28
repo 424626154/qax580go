@@ -1,0 +1,56 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            initData();
+        });
+function initData(){
+  document.getElementById("title_font").href="/admin/mall"
+  document.getElementById("title").value = {{.Commodity.Name}};
+  document.getElementById("info").value = {{.Commodity.Info}};
+  document.getElementById("money").value = {{.Commodity.Money}};
+}
+  function upCom(){
+    var title = document.getElementById("title").value;
+    var info = document.getElementById("info").value;
+    var money = document.getElementById("money").value;
+    if(title == ""){
+      alert("请输入标题");
+      return;
+    }
+    if(info == ""){
+      alert("请输入内容");
+      return;
+    }
+    if(money == ""){
+      alert("请输入金钱");
+      return;
+    }
+    var url = "/admin/upcommodityinfo?title="+title+"&info="+info+"&money="+money+"&id="+{{.Commodity.Id}};
+    // alert(url)
+    document.getElementById("add").action = url;
+     document.getElementById("add").method = "post";   
+     document.getElementById("add").enctype = "multipart/form-data";
+     document.getElementById("add").submit(); 
+  }
+</script>
+<form id = "add" name="add" class="form-inline" method="post" action="/admin/upcommodityinfo" enctype="multipart/form-data">
+  <div >
+    {{if eq .Commodity.Image ""}}
+      {{else}}
+    <img src="{{isImgPath .Commodity.Image}}" alt="{{isImgPath .Commodity.Image}}" width="320px" height="auto">{{end}}</div>
+  <div class="">
+    <label for="">名称</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="输入名称"></div>
+  <div class="">
+    <label for="">内容</label>
+    <textarea class="form-control" rows="5" placeholder="输入内容" id="info" name="info"></textarea>
+  </div>
+  <div class="">
+    <label for="">价格</label>
+    <textarea class="form-control" placeholder="输入价格" id="money" name="money"></textarea>
+  </div>
+  <button type="button" class="my_button my_gray" onclick="upCom();">修改</button>
+  <div></div>
+</form>
+{{template "adminfooter.html" .}}

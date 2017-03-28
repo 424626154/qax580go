@@ -1,0 +1,22 @@
+html,body {
+  height: 100%;
+}
+body{
+  background-color: #efeff4;
+}
+.rbody {
+  background: #efeff4;
+}
+.weui_tab_bd_item {
+  display: none;
+}
+.weui_tab_bd_item h3 {
+  padding: 45% 0 0;
+  text-align: center;
+  color: #888;
+  font-weight: normal;
+}
+.home_err_div{
+	text-align:center;
+	padding-top: 40px;
+}

@@ -1,0 +1,86 @@
+{{template "header.html" .}}
+<script type="text/javascript">
+  	function backToHome() {
+  		window.location.href = "/";
+  		return false;
+  	}
+
+  	function toVaild() {
+  		var email = document.getElementById("email");
+  		if (email.value.length == 0) {
+  			alert("请输入邮箱");
+  			return false;
+  		}
+
+  		var pwd = document.getElementById("pwd");
+  		if (pwd.value.length == 0) {
+  			alert("请输入密码");
+  			return false;
+  		}
+  		return true;
+  	}
+
+ function onLogin(){
+  	var email = document.getElementById("email");
+	var pwd = document.getElementById("pwd");
+	if (email.value.length == 0) {
+  			alert("请输入邮箱");
+  			return ;
+  	}
+	if (pwd.value.length == 0) {
+		alert("请输入密码");
+		return ;
+	}
+    var url = "/login?email="+email.value+"&email="+pwd.value+"&from="+{{.From}};
+    document.getElementById("formid").action = url;
+    document.getElementById("formid").method = "post";   
+    document.getElementById("formid").enctype = "multipart/form-data";
+    document.getElementById("formid").submit();
+}
+</script>
+<div style="background-color: #fff;padding : 10px ">
+	{{if eq .Alert ""}}
+    {{else}}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeErro()">
+	        <span aria-hidden="true">&times;</span>
+	      </button> <strong>登录失败</strong>
+	      {{.Alert}}
+	    </div>
+    {{end}}
+	<form id="formid" class="form-horizontal" method="POST" action="/login" onsubmit="return toVaild()">
+		<div class="form-group">
+			<label class="col-lg-4 control-label">用户名：</label>
+			<div class="col-lg-6">
+				<input id="email" class="form-control" name="email" placeholder="请输入邮箱"></div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-lg-4 control-label">密码：</label>
+			<div class="col-lg-6">
+				<input id="pwd" type="password" class="form-control" name="pwd" placeholder="请输入密码"></div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-lg-offset-4 col-lg-10">
+				<div class="checkbox">
+					<label>
+						<input name="autoLogin" type="checkbox">下次自动登录</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+					<button type="button" class="btn btn-default" onclick="onLogin();">登录</button>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-offset-4 col-lg-10" class="">
+				<div style="float: right;padding-right: 10px">
+					<a style="color: #000000" href="/forgetpwd">忘记密码</a>  <a style="color: #CC0033" href="/register">立即注册</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{{template "footer.html" .}}

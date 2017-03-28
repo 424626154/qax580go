@@ -1,0 +1,43 @@
+{{template "header.html" .}}
+<div id="cont_bg">
+  {{if eq .Guanggao.BImage true}}
+    {{if eq .Guanggao.Image ""}}
+            {{.Guanggao.Image}}
+          {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.Image}}" alt="{{isImgPath .Guanggao.Image}}" width="320px" height="auto"></div>
+  {{end}}
+  {{end}}
+  <div > <font class="title_fnot" >{{.Guanggao.Title}}</font>
+  </div>
+  <div class="cont_info"> <font class="info_fnot">{{.Guanggao.Content}}</font>
+  </div>
+  {{if eq .Guanggao.ImageItem0 ""}}
+         {{.Guanggao.ImageItem0}}
+        {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.ImageItem0}}" alt="{{isImgPath .Guanggao.ImageItem0}}" width="320px" height="auto"></div>
+  {{end}}
+        {{if eq .Guanggao.ImageItem1 ""}}
+         {{.Guanggao.ImageItem1}}
+        {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.ImageItem1}}" alt="{{isImgPath .Guanggao.ImageItem1}}" width="320px" height="auto"></div>
+  {{end}}
+        {{if eq .Guanggao.ImageItem2 ""}}
+         {{.Guanggao.ImageItem2}}
+        {{else}}
+  <div class="image_fnot" >
+    <img src="{{isImgPath .Guanggao.ImageItem2}}" alt="{{isImgPath .Guanggao.ImageItem2}}" width="320px" height="auto"></div>
+  {{end}}
+  <div class="time_font">{{timeformat .Guanggao.Time}}</div>
+  {{if eq .Guanggao.Blink true}}
+  <a href="{{ .Guanggao.Link}}">阅读原文</a>
+  {{end}}
+</div>
+
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>
+{{template "footer.html" .}}

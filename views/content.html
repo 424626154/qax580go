@@ -1,0 +1,61 @@
+{{template "header.html" .}}
+<script type="text/javascript">
+    function onclikHelp(){
+      var url = "/content?op=help&id="+{{.Id}};
+              // alert(url)
+     document.getElementById("onclikhelp").action = url;
+     document.getElementById("onclikhelp").method = "post";   
+     document.getElementById("onclikhelp").enctype = "multipart/form-data"
+     document.getElementById("onclikhelp").submit(); 
+    }
+</script>
+
+<div id="cont_bg">
+  <div > <font class="title_fnot" >{{.Post.Title}}</font>
+  </div>
+  <div class="cont_info"> <font class="info_fnot">{{.Post.Info}}</font>
+  </div>
+  {{if eq .Post.Image ""}}
+            {{.Post.Image}}
+          {{else}}
+  <div id="image_fnot" >
+    <img src="{{isImgPath .Post.Image}}" alt="{{isImgPath .Post.Image}}" width="320px" height="auto"></div>
+  {{end}}
+  <div id="my_label">
+    <span class="label label-success">已审核</span>
+    {{if eq .Post.Label 1}}
+    <span class="label label-primary">个人</span>
+    {{end}} 
+    {{if eq .Post.Label 2}}
+    <span class="label label-primary">官方</span>
+    {{end}}
+    {{if eq .Post.City ""}}
+    {{else}}
+    <span class="label label-info">{{.Post.City}}</span>
+    {{end}}
+  </div>
+  {{if eq .Post.Bfrom true}}
+  <div class="from_div">
+    <a class="from_a" href="{{.Post.Fromurl}}">来自{{.Post.Fromshow}}</a>
+  </div>
+  {{end}}
+  <form id="onclikhelp"class="form-inline" method="post" action="/admin/upwxnumimg" enctype="multipart/form-data">
+      <div>
+
+    {{if eq .HelpState 0}}
+    <button class="label label-default" onclick="onclikHelp()">对我有帮助 {{.HelpNum}}</button>   
+    {{else}}
+        <span class="label label-danger">对我有帮助 {{.HelpNum}}</span>
+    {{end}}
+  </div>
+  </form>
+  <div class="time_font">{{timeformat .Post.Time}}</div>
+
+
+</div>
+
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>
+{{template "footer.html" .}}

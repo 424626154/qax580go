@@ -1,0 +1,71 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript">
+    function onclikMoney(id){
+      var url = "/admin/upusermoney?id="+id;
+              // alert(url)
+     // document.getElementById("onclikmoney").action = url;
+     // document.getElementById("onclikmoney").method = "post";   
+     // document.getElementById("onclikmoney").enctype = "multipart/form-data"
+     // document.getElementById("onclikmoney").submit(); 
+     window.location.href=url;
+    }
+    function onclikUserInfo(OpenId){
+      var url = "/admin/upwxuserinfo?openid="+OpenId;
+              // alert(url)
+     // document.getElementById("onclikmoney").action = url;
+     // document.getElementById("onclikmoney").method = "post";   
+     // document.getElementById("onclikmoney").enctype = "multipart/form-data"
+     // document.getElementById("onclikmoney").submit(); 
+     // window.location.href=url;
+     var temp = document.createElement("form");
+     temp.action = url;
+     temp.method = "post";   
+     temp.enctype = "multipart/form-data"
+     temp.submit(); 
+    }
+     function onclikMoneyInfo(OpenId){
+      var url = "/admin/moneyinfo?openid="+OpenId;
+              // alert(url)
+     // document.getElementById("onclikmoney").action = url;
+     // document.getElementById("onclikmoney").method = "post";   
+     // document.getElementById("onclikmoney").enctype = "multipart/form-data"
+     // document.getElementById("onclikmoney").submit(); 
+     // window.location.href=url;
+     var temp = document.createElement("form");
+     temp.action = url;
+     temp.method = "post";   
+     temp.enctype = "multipart/form-data"
+     temp.submit(); 
+    }
+        function onclikDelete(OpenId){
+       var url = "/admin/wxuserlist?op=del&openid="+OpenId;
+       var temp = document.createElement("form");
+     temp.action = url;
+     temp.method = "post";   
+     temp.enctype = "multipart/form-data"
+     temp.submit(); 
+    }
+    function onclikImport(){
+       var url = "/admin/importuser";
+       window.location.href=url;
+    }
+
+</script>
+<div>
+  <button class="btn btn-default" onclick="onclikImport()">导入微信用户</button>
+</div>
+<ul class="list-group">
+  {{range .WxUsers}}
+  <li class="list-group-item">
+    <div>{{.NickeName}}</div>
+    <div>{{.Subscribe}}</div>
+    <img src="{{.HeadImgurl}}" width="40px" height="40px">
+  <div>帮帮币 {{.Money}}</div>
+  <button class="btn btn-default" onclick="onclikUserInfo({{.OpenId}})">修改用户信息</button>
+  <button class="btn btn-default" onclick="onclikMoney({{.Id}})">修改金钱</button>
+  <button class="btn btn-default" onclick="onclikMoneyInfo({{.OpenId}})">金钱记录</button>
+  <button class="btn btn-default" onclick="onclikDelete({{.OpenId}})">删除</button>
+</li>
+{{end}}
+</ul>
+{{template "adminfooter.html" .}}

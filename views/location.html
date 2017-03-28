@@ -1,0 +1,18 @@
+{{template "header.html" .}}
+<div id="cont_bg">
+	{{if eq .ErrorCode 0}}
+	<div>{{.Today.City}}</div>
+	<div>{{.Today.DateY}}</div>
+	<div>{{.Today.Week}}</div>
+	<div>今日温度：{{.Today.Temperature}}</div>
+	<div>今日天气：{{.Today.Weather}}</div>
+	<div>{{.Today.Wind}}</div>
+	<div>穿衣指数：{{.Today.Dressingindex}}</div>
+	<div>{{.Today.DressingAdvice}}</div>
+	<div>紫外线强度：{{.Today.UvIndex}}</div>
+	<div>洗车指数：{{.Today.WashIndex}}</div>
+	<div>旅游指数：{{.Today.WravelIndex}}</div>
+	<div>晨练指数：{{.Today.WxerciseIndex}}</div>
+	{{ end}}
+</div>
+{{template "trainfooter.html" .}}

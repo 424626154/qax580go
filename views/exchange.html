@@ -1,0 +1,33 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+           document.getElementById("title_font").href="/mymoney"
+        });
+</script>
+<ul class="list-group">
+  {{range .ShowOrders}}
+  <li class="list-group-item">
+    {{if eq .Commodity.Image ""}}
+     {{ .Commodity.Image}}
+     {{else}}
+    <div id="image_fnot" >
+      <img src="{{isImgPath .Commodity.Image}}" alt="{{isImgPath .Commodity.Image}}" width="320px" height="auto"></div>
+    {{end}}
+    <div>
+      <h1>{{.Commodity.Name}}</h1>
+    </div>
+    <div>{{.Commodity.Info}}</div>
+    <div>价格:{{.Commodity.Money}}帮帮币</div>
+    <div>
+    {{if eq .State 0}}
+    <span class="label label-danger">待兑换</span>
+    {{else}}
+    <span class="label label-success">已兑换</span>
+    {{end}}
+  </div>
+   <div class="time_font">{{timeformat1 .Time1}}</div>
+  </li>
+  {{end}}
+</ul>
+{{template "footer.html" .}}

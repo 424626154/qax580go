@@ -1,0 +1,38 @@
+{{template "header.html" .}}
+<div class="uplode_bg">
+  <form class="form-inline" method="post" action="/recommend?op=rec">
+    <div class="body_right">
+      <button type="submit" class="my_button my_gray">提交</button>
+    </div>
+  </form>
+</div>
+<ul class="list-group">
+  {{range .Posts}}
+  <a id="list_bg" href="/content?op=con&id={{.Id}}" class="list-group-item">
+    <div  id="list_item">
+      <div></div>
+      <div> <font  class="title_fnot" >{{.Title}}</font>
+      </div>
+      <div class="cont_info"> <font class="info_fnot" >{{.Info}}</font>
+      </div>
+      {{if eq .Image ""}}
+              {{.Image}}
+          {{else}}
+      <div id="image_fnot" >
+        <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}" width="auto" height="60px"></div>
+      {{end}}
+      <div id="my_label">
+        <span class="label label-success">已审核</span>
+        {{if eq .Label 1}}
+        <span class="label label-primary">个人</span>
+        {{end}} 
+          {{if eq .Label 2}}
+        <span class="label label-primary">官方</span>
+        {{end}}
+      </div>
+      <div class="time_font">{{timeformat .Time}}</div>
+    </div>
+  </a>
+  {{end}}
+</ul>
+{{template "footer.html" .}}

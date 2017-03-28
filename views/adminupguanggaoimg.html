@@ -1,0 +1,108 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+           document.getElementById("title_font").href="/admin/guanggaos"
+           document.getElementById("bimg").checked = {{.Guanggao.BImage}};
+        });
+var img_path = "";
+var itm0_path = "";
+var itm1_path = "";
+var itm2_path = "";
+  function onclikBtn(){
+    var bimg = document.getElementById("bimg").checked;
+    var bitem0 = document.getElementById("bitem0").checked
+    var bitem1 = document.getElementById("bitem1").checked
+    var bitem2 = document.getElementById("bitem2").checked
+    if(img_path == ""&&itm0_path == ""&&itm1_path == ""&&itm2_path == ""&&{{.Guanggao.BImage}} == bimg&&bitem0 ==false &&bitem1 == false &&bitem2 == false){
+      alert("请至少修改一项");
+      return;
+    }
+    var originalitem0 = {{.Guanggao.ImageItem0}};
+    if(bitem0){
+      originalitem0 = "";
+    }
+    var originalitem1 = {{.Guanggao.ImageItem1}};
+    if(bitem1){
+      originalitem1 = "";
+    }
+    var originalitem2 = {{.Guanggao.ImageItem2}};
+    if(bitem2){
+      originalitem2 = "";
+    }
+    var url = "/admin/upguanggaoimg?id="+{{.Guanggao.Id}}+"&bimg="+bimg+"&originalimg="+{{.Guanggao.Image}}+"&originalitem0="+originalitem0+"&originalitem1="+originalitem1+"&originalitem2="+originalitem2;
+    // alert(url)
+     document.getElementById("upimg").action = url;
+     document.getElementById("upimg").method = "post";   
+     document.getElementById("upimg").enctype = "multipart/form-data"
+     document.getElementById("upimg").submit(); 
+  }
+    function setImage(obj){  
+    var value = obj.value;  
+    img_path = value;
+  } 
+      function setItem0(obj){  
+    var value = obj.value;  
+    itm0_path = value;
+  } 
+      function setItem1(obj){  
+    var value = obj.value;  
+    itm1_path = value;
+  } 
+      function setItem2(obj){  
+    var value = obj.value;  
+    itm2_path = value;
+  } 
+</script>
+<form id="upimg" class="form-inline" method="post" action="/admin/upguanggao" enctype="multipart/form-data">
+  <div class="my_select_img">
+    <div>
+      <h5>广告主页：尺寸为 450*250</h5>
+    </div>
+    {{if eq .Guanggao.Image ""}}
+      {{else}}
+    <img src="{{isImgPath .Guanggao.Image}}" alt="{{isImgPath .Guanggao.Image}}" width="320px" height="auto">
+    {{end}}
+    <input type="file" class="form-control my_file" name="image" id="image" accept="image/*" onchange="setImage(this)">
+    <label>
+      <input type="checkbox" name="bimg" id="bimg">正文显示</label>
+  </div>
+  <div class="my_select_img">
+    <div>
+      <h5>详情图片0</h5>
+    </div>
+    {{if eq .Guanggao.ImageItem0 ""}}
+         {{.Guanggao.ImageItem0}}
+        {{else}}
+    <img src="{{isImgPath .Guanggao.ImageItem0}}" alt="{{isImgPath .Guanggao.ImageItem0}}" width="320px" height="auto">
+    {{end}}
+    <div>
+      <input type="checkbox" name="bitem0" id="bitem0">删除详情图片0</div>
+    <input type="file" class="form-control my_file" name="imageitem0" id="imageitem0" accept="image/*" onchange="setItem0(this)"></div>
+  <div class="my_select_img">
+    <div>
+      <h5>详情图片1</h5>
+    </div>
+    {{if eq .Guanggao.ImageItem1 ""}}
+         {{.Guanggao.ImageItem1}}
+        {{else}}
+    <img src="{{isImgPath .Guanggao.ImageItem1}}" alt="{{isImgPath .Guanggao.ImageItem1}}" width="320px" height="auto" >
+    {{end}}
+    <div>
+      <input type="checkbox" name="bitem1" id="bitem1">删除详情图片1</div>
+    <input type="file" class="form-control my_file" name="imageitem1" id="imageitem1" accept="image/*"  onchange="setItem1(this)"></div>
+  <div class="my_select_img">
+    <div>
+      <h5>详情图片2</h5>
+    </div>
+    {{if eq .Guanggao.ImageItem2 ""}}
+         {{.Guanggao.ImageItem2}}
+        {{else}}
+    <img src="{{isImgPath .Guanggao.ImageItem2}}" alt="{{isImgPath .Guanggao.ImageItem2}}" width="320px" height="auto">
+    {{end}}
+    <div>
+      <input type="checkbox" name="bitem2" id="bitem2">删除详情图片2</div>
+    <input type="file" class="form-control my_file" name="imageitem2" id="imageitem2" accept="image/*"  onchange="setItem2(this)"></div>
+  <button type="button" class="my_button my_gray" onclick="onclikBtn();">修改图片</button>
+</form>
+{{template "adminfooter.html" .}}

@@ -1,0 +1,16 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/mymoney"
+        });
+	</script>
+<div id="cont_bg">
+  <ul class="qax_list_bg">
+    {{range .UserMoneys}}
+    <div class="cont_info"> <font class="info_fnot">{{moneyrecord .MoneyType}} {{moneyrecordinfo .MoneyType .MoneyType}}</font></div>
+      <div class="time_font">{{timeformat1 .Time}}</div>
+      {{end}}
+    </ul>
+  </div>
+{{template "footer.html" .}}

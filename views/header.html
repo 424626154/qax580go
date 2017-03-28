@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="庆安，庆安县，免费信息发布">
+  <meta name="description" content="有情怀的免费信息发布网站">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <link rel="shortcut icon" href="/static/img/logo32.png" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Stylesheets -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/static/css/mycss.css">
+  <title>咱这580</title>
+</head>
+<body id="header_body">
+  <div style="height:60px;padding:15px">
+    <a id="title_font" href="/" style="color:#fff; font-size:20px ;text-decoration:none"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 咱这580</a>
+    {{ if .isLogin}}
+    <span style="float:right "> 
+      <h5 style="
+            color: #ffffff ;
+            width:80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;">
+            {{.User.Name}}
+        </h5>
+   <!--    <img src="{{.User.Head}}" width="40px" height="40px"> -->
+  </span>
+  {{ end}}
+</div>
