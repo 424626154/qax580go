@@ -6,6 +6,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
 	"gopkg.in/gomail.v2"
 	"qax580go/models"
 	"strings"
@@ -36,7 +37,21 @@ func (c *ForgetpwdController) Post() {
 		} else {
 			username := user.Name
 			verify := user.Verify
-			url := "http://127.0.0.1:8080/forgetpwdverify"
+			url := ""
+			isdebug := "flase"
+			iniconf, err := config.NewConfig("json", "conf/myconfig.json")
+			if err != nil {
+				beego.Error(err)
+			} else {
+				isdebug = iniconf.String("qax580::isdebug")
+				if isdebug == "true" {
+					url = iniconf.String("qax580::emailurltest") + "forgetpwdverify"
+				} else {
+					url = iniconf.String("qax580::emailurl") + "forgetpwdverify"
+				}
+
+			}
+			beego.Debug("emailurl:", url)
 			verifurl := url + "?verify=" + verify
 			sendForgetEmail(email, username, verifurl)
 			c.Data["isTips"] = "请登录邮箱修改密码"

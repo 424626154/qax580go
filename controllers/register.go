@@ -7,6 +7,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
 	"github.com/satori/go.uuid"
 	"gopkg.in/gomail.v2"
 	"qax580go/models"
@@ -41,7 +42,21 @@ func (c *RegisterController) Post() {
 			if err != nil {
 				beego.Error(err)
 			}
-			url := "http://127.0.0.1:8080/registerverify"
+			url := ""
+			isdebug := "flase"
+			iniconf, err := config.NewConfig("json", "conf/myconfig.json")
+			if err != nil {
+				beego.Error(err)
+			} else {
+				isdebug = iniconf.String("qax580::isdebug")
+				if isdebug == "true" {
+					url = iniconf.String("qax580::emailurltest") + "registerverify"
+				} else {
+					url = iniconf.String("qax580::emailurl") + "registerverify"
+				}
+
+			}
+			beego.Debug("emailurl:", url)
 			verifurl := url + "?verify=" + verify
 			sendEmail(email, username, verifurl)
 			c.Data["isTips"] = "请登录邮箱验证"
