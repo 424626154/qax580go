@@ -76,6 +76,7 @@ func sendEmail(email string, username string, verifurl string) {
 				<html>
 				<body>
 				<h3>
+				点击链接完成您的注册:
 				<a href="[TEXT]">[TEXT]</a>
 				</h3>
 				</body>

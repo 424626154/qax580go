@@ -70,6 +70,7 @@ func sendForgetEmail(email string, username string, verifurl string) {
 				<html>
 				<body>
 				<h3>
+				点击链接修改您的密码：
 				<a href="[TEXT]">[TEXT]</a>
 				</h3>
 				</body>

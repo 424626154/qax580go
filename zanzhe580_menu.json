@@ -1,0 +1,91 @@
+{
+        "button": [
+            {
+                "name": "信息平台", 
+                "sub_button": [
+                    {
+                        "type": "view", 
+                        "name": "咱这580", 
+                        "url": "http://www.zanzhe580.com", 
+                        "sub_button": [ ]
+                    },
+                    {
+                        "type": "view", 
+                        "name": "咱这微平台", 
+                        "url": "http://www.zanzhe580.com/wpt/home", 
+                        "sub_button": [ ]
+                    }
+                ]
+            }, 
+            {
+                "name": "生活助手", 
+                "sub_button": [
+                    {
+                        "type": "click", 
+                        "name": "今日580", 
+                        "key": "today", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "view", 
+                        "name": "今日天气", 
+                        "url": "http://www.zanzhe580.com/weather", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "view", 
+                        "name": "火车票查询", 
+                        "url": "http://www.zanzhe580.com/traintickets", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "view", 
+                        "name": "车辆违章查询", 
+                        "url": "http://www.zanzhe580.com/querypeccancy", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "view", 
+                        "name": "快递查询", 
+                        "url": "http://www.zanzhe580.com/kuaidi", 
+                        "sub_button": [ ]
+                    }
+                ]
+            }, 
+            {
+                "name": "更多", 
+                "sub_button": [
+                    {
+                        "type": "view", 
+                        "name": "一元快洗", 
+                        "url": "http://mp.weixin.qq.com/s?__biz=MzIwMzE5MzQyMw==&mid=402988111&idx=2&sn=3763ebe663ba3745d39a6800e5dde5e6#rd", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "view", 
+                        "name": "兰溪信息网", 
+                        "url": "http://lanxixian.com/wap/fabu.asp", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "view", 
+                        "name": "580部落", 
+                        "url": "http://s.p.qq.com/pub/jump?d=AAAUkV9k", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "view", 
+                        "name": "意见反馈", 
+                        "url": "http://www.zanzhe580.com/feedback", 
+                        "sub_button": [ ]
+                    }, 
+                    {
+                        "type": "click", 
+                        "name": "联系我们", 
+                        "key": "about", 
+                        "sub_button": [ ]
+                    }
+                ]
+            }
+        ]
+    }
