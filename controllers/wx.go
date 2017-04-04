@@ -26,7 +26,7 @@ const (
 	null_info1     = "未搜索到有关&的信息"
 	subscribe_info = "欢迎关注咱这580，我们正在努力成为一个有情怀的免费信息发布平台，为大家服务"
 	about_info     = "【客服服务】\n关注我们\n公众号:qax580\n微信:qax580kf\n腾讯微博:庆安兄弟微盟\nQQ : 2063883729\n邮箱：qaxiongdiweimeng@163.com"
-	content_url    = "http://www.baoguangguang.cn/content?op=con&id=s%"
+	content_url    = "http://www.zanzhe580.com//content?op=con&id=s%"
 	jieshao_info   = "【帮助】\n你好，咱这580是免费的信息发布平台，在这里您可以发布信息也可以搜索相关信息，相关功能在功能菜单中"
 	function_info  = "【帮助】\n发布信息－》更多－》发布信息，意见反馈－》更多－》意见反馈"
 )
