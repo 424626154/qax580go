@@ -6,6 +6,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"qax580go/models"
+	"strings"
 )
 
 type ContentController struct {
@@ -14,6 +15,31 @@ type ContentController struct {
 
 func (c *ContentController) Get() {
 	openid := getContentCookie(c)
+	splat := c.Ctx.Input.Param(":splat")
+	if len(splat) > 0 {
+		result := strings.Index(splat, ".html")
+		// beego.Debug("result:", result)
+		if result > 0 {
+			id := string([]byte(splat)[:result])
+			beego.Debug("result:", result, "id:", id)
+			// id = c.Input().Get("id")
+			post, err := models.GetOnePost(id)
+			if err != nil {
+				beego.Error(err)
+			}
+			beego.Debug("id :", id)
+			c.Data["Id"] = id
+			c.Data["Post"] = post
+			beego.Debug("is con " + post.Title)
+			help_num, err := models.GatPostHelpNum(id)
+			c.Data["HelpNum"] = help_num
+			state, err := models.GatPaseHelpState(id, openid)
+			c.Data["HelpState"] = state
+			c.TplName = "content.html"
+			return
+		}
+	}
+	beego.Debug("get op splat:---------------", splat)
 	op := c.Input().Get("op")
 	beego.Debug("get op :---------------", op)
 	switch op {

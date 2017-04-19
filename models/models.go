@@ -735,7 +735,7 @@ func RegisterDB() {
 		isdebug = iniconf.String("qax580::isdebug")
 	}
 	if isdebug == "true" {
-		orm.RegisterDataBase("default", "mysql", "root:@/qax580?charset=utf8")
+		orm.RegisterDataBase("default", "mysql", "root:890503@/qax580?charset=utf8")
 		beego.Debug("root:@/qax580?charset=utf8")
 	} else {
 		orm.RegisterDataBase("default", "mysql", "root:sbb890503@/qax580go?charset=utf8")

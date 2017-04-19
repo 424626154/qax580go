@@ -3,6 +3,18 @@
 <script type="text/javascript" src="/static/js/bootstrap-paginator.min.js"></script>
 <!--广告栏-->
 <script type="text/javascript">
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
   $(document).ready(function(){
            $('#myCarousel').carousel({
               interval: 4000
@@ -176,7 +188,7 @@ function onBack(){
     </div>
     <ul class="qax_list_bg">
       {{range .Posts}}
-      <a href="/content?op=con&id={{.Id}}" style="text-decoration:none;">
+      <a href="/content/{{.Id}}.html" style="text-decoration:none;">
         <div  id="list_item">
           <!--list_item-->
           <div class="list_item_1">

@@ -10,7 +10,8 @@ func init() {
 	beego.Router("/", &controllers.HomeController{})           //主页
 	beego.Router("/uplode", &controllers.UplodeController{})   //发布消息
 	beego.Router("/content", &controllers.ContentController{}) //消息详情
-	beego.Router("/login", &controllers.LoginController{})     //登录
+	beego.Router("/content/*", &controllers.ContentController{})
+	beego.Router("/login", &controllers.LoginController{}) //登录
 	beego.Router("/register", &controllers.RegisterController{})
 	beego.Router("/registerverify", &controllers.RegisterVerifyController{}) //注册
 	beego.Router("/usercenter", &controllers.UserCenterController{})
