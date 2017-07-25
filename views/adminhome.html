@@ -1,8 +1,8 @@
 {{template "adminheader.html" .}}
 <div class="btn-group" role="group" aria-label="...">
 <!--   <a type="button" class="btn btn-default" href="/admin/uplode">发布</a> -->
-<!--   <a type="button" class="btn btn-default" href="/admin/wxlist">推荐公众号</a>
-  <a type="button" class="btn btn-default" href="/admin/weixinnumberlist">推荐微信号</a> -->
+<!--   <a type="button" class="btn btn-default" href="/admin/wxofficials">推荐公众号</a>
+  <a type="button" class="btn btn-default" href="/admin/wechats">推荐微信号</a> -->
  <!--  <a type="button" class="btn btn-default" href="/admin/feedbacklist">意见反馈</a> -->
   <!-- <a type="button" class="btn btn-default" href="/admin/adminlist">管理员管理</a> -->
   <!-- <a type="button" class="btn btn-default" href="/admin/wxuserlist">微信用户</a> -->
@@ -54,8 +54,8 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="/admin/wxlist">推荐公众号</a></li>
-    <li><a href="/admin/weixinnumberlist">推荐微信号</a></li>
+    <li><a href="/admin/wxofficials">推荐公众号</a></li>
+    <li><a href="/admin/wechats">推荐微信号</a></li>
     <li><a href="/wpt/adminhome">微平台</a></li>
     <li><a href="/admin/shanghus">商户管理</a></li>
   </ul>
@@ -128,7 +128,7 @@
   <div>
     {{if eq .Label 1}}
     <span class="label label-primary">个人</span>
-    {{end}} 
+    {{end}}
       {{if eq .Label 2}}
     <span class="label label-primary">官方</span>
     {{end}}
@@ -169,8 +169,8 @@
 <script type="text/javascript" src="/static/js/bootstrap-paginator.min.js"></script>
 <div style="text-align:center">
 <div id="example"></div>
-<script type='text/javascript'>  
-          var options = {  
+<script type='text/javascript'>
+          var options = {
               currentPage: {{.CurrentPage}},//当前页
               totalPages: {{.CotalPages}},//总页数
               numberofPages: {{.NumberofPages}},//显示的页数
@@ -187,13 +187,13 @@
                   case "page":
                     return page;
                 }
-              },  
-              onPageClicked: function (e, originalEvent, type, page) {  
-                  // alert("type:" + type + ",Page:" + page);  
+              },
+              onPageClicked: function (e, originalEvent, type, page) {
+                  // alert("type:" + type + ",Page:" + page);
                   window.location.href = "?type="+type+"&page="+page
-              }  
-          }  
-          $('#example').bootstrapPaginator(options);  
+              }
+          }
+          $('#example').bootstrapPaginator(options);
   </script>
 </div>
 <!--分页控件-->

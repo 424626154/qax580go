@@ -1,0 +1,45 @@
+{{template "adminheader.html" .}}
+<div class="list_but">
+  <a class="btn btn-default" href="/admin/addwxofficial">添加公众号</a>
+</div>
+<div class="container">
+<div class="row">
+  {{range .Wxnums}}
+  <div class="col-sm-6 col-md-4 thumbnail">
+    {{if eq .Image ""}}
+              {{.Image}}
+            {{else}}
+    <img class="admin_img" src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}">
+    {{end}}
+    <div class="caption">
+      <h3>{{.Title}}</h3>
+      <p>{{.Introduce}}</p>
+      <p>公众号:{{.Number}}</p>
+      {{if eq .Evaluate ""}}
+            {{else}}
+      <p>评价:{{.Evaluate}}</p>
+      {{end}}
+    </div>
+    <div class="btn-group" role="group" aria-label="">
+    {{if eq .State 0}}
+    <a href="/admin/wxofficials?op=state&id={{.Id}}" type="button" class="btn btn-default">上线</a>
+    {{else}}
+    <a href="/admin/wxofficials?op=state1&id={{.Id}}" type="button" class="btn btn-success">下线</a>
+      {{if eq .IsHome true}}
+      <a href="/admin/wxofficials?op=ishome&show=false&id={{.Id}}" type="button" class="btn btn-success">取消首页显示</a>
+      {{else}}
+      <a href="/admin/wxofficials?op=ishome&show=true&id={{.Id}}" type="button" class="btn btn-default">首页显示</a>
+      {{end}}
+    {{end}}
+    </div>
+    <div class="btn-group" role="group" aria-label="">
+      <a href="/admin/wxofficials?op=upinfo&id={{.Id}}" type="button" class="btn btn-warning">修改内容</a>
+      <a href="/admin/wxofficials?op=upimg&id={{.Id}}" type="button" class="btn btn-warning">修改图片</a>
+      <a href="/admin/wxofficials?op=del&id={{.Id}}" type="button" class="btn btn-danger">删除</a>
+    </div>
+    <div >{{timeformat .Time}}</div>
+  </div>
+  {{end}}
+</div>
+</div>
+{{template "adminfooter.html" .}}

@@ -4,8 +4,10 @@ package controllers
 *个人中心
  */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type UserCenterController struct {
@@ -31,7 +33,7 @@ func (c *UserCenterController) Post() {
 
 func initUserCenter(c *UserCenterController) (*models.User, bool) {
 	isLogin := false
-	openid := c.Ctx.GetCookie(COOKIE_UID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_UID)
 	muser := &models.User{}
 	beego.Debug(openid)
 	if len(openid) != 0 {

@@ -4,9 +4,11 @@ package controllers
 信息详情
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
 type ContentController struct {
@@ -87,7 +89,7 @@ func (c *ContentController) Post() {
 					if err != nil {
 						beego.Error(err)
 					} else {
-						_, err = models.AddUserMoneyRecord(post.OpenId, MONEY_BELIKE_SUM, MONEY_BELIKE)
+						_, err = models.AddUserMoneyRecord(post.OpenId, qutil.MONEY_BELIKE_SUM, qutil.MONEY_BELIKE)
 					}
 				}
 				url := "/content?op=con&id=" + id_s
@@ -102,7 +104,7 @@ func (c *ContentController) Post() {
 }
 func getContentCookie(c *ContentController) string {
 	isUser := false
-	openid := c.Ctx.GetCookie(COOKIE_WX_OPENID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_WX_OPENID)
 	beego.Debug("------------openid--------")
 	beego.Debug(openid)
 	if len(openid) != 0 {

@@ -4,8 +4,10 @@ package controllers
 联系我们
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type ContactusController struct {
@@ -23,7 +25,7 @@ func (c *ContactusController) Post() {
 
 func getConCookie(c *ContactusController) string {
 	isUser := false
-	openid := c.Ctx.GetCookie(COOKIE_WX_OPENID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_WX_OPENID)
 	beego.Debug(openid)
 	if len(openid) != 0 {
 		wxuser, err := models.GetOneWxUserInfo(openid)

@@ -5,11 +5,13 @@ package controllers
 */
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
 	"io/ioutil"
 	"net/http"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
 type ImportUser struct {
@@ -58,7 +60,7 @@ func (c *AdminImportUserController) Get() {
 						if err != nil {
 							beego.Error(err)
 						} else {
-							_, err = models.AddUserMoneyRecord(user.OpenId, MONEY_SUBSCRIBE_SUM, MONEY_SUBSCRIBE)
+							_, err = models.AddUserMoneyRecord(user.OpenId, qutil.MONEY_SUBSCRIBE_SUM, qutil.MONEY_SUBSCRIBE)
 						}
 					}
 

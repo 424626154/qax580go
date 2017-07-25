@@ -2,15 +2,18 @@ package controllers
 
 import (
 	// "fmt"
-	"github.com/astaxie/beego"
 	"io/ioutil"
+
+	"github.com/astaxie/beego"
 	// "log"
 	"encoding/json"
 	"net/http"
 	// "net/url"
-	"github.com/astaxie/beego/config"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
+
+	"github.com/astaxie/beego/config"
 )
 
 type WxUplodeController struct {
@@ -152,5 +155,5 @@ func getUplodeUserInfo(access_toke, openid string, c *WxUplodeController) {
  */
 func saveUplodeFromType(from string, c *WxUplodeController) {
 	maxAge := 1<<31 - 1
-	c.Ctx.SetCookie(COOKIE_FROM_TYPE, from, maxAge, "/")
+	c.Ctx.SetCookie(qutil.COOKIE_FROM_TYPE, from, maxAge, "/")
 }

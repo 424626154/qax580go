@@ -4,8 +4,10 @@ package controllers
 *注册验证
  */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type RegisterVerifyController struct {
@@ -26,7 +28,7 @@ func (c *RegisterVerifyController) Get() {
 				beego.Error(err)
 			}
 			maxAge := 1<<31 - 1
-			c.Ctx.SetCookie(COOKIE_UID, user.Uid, maxAge, "/")
+			c.Ctx.SetCookie(qutil.COOKIE_UID, user.Uid, maxAge, "/")
 			c.Redirect("/", 302)
 			return
 		} else {

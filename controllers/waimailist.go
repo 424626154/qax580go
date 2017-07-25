@@ -4,8 +4,10 @@ package controllers
 外卖列表
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type WaimaiListController struct {
@@ -30,7 +32,7 @@ func (c *WaimaiListController) Post() {
 
 func getWaimaiListCookie(c *WaimaiListController) string {
 	isUser := false
-	openid := c.Ctx.GetCookie(COOKIE_WX_OPENID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_WX_OPENID)
 	if len(openid) != 0 {
 		wxuser, err := models.GetOneWxUserInfo(openid)
 		if err != nil {

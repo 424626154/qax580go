@@ -4,11 +4,13 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-	"github.com/astaxie/beego"
 	"path"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
 )
 
 type WptController struct {
@@ -26,12 +28,12 @@ func (c *WptController) Home() {
 		beego.Debug("WptController Home Post")
 	}
 	initWptUser(c)
-	objs, err := models.GetAllWptTJ(1)
+	objs, err := models.GetWxPlatformTJ(1)
 	if err != nil {
 		beego.Error(err)
 	}
 	c.Data["Objs"] = objs
-	objs1, err := models.GetAllWptTJ(0)
+	objs1, err := models.GetWxPlatformTJ(0)
 	if err != nil {
 		beego.Error(err)
 	}
@@ -39,7 +41,7 @@ func (c *WptController) Home() {
 	// shaer_url := "http://www.baoguangguang.cn/wpt/home"
 	// wxShare := getShare(tl_appid, tl_secret, shaer_url)
 	// c.Data["WxShare"] = wxShare
-	c.TplName = "wpthome.html"
+	c.TplName = "wpt/wpthome.html"
 }
 
 func (c *WptController) Search() {
@@ -52,14 +54,14 @@ func (c *WptController) Search() {
 	initWptUser(c)
 	search := c.Input().Get("search")
 	if len(search) != 0 {
-		objs, err := models.GetAllWptLike(search)
+		objs, err := models.GetWxPlatformstLike(search)
 		if err != nil {
 			beego.Error(err)
 		}
 		beego.Debug("Search :", objs)
 		c.Data["Objs"] = objs
 	} else {
-		objs, err := models.GetAllWpt()
+		objs, err := models.GetWxPlatforms()
 		if err != nil {
 			beego.Error(err)
 		}
@@ -67,7 +69,7 @@ func (c *WptController) Search() {
 
 	}
 
-	c.TplName = "wptsearch.html"
+	c.TplName = "wpt/wptsearch.html"
 }
 
 /**
@@ -95,47 +97,47 @@ func (c *WptController) AdminHome() {
 	switch op {
 	case "del":
 		id := c.Input().Get("id")
-		err := models.DelWpt(id)
+		err := models.DelWxPlatform(id)
 		if err != nil {
 			beego.Error(err)
 		}
 		break
 	case "state":
 		id := c.Input().Get("id")
-		err := models.UpWptState(id, 1)
+		err := models.UpWxPlatformState(id, 1)
 		if err != nil {
 			beego.Error(err)
 		}
 		break
 	case "state1":
 		id := c.Input().Get("id")
-		err := models.UpWptState(id, 0)
+		err := models.UpWxPlatformState(id, 0)
 		if err != nil {
 			beego.Error(err)
 		}
 		break
 	case "tuijian":
 		id := c.Input().Get("id")
-		err := models.UpWptTuijian(id, 1)
+		err := models.UpWxPlatformTuijian(id, 1)
 		if err != nil {
 			beego.Error(err)
 		}
 		break
 	case "tuijian1":
 		id := c.Input().Get("id")
-		err := models.UpWptTuijian(id, 0)
+		err := models.UpWxPlatformTuijian(id, 0)
 		if err != nil {
 			beego.Error(err)
 		}
 		break
 	}
 
-	objs, err := models.GetAllWpts()
+	objs, err := models.GetAdminWxPlatforms()
 	if err != nil {
 		beego.Error(err)
 	}
 	c.Data["Objs"] = objs
-	c.TplName = "wptadminhome.html"
+	c.TplName = "wpt/wptadminhome.html"
 }
 
 /**
@@ -189,7 +191,7 @@ func (c *WptController) AdminAdd() {
 			}
 		}
 
-		err = models.AddWpt(title, info, wid, wrange, qrcode_name)
+		err = models.AddWxPlatform(title, info, wid, wrange, qrcode_name)
 		if err != nil {
 			beego.Error(err)
 		}
@@ -199,7 +201,7 @@ func (c *WptController) AdminAdd() {
 		return
 	}
 
-	c.TplName = "wptadminadd.html"
+	c.TplName = "wpt/wptadminadd.html"
 }
 
 /**
@@ -259,7 +261,7 @@ func (c *WptController) AdminUpImg() {
 			}
 
 			if len(qrcode_name) != 0 {
-				err := models.UpWptImg(id, qrcode_name)
+				err := models.UpWxPlatformImg(id, qrcode_name)
 				if err != nil {
 					beego.Error(err)
 				} else {
@@ -270,12 +272,12 @@ func (c *WptController) AdminUpImg() {
 		}
 	}
 	id := c.Input().Get("id")
-	obj, err := models.GetOneWpt(id)
+	obj, err := models.GetOneWxPlatform(id)
 	if err != nil {
 		beego.Error(err)
 	}
 	c.Data["Obj"] = obj
-	c.TplName = "wptadminupimg.html"
+	c.TplName = "wpt/wptadminupimg.html"
 }
 
 /**
@@ -305,7 +307,7 @@ func (c *WptController) AdminUpInfo() {
 		wid := c.Input().Get("wid")
 		wrange := c.Input().Get("wrange")
 		if len(title) != 0 && len(info) != 0 && len(wid) != 0 && len(wrange) != 0 {
-			err := models.UpWptInfo(id, title, info, wid, wrange)
+			err := models.UpWxPlatformInfo(id, title, info, wid, wrange)
 			if err != nil {
 				beego.Error(err)
 			}
@@ -316,17 +318,17 @@ func (c *WptController) AdminUpInfo() {
 	}
 
 	id := c.Input().Get("id")
-	obj, err := models.GetOneWpt(id)
+	obj, err := models.GetOneWxPlatform(id)
 	if err != nil {
 		beego.Error(err)
 	}
 	c.Data["Obj"] = obj
-	c.TplName = "wptadminupinfo.html"
+	c.TplName = "wpt/wptadminupinfo.html"
 }
 
 func initWptUser(c *WptController) (*models.User, bool) {
 	isLogin := false
-	openid := c.Ctx.GetCookie(COOKIE_UID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_UID)
 	muser := &models.User{}
 	beego.Debug(openid)
 	if len(openid) != 0 {

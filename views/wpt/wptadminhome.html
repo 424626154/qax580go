@@ -1,0 +1,47 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/admin"
+        });
+    </script>
+  <div>
+  <a type="button" class="btn btn-default" href="/wpt/adminadd">添加平台</a>
+</div>
+
+<ul class="list-group">
+  {{range .Objs}}
+  <li class="list-group-item">
+    {{if eq .Qrcode ""}}
+         {{.Qrcode}}
+        {{else}}
+    <div id="image_fnot" >
+     <h3>二维码</h3>
+      <img src="{{isImgPath .Qrcode}}" alt="{{isImgPath .Qrcode}}" width="200px" height="200px"></div>
+    {{end}}
+    <div>
+      <h1>{{.Title}}</h1>
+    </div>
+    <div>{{.Introduce}}</div>
+    <div>微信号:{{.Wid}}</div>
+    <div>服务范围:{{.WRange}}</div>
+    <div class="btn-group" role="group" aria-label="">
+    {{if eq .State 0}}
+    <a href="/wpt/adminhome?op=state&id={{.Id}}" type="button" class="btn btn-default">未上架</a>
+    {{else}}
+    <a href="/wpt/adminhome?op=state1&id={{.Id}}" type="button" class="btn btn-success">已上架</a>
+      {{if eq .Tuijian 0}}
+      <a href="/wpt/adminhome?op=tuijian&id={{.Id}}" type="button" class="btn btn-default">未推荐</a>
+      {{else}}
+      <a href="/wpt/adminhome?op=tuijian1&id={{.Id}}" type="button" class="btn btn-success">已推荐</a>
+      {{end}}
+    {{end}}
+    <a href="/wpt/adminupinfo?id={{.Id}}"type="button" class="btn btn-default" >修改内容</a>
+    <a href="/wpt/adminupimg?id={{.Id}}" type="button" class="btn btn-default">修改图片</a>
+    <a href="/wpt/adminhome?op=del&id={{.Id}}" type="button" class="btn btn-danger">删除</a>
+    </div>
+    <div class="time_font">{{timeformat .CreateTime}}</div>
+  </li>
+  {{end}}
+</ul>
+{{template "adminfooter.html" .}}

@@ -7,11 +7,13 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-	"github.com/astaxie/beego"
 	"path"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
 )
 
 type SHType struct {
@@ -68,10 +70,10 @@ func (c *AdminAddShanghuController) Post() {
 
 		mtype_i := int16(0)
 		typemap := make(map[string]int16)
-		typemap[SH_CANYIN] = CANYIN_TYPE
-		typemap[SH_QICHE] = QICHE_TYPE
-		typemap[SH_WEIXIU] = WEIXIU_TYPE
-		typemap[SH_PEIXUN] = PEIXUN_TYPE
+		typemap[qutil.SH_CANYIN] = qutil.CANYIN_TYPE
+		typemap[qutil.SH_QICHE] = qutil.QICHE_TYPE
+		typemap[qutil.SH_WEIXIU] = qutil.WEIXIU_TYPE
+		typemap[qutil.SH_PEIXUN] = qutil.PEIXUN_TYPE
 		if v, ok := typemap[mtype]; ok {
 			mtype_i = v
 		} else {

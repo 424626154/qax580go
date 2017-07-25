@@ -8,17 +8,19 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/config"
-	"github.com/astaxie/beego/context"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"path"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
+	"github.com/astaxie/beego/context"
 )
 
 type DqsjController struct {
@@ -46,8 +48,8 @@ func (c *DqsjController) Admin() {
 	op := c.Input().Get("op")
 	switch op {
 	case "back":
-		c.Ctx.SetCookie(DQSJ_USERNAME, "", -1, "/")
-		c.Ctx.SetCookie(DQSJ_PASSWORD, "", -1, "/")
+		c.Ctx.SetCookie(qutil.DQSJ_USERNAME, "", -1, "/")
+		c.Ctx.SetCookie(qutil.DQSJ_PASSWORD, "", -1, "/")
 		c.Redirect("/dqsj/admin", 302)
 		return
 	}
@@ -77,8 +79,8 @@ func (c *DqsjController) AdminLogin() {
 				if autologin {
 					maxAge = 1<<31 - 1
 				}
-				c.Ctx.SetCookie(DQSJ_USERNAME, username, maxAge, "/")
-				c.Ctx.SetCookie(DQSJ_PASSWORD, password, maxAge, "/")
+				c.Ctx.SetCookie(qutil.DQSJ_USERNAME, username, maxAge, "/")
+				c.Ctx.SetCookie(qutil.DQSJ_PASSWORD, password, maxAge, "/")
 				beego.Debug("login ok------")
 				c.Redirect("/dqsj/admin", 302)
 				return
@@ -1984,14 +1986,14 @@ func getDqsjTicket(access_toke string) string {
 }
 
 func chackDqsjAccount(ctx *context.Context) (bool, string) {
-	ck, err := ctx.Request.Cookie(DQSJ_USERNAME)
+	ck, err := ctx.Request.Cookie(qutil.DQSJ_USERNAME)
 	if err != nil {
 		return false, ""
 	}
 
 	username := ck.Value
 
-	ck, err = ctx.Request.Cookie(DQSJ_PASSWORD)
+	ck, err = ctx.Request.Cookie(qutil.DQSJ_PASSWORD)
 	if err != nil {
 		return false, ""
 	}
@@ -2013,7 +2015,7 @@ func chackDqsjAccount(ctx *context.Context) (bool, string) {
 }
 
 func getShareTitle() string {
-	title := DQSJ_SHARE_TITLE
+	title := qutil.DQSJ_SHARE_TITLE
 	config, err := models.GetConfig()
 	if err != nil {
 		beego.Error(err)

@@ -4,8 +4,10 @@ package controllers
 我的消息
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type MyMessageController struct {
@@ -54,7 +56,7 @@ func (c *MyMessageController) Post() {
 }
 func initMyMessageUser(c *MyMessageController) (*models.User, bool) {
 	isLogin := false
-	openid := c.Ctx.GetCookie(COOKIE_UID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_UID)
 	user := &models.User{}
 	beego.Debug(openid)
 	if len(openid) != 0 {

@@ -2,15 +2,18 @@ package controllers
 
 import (
 	// "fmt"
-	"github.com/astaxie/beego"
 	"io/ioutil"
+
+	"github.com/astaxie/beego"
 	// "log"
 	"encoding/json"
 	"net/http"
 	// "net/url"
-	"github.com/astaxie/beego/config"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
+
+	"github.com/astaxie/beego/config"
 )
 
 type WxHomeController struct {
@@ -137,7 +140,7 @@ func getHomeUserInfo(access_toke, openid string, c *WxHomeController) {
 			// beego.Debug(wx_home)
 			// c.Redirect(wx_home, 302)
 			maxAge := 1<<31 - 1
-			c.Ctx.SetCookie(COOKIE_WX_OPENID, uij.OpenId, maxAge, "/")
+			c.Ctx.SetCookie(qutil.COOKIE_WX_OPENID, uij.OpenId, maxAge, "/")
 			c.Redirect("/", 302)
 		}
 		return
@@ -152,6 +155,6 @@ func getHomeUserInfo(access_toke, openid string, c *WxHomeController) {
  */
 func saveHomeFromType(from string, c *WxHomeController) {
 	maxAge := 1<<31 - 1
-	c.Ctx.SetCookie(COOKIE_FROM_TYPE, from, maxAge, "/")
+	c.Ctx.SetCookie(qutil.COOKIE_FROM_TYPE, from, maxAge, "/")
 	beego.Debug("save COOKIE_FROM_TYPE:", from, maxAge)
 }

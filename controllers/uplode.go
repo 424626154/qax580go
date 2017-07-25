@@ -7,11 +7,13 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-	"github.com/astaxie/beego"
 	"path"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
 )
 
 type UplodeController struct {
@@ -78,7 +80,7 @@ func (c *UplodeController) Post() {
 
 func isUplodeLogin(c *UplodeController) bool {
 	isLogin := false
-	uid := c.Ctx.GetCookie(COOKIE_UID)
+	uid := c.Ctx.GetCookie(qutil.COOKIE_UID)
 	if len(uid) != 0 {
 		user, err := models.GetOneUserUid(uid)
 		if err != nil {
@@ -93,7 +95,7 @@ func isUplodeLogin(c *UplodeController) bool {
 }
 
 func getUplodeUser(c *UplodeController) *models.User {
-	openid := c.Ctx.GetCookie(COOKIE_UID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_UID)
 	muser := &models.User{}
 	beego.Debug(openid)
 	if len(openid) != 0 {
@@ -112,9 +114,9 @@ func getUplodeUser(c *UplodeController) *models.User {
 *来源类型
  */
 func getUplodeFromType(c *UplodeController) string {
-	from_type := c.Ctx.GetCookie(COOKIE_FROM_TYPE)
+	from_type := c.Ctx.GetCookie(qutil.COOKIE_FROM_TYPE)
 	if len(from_type) == 0 {
-		from_type = COOKIE_FROM_ALL
+		from_type = qutil.COOKIE_FROM_ALL
 	}
 	return from_type
 }

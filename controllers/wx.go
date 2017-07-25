@@ -8,14 +8,15 @@ import (
 	"encoding/hex"
 	"encoding/xml"
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/config"
 	"io/ioutil"
 	"net/http"
 	"qax580go/models"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
 )
 
 const (
@@ -30,6 +31,8 @@ const (
 	jieshao_info   = "【帮助】\n你好，咱这580是免费的信息发布平台，在这里您可以发布信息也可以搜索相关信息，相关功能在功能菜单中"
 	function_info  = "【帮助】\n发布信息－》更多－》发布信息，意见反馈－》更多－》意见反馈"
 )
+const qa_appid = "wx570bbcc8cf9fdd80"
+const qa_secret = "c4b26e95739bc7defcc42e556cc7ae42"
 
 //接收文本消息
 type TextRequestBody struct {

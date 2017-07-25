@@ -1,0 +1,69 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/wpingtai/adminhome"
+            initData();
+        });
+function initData(){
+  // alert({{.Obj}})
+  document.getElementById("title").value = {{.Obj.Title}};
+  document.getElementById("info").value = {{.Obj.Introduce}};
+  document.getElementById("wid").value = {{.Obj.Wid}};
+  document.getElementById("wrange").value = {{.Obj.WRange}};
+}
+
+    function addObj(){
+
+    var title = document.getElementById("title").value;
+    var info = document.getElementById("info").value;
+    var wid = document.getElementById("wid").value;
+    var wrange = document.getElementById("wrange").value;
+    if(title == ""){
+      alert("请输入平台名称");
+      return;
+    }
+    if(info == ""){
+      alert("请输入平台内容");
+      return;
+    }
+    if(wid == ""){
+      alert("请输入平台微信号");
+      return;
+    }
+  if(wrange == ""){
+      alert("请输入服务范围");
+      return;
+    }
+    var url = "/wpt/adminupinfo?title="+title+"&info="+info+"&wid="+wid+"&wrange="+wrange+"&id="+{{.Obj.Id}};
+    // alert(url)
+     document.getElementById("add").action = url;
+     document.getElementById("add").method = "post";
+     document.getElementById("add").enctype = "multipart/form-data";
+     document.getElementById("add").submit();
+  }
+
+    </script>
+
+<form id = "add" name="add" class="form-inline" method="post" action="/poll/adminaddpoll" enctype="multipart/form-data">
+    {{if eq .Obj.Qrcode ""}}
+      {{else}}
+    <h3>二维码</h3>
+    <img src="{{isImgPath .Obj.Qrcode}}" alt="{{isImgPath .Obj.Qrcode}}" width="320px" height="auto">{{end}}</div>
+
+  <div class="">
+    <label for="">平台名称</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="输入平台名称"></div>
+  <div class="">
+    <label for="">投票平台内容</label>
+    <textarea class="form-control" rows="5" placeholder="输入平台内容" id="info" name="info"></textarea>
+  </div>
+  <div class="">
+    <label for="">平台微信号</label>
+    <input type="text" class="form-control" id="wid" name="wid" placeholder="输入平台微信号"></div>
+    <div class="">
+    <label for="">服务范围</label>
+    <input type="text" class="form-control" id="wrange" name="wrange" placeholder="输入服务范围"></div>
+  <button type="button" class="my_button my_gray" onclick="addObj();">修改</button>
+</form>
+{{template "adminfooter.html" .}}

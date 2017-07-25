@@ -4,7 +4,7 @@
       var bp = document.createElement('script');
       var curProtocol = window.location.protocol.split(':')[0];
       if (curProtocol === 'https') {
-          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
       }
       else {
           bp.src = 'http://push.zhanzhang.baidu.com/push.js';
@@ -16,13 +16,13 @@
       var url = "/content?op=help&id="+{{.Id}};
               // alert(url)
      document.getElementById("onclikhelp").action = url;
-     document.getElementById("onclikhelp").method = "post";   
+     document.getElementById("onclikhelp").method = "post";
      document.getElementById("onclikhelp").enctype = "multipart/form-data"
-     document.getElementById("onclikhelp").submit(); 
+     document.getElementById("onclikhelp").submit();
     }
 </script>
 
-<div id="cont_bg">
+<div class="container cont_bg">
   <div > <font class="title_fnot" >{{.Post.Title}}</font>
   </div>
   <div class="cont_info"> <font class="info_fnot">{{.Post.Info}}</font>
@@ -37,7 +37,7 @@
     <span class="label label-success">已审核</span>
     {{if eq .Post.Label 1}}
     <span class="label label-primary">个人</span>
-    {{end}} 
+    {{end}}
     {{if eq .Post.Label 2}}
     <span class="label label-primary">官方</span>
     {{end}}
@@ -55,7 +55,7 @@
       <div>
 
     {{if eq .HelpState 0}}
-    <button class="label label-default" onclick="onclikHelp()">对我有帮助 {{.HelpNum}}</button>   
+    <button class="label label-default" onclick="onclikHelp()">对我有帮助 {{.HelpNum}}</button>
     {{else}}
         <span class="label label-danger">对我有帮助 {{.HelpNum}}</span>
     {{end}}

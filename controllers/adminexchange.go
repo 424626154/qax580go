@@ -4,8 +4,10 @@ package controllers
 后台商城
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type AdminExchangeController struct {
@@ -45,7 +47,7 @@ func (c *AdminExchangeController) Get() {
 					if err != nil {
 						beego.Error(err)
 					} else {
-						models.AddUserMoneyRecord(uoder.OpenId, com.Money, MONEY_EXCHANGE)
+						models.AddUserMoneyRecord(uoder.OpenId, com.Money, qutil.MONEY_EXCHANGE)
 						if err != nil {
 							beego.Error(err)
 						} else {

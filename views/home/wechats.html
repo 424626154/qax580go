@@ -1,0 +1,32 @@
+{{template "header.html" .}}
+<div class="qax_bg" style="padding-top:10px">
+<div class="container">
+<div class="row">
+    {{range .WeixinNumbers}}
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        {{if eq .Image ""}}
+                {{.Image}}
+              {{else}}
+        <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}">
+        {{end}}
+        <div class="caption"> <font class="title_fnot">{{.Name}}</font>
+          <div class="cont_info"> <font class="info_fnot">{{.Introduce}}</font>
+          </div>
+          <div class="cont_info">
+            <font class="info_fnot">微信号:{{.Number}}</font>
+          </div>
+          {{if eq .Evaluate ""}}
+            {{else}}
+          <div class="cont_info">
+            <font class="info_fnot">推荐理由:{{.Evaluate}}</font>
+          </div>
+          {{end}}
+        </div>
+      </div>
+    </div>
+    {{end}}
+</div>
+</div>
+</div>
+{{template "footer.html" .}}

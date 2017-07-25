@@ -1,0 +1,58 @@
+{{template "adminheader.html" .}}
+<div class="list_but">
+  <a class="btn btn-default" href="/admin/addwechat">添加微信号</a>
+</div>
+<div class="row con_div">
+  {{range .WeixinNumbers}}
+  <div class="col-sm-6 col-md-4 thumbnail">
+    {{if eq .Image ""}}
+              {{.Image}}
+    {{else}}
+    <img src="{{isImgPath .Image}}" alt="{{isImgPath .Image}}">
+    {{end}}
+    <div class="caption">
+      <h3>{{.Name}}</h3>
+      <p>{{.Introduce}}</p>
+      <p>微信号:{{.Number}}</p>
+      {{if eq .Evaluate ""}}
+            {{else}}
+      <p>评价:{{.Evaluate}}</p>
+      {{end}}
+    </div>
+    <div>
+      <div class="btn-group" role="group" aria-label="">
+        {{if eq .State 0}}
+        <a href="/admin/wechats?op=state&id={{.Id}}" type="button" class="btn btn-default">上线</a>
+        {{else}}
+        <a href="/admin/wechats?op=state1&id={{.Id}}" type="button" class="btn btn-success">下线</a>
+          {{if eq .IsHome true}}
+          <a href="/admin/wechats?op=ishome&show=false&id={{.Id}}" type="button" class="btn btn-success">取消首页显示</a>
+          {{else}}
+          <a href="/admin/wechats?op=ishome&show=true&id={{.Id}}" type="button" class="btn btn-default">首页显示</a>
+          {{end}}
+        {{end}}
+      </div>
+      <div class="btn-group" role="group" aria-label="">
+        <a href="/admin/wechats?op=upinfo&id={{.Id}}" type="button" class="btn btn-warning">修改内容</a>
+        <a href="/admin/wechats?op=upimg&id={{.Id}}" type="button" class="btn btn-warning">修改图片</a>
+        <a href="/admin/wechats?op=del&id={{.Id}}" type="button" class="btn btn-danger">删除</a>
+      </div>
+    <!-- {{if eq .State 0}}
+    <a href="/admin/wechats?op=state&id={{.Id}}" type="button" class="btn btn-default">上线</a>
+    {{else}}
+    <a href="/admin/wechats?op=state1&id={{.Id}}" >下线</a>
+    {{end}}
+    {{if eq .IsHome true}}
+    <a href="/admin/wechats?op=ishome&show=false&id={{.Id}}" >取消首页显示</a>
+    {{else}}
+    <a href="/admin/wechats?op=ishome&show=true&id={{.Id}}" >首页显示</a>
+    {{end}}
+    <a href="/admin/wechats?op=upinfo&id={{.Id}}" >修改内容</a>
+    <a href="/admin/wechats?op=upimg&id={{.Id}}" >修改图片</a>
+    <a href="/admin/wechats?op=del&id={{.Id}}" >删除</a> -->
+    </div>
+    <div >{{timeformat .Time}}</div>
+  </div>
+  {{end}}
+</div>
+{{template "adminfooter.html" .}}

@@ -4,8 +4,10 @@ package controllers
 信息详情
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type ShangHusController struct {
@@ -37,7 +39,7 @@ func (c *ShangHusController) Post() {
 }
 func getShanghusCookie(c *ShangHusController) string {
 	isUser := false
-	openid := c.Ctx.GetCookie(COOKIE_WX_OPENID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_WX_OPENID)
 	beego.Debug("------------openid--------")
 	beego.Debug(openid)
 	if len(openid) != 0 {

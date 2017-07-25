@@ -1,8 +1,12 @@
 {{template "header.html" .}}
 <div class="body_bg">
-	<ul class="list-group">
-	  <li class="list-group-item">{{.User.Name}}<a href="/upuser?uid={{.User.Uid}}">修改个人信息</a></li>
-	  <li class="list-group-item">帮帮币:{{.User.Money}}<a href="/mymoney">详情</a></li>
-	</ul>
+    <div class="usercenter">
+        <ul class="list-group">
+            <li class="list-group-item">{{.User.Name}}</li>
+            <li class="list-group-item"><a href="/upuser?uid={{.User.Uid}}">修改个人信息</a></li>
+            <li class="list-group-item"><a href="/mymoney">帮帮币:{{.User.Money}}</a></li>
+            <li class="list-group-item"><a href="/?op=back">退出登陆</a></li>
+        </ul>
+    </div>
 </div>
 {{template "footer.html" .}}

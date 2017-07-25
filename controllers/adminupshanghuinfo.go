@@ -4,8 +4,10 @@ package controllers
 后台修改商户内容
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type AdminUpShangHuInfoController struct {
@@ -30,10 +32,10 @@ func (c *AdminUpShangHuInfoController) Post() {
 	if len(id) != 0 && len(title) != 0 && len(info) != 0 {
 		mtype_i := int16(0)
 		typemap := make(map[string]int16)
-		typemap[SH_CANYIN] = CANYIN_TYPE
-		typemap[SH_QICHE] = QICHE_TYPE
-		typemap[SH_WEIXIU] = WEIXIU_TYPE
-		typemap[SH_PEIXUN] = PEIXUN_TYPE
+		typemap[qutil.SH_CANYIN] = qutil.CANYIN_TYPE
+		typemap[qutil.SH_QICHE] = qutil.QICHE_TYPE
+		typemap[qutil.SH_WEIXIU] = qutil.WEIXIU_TYPE
+		typemap[qutil.SH_PEIXUN] = qutil.PEIXUN_TYPE
 		if v, ok := typemap[mtype]; ok {
 			mtype_i = v
 		} else {

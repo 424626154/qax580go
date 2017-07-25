@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/config"
 	"qax580go/models"
 	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
 )
 
 func getImageUrl() string {
@@ -23,7 +24,6 @@ func getImageUrl() string {
 		}
 
 	}
-	beego.Debug("111111", url)
 	return url
 }
 

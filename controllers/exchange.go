@@ -4,8 +4,10 @@ package controllers
 商城
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
+
+	"github.com/astaxie/beego"
 )
 
 type ExchangeController struct {
@@ -68,7 +70,7 @@ func (c *ExchangeController) Post() {
 }
 func getExchangeeCookie(c *ExchangeController) string {
 	isUser := false
-	openid := c.Ctx.GetCookie(COOKIE_WX_OPENID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_WX_OPENID)
 	beego.Debug("------------openid--------")
 	beego.Debug(openid)
 	if len(openid) != 0 {

@@ -4,9 +4,11 @@ package controllers
 登录
 */
 import (
+	"qax580go/models"
+	"qax580go/qutil"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"qax580go/models"
 )
 
 type LoginController struct {
@@ -43,7 +45,7 @@ func (this *LoginController) Post() {
 					maxAge = 1<<31 - 1
 				}
 
-				this.Ctx.SetCookie(COOKIE_UID, user.Uid, maxAge, "/")
+				this.Ctx.SetCookie(qutil.COOKIE_UID, user.Uid, maxAge, "/")
 				if len(from) != 0 {
 					switch from {
 					case "uplode":

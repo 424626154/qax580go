@@ -6,12 +6,14 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/config"
 	"io/ioutil"
 	"net/http"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
 )
 
 type MyExtensionController struct {
@@ -35,7 +37,7 @@ func (c *MyExtensionController) Post() {
 }
 func getMyExtensionCookie(c *MyExtensionController) string {
 	isUser := false
-	openid := c.Ctx.GetCookie(COOKIE_WX_OPENID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_WX_OPENID)
 	beego.Debug("------------openid--------")
 	beego.Debug(openid)
 	if len(openid) != 0 {

@@ -1,12 +1,13 @@
 package models
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/config"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // import your used driver
-	"strconv"
-	"time"
 )
 
 type User struct {
@@ -56,30 +57,6 @@ type Feedback struct {
 	Sex        int32
 	HeadImgurl string `orm:"size(500)"`
 	Time       int64
-}
-
-//微信公众号
-type Wxnum struct {
-	Id       int64
-	Title    string `orm:"size(100)"`
-	Info     string `orm:"size(1000)"`
-	Num      string `orm:"size(100)"`
-	Evaluate string `orm:"size(1000)"` //评价
-	Image    string
-	Time     int64
-	State    int8 //0未上线  1 已上线
-}
-
-//微信号
-type WeixinNumber struct {
-	Id       int64
-	Name     string `orm:"size(100)"`
-	Info     string `orm:"size(1000)"`
-	Num      string `orm:"size(100)"`
-	Evaluate string `orm:"size(1000)"` //评价
-	Image    string
-	Time     int64
-	State    int8 //0未上线  1 已上线
 }
 
 type Admin struct {
@@ -441,18 +418,6 @@ type RUser struct {
 	RId     int64  //显示id
 }
 
-type Wpt struct {
-	Id         int64
-	Title      string `orm:"size(1000)"` //标题
-	Info       string `orm:"size(1000)"` //内容
-	Wid        string //微信号
-	Qrcode     string //二维码
-	WRange     string //服务范围
-	State      int16  //0 未上线 1上线
-	Tuijian    int16  //推荐
-	CreateTime int64  //创建时间
-}
-
 /**
 相册授权
 */
@@ -745,8 +710,8 @@ func RegisterDB() {
 	orm.RegisterModel(new(User))
 	orm.RegisterModel(new(Post))
 	orm.RegisterModel(new(Feedback))
-	orm.RegisterModel(new(Wxnum))
-	orm.RegisterModel(new(WeixinNumber))
+	orm.RegisterModel(new(WxOfficial))
+	orm.RegisterModel(new(WeChat))
 	orm.RegisterModel(new(Admin))
 	orm.RegisterModel(new(Wxuserinfo)) //微信用户
 	orm.RegisterModel(new(NewsKey))
@@ -767,7 +732,7 @@ func RegisterDB() {
 	orm.RegisterModel(new(Notice))          //通知
 	// orm.RegisterModel(new(RBinding))        //冲洗绑定
 	orm.RegisterModel(new(RUser))       //冲洗帐号
-	orm.RegisterModel(new(Wpt))         //微平台对象
+	orm.RegisterModel(new(WxPlatform))  //微平台对象
 	orm.RegisterModel(new(Poauth))      //照片授权
 	orm.RegisterModel(new(Puser))       //照片用户
 	orm.RegisterModel(new(Photos))      //相册
@@ -896,6 +861,11 @@ func GetAllState1Num() (int, error) {
 	return len(posts), err
 }
 
+//获得首页帖子
+// func GetHomePosts() ([]Post, error) {
+//
+// }
+
 //获得我发布的帖子
 func GetAllPostsOpenid(openid string) ([]Post, error) {
 	o := orm.NewOrm()
@@ -1017,6 +987,13 @@ func QueryAdminPagePost(page int32, nums int32) ([]Post, error) {
 	return posts, err
 }
 
+func QueryHomePost() ([]Post, error) {
+	o := orm.NewOrm()
+	var posts []Post
+	_, err := o.Raw("SELECT * FROM post WHERE examine = 1  ORDER BY id DESC LIMIT 10 ").QueryRows(&posts)
+	return posts, err
+}
+
 /*
 返回帖子数量
 */
@@ -1091,199 +1068,6 @@ func GetOneFeedback(id string) (*Feedback, error) {
 	return feedback, err
 }
 
-//添加微信公众号
-
-func AddPublicNumber(title string, info string, num string, evaluate string, image string) error {
-	o := orm.NewOrm()
-	my_time := time.Now().Unix()
-	cate := &Wxnum{Title: title, Info: info, Num: num, Evaluate: evaluate, Image: image, Time: my_time, State: int8(0)}
-
-	// 查询数据
-	qs := o.QueryTable("wxnum")
-	err := qs.Filter("title", title).One(cate)
-	if err == nil {
-		return err
-	}
-
-	// 插入数据
-	_, err = o.Insert(cate)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-func DeleteWxnum(id string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wxnum{Id: cid}
-	_, err = o.Delete(cate)
-	return err
-}
-
-func UpdateWxnum(id string, state int8) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	obj := &Wxnum{Id: cid}
-	obj.State = state
-	_, err = o.Update(obj, "state")
-	return err
-}
-
-func GetAllWxnums() ([]Wxnum, error) {
-	o := orm.NewOrm()
-	var wxnums []Wxnum
-	_, err := o.Raw("SELECT * FROM wxnum  ORDER BY id DESC").QueryRows(&wxnums)
-	return wxnums, err
-}
-func GetAllWxnumsState1() ([]Wxnum, error) {
-	o := orm.NewOrm()
-	var objs []Wxnum
-	_, err := o.Raw("SELECT * FROM wxnum  WHERE state = ? ORDER BY id DESC", 1).QueryRows(&objs)
-	return objs, err
-}
-
-func GetOneWxnum(id string) (*Wxnum, error) {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return nil, err
-	}
-	o := orm.NewOrm()
-	obj := &Wxnum{Id: cid}
-	err = o.Read(obj)
-	return obj, err
-}
-
-func UpdateWxnumInfo(id string, title string, info string, number string, evaluate string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wxnum{Id: cid}
-	cate.Title = title
-	cate.Info = info
-	cate.Num = number
-	cate.Evaluate = evaluate
-	_, err = o.Update(cate, "title", "info", "num", "evaluate")
-	return err
-}
-
-func UpdateWxnumImg(id string, img string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wxnum{Id: cid}
-	cate.Image = img
-	_, err = o.Update(cate, "image")
-	return err
-}
-
-/***********************推荐公众号**********************/
-//添加微信公众号
-func AddWeixinNumber(name string, info string, num string, evaluate string, image string) error {
-	o := orm.NewOrm()
-	my_time := time.Now().Unix()
-	cate := &WeixinNumber{Name: name, Info: info, Num: num, Evaluate: evaluate, Image: image, Time: my_time, State: int8(0)}
-
-	// 查询数据
-	qs := o.QueryTable("weixin_number")
-	err := qs.Filter("num", num).One(cate)
-	if err == nil {
-		return err
-	}
-
-	// 插入数据
-	_, err = o.Insert(cate)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-func DeleteWeixinNumber(id string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &WeixinNumber{Id: cid}
-	_, err = o.Delete(cate)
-	return err
-}
-
-func UpdateWeixinNumber(id string, state int8) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	obj := &WeixinNumber{Id: cid}
-	obj.State = state
-	_, err = o.Update(obj, "state")
-	return err
-}
-
-func GetAllWeixinNumbers() ([]WeixinNumber, error) {
-	o := orm.NewOrm()
-	var wxnums []WeixinNumber
-	_, err := o.Raw("SELECT * FROM weixin_number  ORDER BY id DESC").QueryRows(&wxnums)
-	return wxnums, err
-}
-func GetAllWeixinNumbersState1() ([]WeixinNumber, error) {
-	o := orm.NewOrm()
-	var objs []WeixinNumber
-	_, err := o.Raw("SELECT * FROM weixin_number  WHERE state = ? ORDER BY id DESC", 1).QueryRows(&objs)
-	return objs, err
-}
-
-func GetOneWeixinNumber(id string) (*WeixinNumber, error) {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return nil, err
-	}
-	o := orm.NewOrm()
-	obj := &WeixinNumber{Id: cid}
-	err = o.Read(obj)
-	return obj, err
-}
-
-func UpdateWeixinNumberInfo(id string, name string, info string, number string, evaluate string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &WeixinNumber{Id: cid}
-	cate.Name = name
-	cate.Info = info
-	cate.Num = number
-	cate.Evaluate = evaluate
-	_, err = o.Update(cate, "name", "info", "num", "evaluate")
-	return err
-}
-
-func UpdateWeixinNumberImg(id string, img string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &WeixinNumber{Id: cid}
-	cate.Image = img
-	_, err = o.Update(cate, "image")
-	return err
-}
-
-/***********************推荐公众号**********************/
 /*
 添加后台用户
 */
@@ -2925,163 +2709,6 @@ func GetUserCount() (int64, error) {
 	o := orm.NewOrm()
 	count, err := o.QueryTable("r_user").Count()
 	return count, err
-}
-
-/***微平台数据***/
-func AddWpt(title string, info string, wid string, wrange string, qrcode string) error {
-	o := orm.NewOrm()
-	my_time := time.Now().Unix()
-	obj := &Wpt{Title: title, Info: info, Wid: wid, Qrcode: qrcode, WRange: wrange, CreateTime: my_time}
-	// 插入数据
-	_, err := o.Insert(obj)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-/**
-获得所有
-*/
-func GetAllWpts() ([]Wpt, error) {
-	o := orm.NewOrm()
-	var objs []Wpt
-	_, err := o.QueryTable("wpt").OrderBy("-id").All(&objs)
-	if err != nil {
-		beego.Error(err)
-	}
-	return objs, err
-}
-
-/**
-删除平台
-*/
-func DelWpt(id string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wpt{Id: cid}
-	_, err = o.Delete(cate)
-	return err
-}
-
-/**
-修改平台状态
-*/
-func UpWptState(id string, state int16) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wpt{Id: cid}
-	cate.State = state
-	_, err = o.Update(cate, "state")
-	if err != nil {
-		beego.Error(err)
-	}
-	return err
-}
-
-/**
-修改平台推荐
-*/
-func UpWptTuijian(id string, tuijian int16) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wpt{Id: cid}
-	cate.Tuijian = tuijian
-	_, err = o.Update(cate, "tuijian")
-	if err != nil {
-		beego.Error(err)
-	}
-	return err
-}
-
-/**
-修改图片
-*/
-func UpWptImg(id string, qrcode string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wpt{Id: cid}
-	cate.Qrcode = qrcode
-	_, err = o.Update(cate, "qrcode")
-	return err
-}
-
-/**
-获得平台
-*/
-func GetOneWpt(id string) (*Wpt, error) {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return nil, err
-	}
-	o := orm.NewOrm()
-	obj := &Wpt{}
-	err = o.QueryTable("wpt").Filter("id", cid).One(obj)
-	if err != nil {
-		beego.Error(err)
-		return nil, err
-	}
-	return obj, err
-}
-
-/**
-修改平台内容
-*/
-func UpWptInfo(id string, title string, info string, wid string, wrange string) error {
-	cid, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return err
-	}
-	o := orm.NewOrm()
-	cate := &Wpt{Id: cid}
-	cate.Title = title
-	cate.Info = info
-	cate.Wid = wid
-	cate.WRange = wrange
-	_, err = o.Update(cate, "title", "info", "wid", "w_range")
-	return err
-}
-
-/**
-返回微信平台
-*/
-func GetAllWptTJ(tuijian int16) ([]Wpt, error) {
-	o := orm.NewOrm()
-	var objs []Wpt
-	_, err := o.Raw("SELECT * FROM wpt WHERE state = 1  AND tuijian = ? ORDER BY id DESC", tuijian).QueryRows(&objs)
-	return objs, err
-}
-
-/**
-返回微信平台
-*/
-func GetAllWpt() ([]Wpt, error) {
-	o := orm.NewOrm()
-	var objs []Wpt
-	_, err := o.Raw("SELECT * FROM wpt WHERE state = 1 ORDER BY id DESC").QueryRows(&objs)
-	return objs, err
-}
-
-/**
-返回微信平台 关键字
-*/
-func GetAllWptLike(like string) ([]Wpt, error) {
-	o := orm.NewOrm()
-	var objs []Wpt
-	_, err := o.Raw("SELECT * FROM wpt WHERE title LIKE ? OR wid = ? ORDER BY id DESC ", "%"+like+"%", "%"+like+"%").QueryRows(&objs)
-	return objs, err
 }
 
 /**

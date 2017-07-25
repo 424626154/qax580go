@@ -23,13 +23,13 @@ $(document).ready(function(){
         document.getElementById("city").options.length=0;
         for(var i = 0 ; i < citys.length ; i ++ ){
              document.getElementById("city").options.add(new Option(citys[i],citys[i]));
-          } 
+          }
   }
   var img_path = "";
-  function setImage(obj){  
-    var value = obj.value;  
+  function setImage(obj){
+    var value = obj.value;
     img_path = value;
-  } 
+  }
   function addPost(){
     // if(img_path == ""){
     //   alert("请选择图片");
@@ -65,16 +65,16 @@ $(document).ready(function(){
     +"&fromshow="+fromshow+"&fromurl="+fromurl;
     // alert(url)
      document.getElementById("add").action = url;
-     document.getElementById("add").method = "post";   
+     document.getElementById("add").method = "post";
      document.getElementById("add").enctype = "multipart/form-data";
-     document.getElementById("add").submit();       
-      //调用方法 如        
-      // var post_map = { title: title, info: info , image: img_path ,city:city,"bfrom":bfrom,fromshow:fromshow,fromurl:fromurl} 
+     document.getElementById("add").submit();
+      //调用方法 如
+      // var post_map = { title: title, info: info , image: img_path ,city:city,"bfrom":bfrom,fromshow:fromshow,fromurl:fromurl}
       // var post_url = "/adminpost/addpost";
       // $.ajax({
       //           url : post_url,
       //           data: post_map,
-      //           cache : false, 
+      //           cache : false,
       //           async : false,
       //           type : "POST",
       //           enctype: 'multipart/form-data',
@@ -82,7 +82,7 @@ $(document).ready(function(){
       //           success : function (result){
       //               // alert(result.errcode)
       //               if(result.errcode == 0){
-      //                   window.location.href="/admin";  
+      //                   window.location.href="/admin";
       //               }else{
       //                   alert(result.errmsg)
       //               }
@@ -94,23 +94,23 @@ $(document).ready(function(){
       //          }
       //       });
   }
-  function post(URL, PARAMS) {        
-            var temp = document.createElement("form");        
-            temp.action = URL;        
-            temp.method = "post";        
-            temp.style.display = "none";        
-            for (var x in PARAMS) {        
-                var opt = document.createElement("textarea");        
-                opt.name = x;        
-                opt.value = PARAMS[x];        
-                // alert(opt.name)      
-                temp.appendChild(opt);        
-            }        
+  function post(URL, PARAMS) {
+            var temp = document.createElement("form");
+            temp.action = URL;
+            temp.method = "post";
+            temp.style.display = "none";
+            for (var x in PARAMS) {
+                var opt = document.createElement("textarea");
+                opt.name = x;
+                opt.value = PARAMS[x];
+                // alert(opt.name)
+                temp.appendChild(opt);
+            }
             alert(document.body)
-            document.body.appendChild(temp);   
-            // alert(PARAMS)     
-            temp.submit();        
-            return temp;        
+            document.body.appendChild(temp);
+            // alert(PARAMS)
+            temp.submit();
+            return temp;
         }
 function checkURL(URL){
     var str=URL;
@@ -123,7 +123,7 @@ function checkURL(URL){
     }else{
     return false;
     }
-} 
+}
 </script>
 <form id = "add" name="add" class="form-inline" method="post" action="/admin/uplode" enctype="multipart/form-data" onsubmit="return false">
 
@@ -136,7 +136,7 @@ function checkURL(URL){
   </div>
   <div class="">
     <label>选择图片：(上传图片会让你的消息阅读量增加)</label>
-    <input type="file" class="form-control my_file" name="image" id="image" accept="image/*" onchange="setImage(this)"></div>
+    <input type="file" class="form-control my_file" name="image" id="image" accept="image/jpeg,image/jpg,image/png" onchange="setImage(this)"></div>
   <div>
     <label>设置来源</label>
     <input type="checkbox" name="bfrom" id="bfrom">

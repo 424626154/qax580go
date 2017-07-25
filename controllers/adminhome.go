@@ -5,9 +5,11 @@ package controllers
 */
 import (
 	"fmt"
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strconv"
+
+	"github.com/astaxie/beego"
 )
 
 type AdminHomeController struct {
@@ -55,11 +57,11 @@ func (c *AdminHomeController) Get() {
 			beego.Error(err)
 		} else {
 			if post.Label == 1 {
-				err = models.AddWxUserMoney(post.OpenId, MONEY_EXAMINE_SUM)
+				err = models.AddWxUserMoney(post.OpenId, qutil.MONEY_EXAMINE_SUM)
 				if err != nil {
 					beego.Error(err)
 				} else {
-					_, err = models.AddUserMoneyRecord(post.OpenId, MONEY_EXAMINE_SUM, MONEY_EXAMINE)
+					_, err = models.AddUserMoneyRecord(post.OpenId, qutil.MONEY_EXAMINE_SUM, qutil.MONEY_EXAMINE)
 					if err != nil {
 						beego.Error(err)
 					}
@@ -71,7 +73,7 @@ func (c *AdminHomeController) Get() {
 			msg := fmt.Sprintf("您发布的[%s]已通过审核", post.Title)
 			beego.Debug("msg:", msg)
 			sid := fmt.Sprintf("%d", post.Id)
-			err = models.AddNotice(username, post.OpenId, true, msg, sid, NTYPE_1)
+			err = models.AddNotice(username, post.OpenId, true, msg, sid, qutil.NTYPE_1)
 			if err != nil {
 				beego.Error(err)
 			}
@@ -109,7 +111,7 @@ func (c *AdminHomeController) Get() {
 		if post.Label == 1 {
 			msg := fmt.Sprintf("您发布的[%s]存在违规，请您重新发布", post.Title)
 			sid := fmt.Sprintf("%d", post.Id)
-			err = models.AddNotice(username, post.OpenId, true, msg, sid, NTYPE_2)
+			err = models.AddNotice(username, post.OpenId, true, msg, sid, qutil.NTYPE_2)
 			if err != nil {
 				beego.Error(err)
 			}

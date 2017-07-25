@@ -4,9 +4,11 @@ package controllers
 发布消息
 */
 import (
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strconv"
+
+	"github.com/astaxie/beego"
 )
 
 type AdminUpUserMoneyController struct {
@@ -45,11 +47,11 @@ func (c *AdminUpUserMoneyController) Post() {
 				if len(moneytype) != 0 {
 					addmoney := int64(0)
 					if moneytype == "1" {
-						addmoney = MONEY_SUBSCRIBE_SUM
+						addmoney = qutil.MONEY_SUBSCRIBE_SUM
 					} else if moneytype == "2" {
-						addmoney = MONEY_EXAMINE_SUM
+						addmoney = qutil.MONEY_EXAMINE_SUM
 					} else if moneytype == "3" {
-						addmoney = MONEY_BELIKE_SUM
+						addmoney = qutil.MONEY_BELIKE_SUM
 					}
 					// beego.Debug("User:", user.Uid)
 					err = models.AddUserMoney(user.Uid, addmoney)

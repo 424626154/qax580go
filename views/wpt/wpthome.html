@@ -1,0 +1,200 @@
+{{template "header.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<!-- <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+<script type="text/javascript">
+//微信分享
+// wx.config({
+//     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+//     appId: {{.WxShare.AppId}}, // 必填，公众号的唯一标识
+//     timestamp: {{.WxShare.TimeStamp}}, // 必填，生成签名的时间戳
+//     nonceStr: {{.WxShare.NonceStr}}, // 必填，生成签名的随机串
+//     signature: {{.WxShare.Signature}},// 必填，签名，见附录1
+//     jsApiList: ['downloadImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2  分享到朋友圈onMenuShareTimeline
+// });
+// wx.ready(function(){
+
+//     // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+//     alert("wx read");
+// });
+// wx.error(function(res){
+
+//     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+//     alert(res);
+//     alert(location.href)
+//     // alert({{.WxShare.TimeStamp}})
+//     // alert({{.WxShare.NonceStr}})
+//     // alert({{.WxShare.Signature}})
+// });
+//微信分享
+/**
+关闭
+*/
+  function onCloseDialog(){
+    $('#mymodal').hide();
+        // alert("onCloseDialog")
+  }
+  function showDialog(img,wid){
+  	// alert(info)
+    $('#mymodal').show();
+    $("#modalimg").attr('src',img);
+    $('#modalwid').html("微信号："+wid)
+     // alert("showDialog")
+  }
+   function onCloseDialog1(){
+    $('#mymodal1').hide();
+        // alert("onCloseDialog")
+  }
+  function showDialog1(){
+  	// alert()
+    $('#mymodal1').show();
+    $('#modal').html()
+     // alert("showDialog")
+  }
+
+  function onSearch(){
+  	var search = document.getElementById("search").value;
+  	if(search.length > 0){
+  		// alert(search)
+	  	var url = "/wpt/search?search="+search;
+	    // alert(url)
+	    var tempForm = document.createElement("form");
+	    document.body.appendChild(tempForm);
+	    tempForm.action = url;
+	    tempForm.method = "post";
+	    tempForm.enctype = "multipart/form-data"
+	    tempForm.submit();
+	     return;
+  	}else{
+  		alert("请输入搜索平台")
+  	}
+  }
+ //  function saveImg()
+	// {
+
+	// 	var imgURL = $("#modalimg").attr("src");
+	// 	wx.downloadImage({
+	// 	    serverId: imgURL, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+	// 	    isShowProgressTips: 1, // 默认为1，显示进度提示
+	// 	    success: function (res) {
+	// 	        var localId = res.localId; // 返回图片下载后的本地ID
+	// 	    }
+	// 	});
+	// }
+</script>
+<div class="wpt_bg">
+
+	<!--搜索-->
+	<div class="row" style="padding-left: 10px;padding-right: 10px">
+		<div class="col-xs-8 col-sm-8 col-md-8">
+			<input id="search" type="text" class="form-control" placeholder="请输入搜索微平台名称或微信号"></div>
+		<div class="col-xs-4 col-sm-4 col-md-4">
+			<button type="submit" class="btn btn-default" onclick="onSearch()" style="width: 100%">搜索</button>
+		</div>
+	</div>
+	<!--搜索-->
+	<!--推荐-->
+	<div class="wpt_title" id="tuijian_title">
+		<h4>推荐微平台</h4>
+		<hr/>
+	</div>
+	<div class="row">
+		{{range .Objs}}
+		<div class="col-xs-6 col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<img data-src="holder.js/100%x200" src="{{isImgPath .Qrcode}}" alt="{{isImgPath .Qrcode}}">
+				<div class="caption">
+					<h3>{{.Title}}</h3>
+					<h5>微信号：{{.Wid}}</h5>
+					<h5>服务范围：{{.WRange}}</h5>
+					<p>
+						<button class="btn btn-default" role="button" onclick="showDialog({{isImgPath .Qrcode}},{{.Wid}})">关注</button>
+						<button class="btn btn-default" role="button" onclick="showDialog1({{.Introduce}})">介绍</button>
+					</p>
+				</div>
+			</div>
+		</div>
+		{{else}}
+		<script type="text/javascript">$('#tuijian_title').hide();</script>
+		{{end}}
+	</div>
+	<!--推荐-->
+	<!--常规-->
+	<div class="wpt_title">
+		<h4>微平台</h4>
+		<hr/>
+	</div>
+	<div class="row">
+		{{range .Obj1s}}
+		<div class="col-xs-6 col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<img data-src="holder.js/100%x200" src="{{isImgPath .Qrcode}}" alt="{{isImgPath .Qrcode}}">
+				<div class="caption">
+					<h3>{{.Title}}</h3>
+					<h5>微信号：{{.Wid}}</h5>
+					<h5>服务范围：{{.WRange}}</h5>
+					<p>
+						<button class="btn btn-default" role="button" onclick="showDialog({{isImgPath .Qrcode}},{{.Wid}})">关注</button>
+						<button class="btn btn-default" role="button" onclick="showDialog1({{.Introduce}})">介绍</button>
+					</p>
+				</div>
+			</div>
+		</div>
+		{{end}}
+	</div>
+	<!--常规-->
+
+	<!--弹出框-->
+	<div class="modal" id="mymodal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">关注微平台</h4>
+				</div>
+				<div class="modal-body">
+					<div class="thumbnail">
+						<img data-src="holder.js/100%x200" src="" alt="" id="modalimg">
+						<div class="caption">
+							<h5 id="modalwid">微信号：{{.Wid}}</h5>
+							<p>
+								<button class="btn btn-default" role="button" onclick="onCloseDialog()">关闭</button>
+								<!-- <button class="btn btn-default" role="button" onclick="saveImg()">保存二维码</button> -->
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<!--弹出框-->
+	<!--弹出框-->
+	<div class="modal" id="mymodal1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">微平台介绍</h4>
+				</div>
+				<div class="modal-body">
+					<div class="thumbnail">
+						<img data-src="holder.js/100%x200" src="" alt="" id="modalimg">
+						<div class="caption">
+							<p id="modalinfo"></p>
+							<p>
+								<button class="btn btn-default" role="button" onclick="onCloseDialog1()">关闭</button>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	<!--弹出框-->
+</div>
+{{template "footer.html" .}}

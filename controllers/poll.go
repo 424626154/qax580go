@@ -5,14 +5,16 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/config"
 	"io/ioutil"
 	"net/http"
 	"path"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
 )
 
 type PollController struct {
@@ -833,7 +835,7 @@ func getPollWxOpenId(c *PollController, pollsid string, code string) (string, er
 			beego.Error(err)
 		} else {
 			maxAge := 1<<31 - 1
-			c.Ctx.SetCookie(COOKIE_WX_OPENID, tokenobj.OpenID, maxAge, "/")
+			c.Ctx.SetCookie(qutil.COOKIE_WX_OPENID, tokenobj.OpenID, maxAge, "/")
 			return tokenobj.OpenID, nil
 		}
 	}
@@ -879,7 +881,7 @@ func getWxAutoToken(appid string, secret string, code string) (models.AccessToke
 }
 
 func getPollCookie(c *PollController) string {
-	openid := c.Ctx.GetCookie(COOKIE_WX_OPENID)
+	openid := c.Ctx.GetCookie(qutil.COOKIE_WX_OPENID)
 	c.Data["OpenId"] = openid
 	beego.Debug("/poll getPollCookie openid:", openid)
 	return openid
@@ -905,7 +907,7 @@ func getPollShare(appid string, secret string, share_url string, wxShareCon mode
 			beego.Error()
 		}
 		if ticket.ErrCode == 0 {
-			c.Ctx.SetCookie(COOKIE_WX_TICKET, ticket.Ticket, ticket.ExpiresIn, "/")
+			c.Ctx.SetCookie(qutil.COOKIE_WX_TICKET, ticket.Ticket, ticket.ExpiresIn, "/")
 			ticket_cookie = ticket.Ticket
 		}
 	}

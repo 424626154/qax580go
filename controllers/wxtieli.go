@@ -31,6 +31,9 @@ const (
 	tl_function_info  = "【帮助】\n发布信息－》更多－》发布信息，意见反馈－》更多－》意见反馈"
 )
 
+const tl_appid = "wx544b79bb1ac22fc7"
+const tl_secret = "4477458a2abf3adf5880d2420235df90"
+
 // //接收文本消息
 // type TextRequestBody struct {
 // 	XMLName      xml.Name `xml:"xml"`

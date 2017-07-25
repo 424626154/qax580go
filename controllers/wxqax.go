@@ -6,13 +6,15 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/config"
 	"io/ioutil"
 	"net/http"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
 )
 
 type WxqaxController struct {
@@ -51,7 +53,7 @@ func (c *WxqaxController) Sunscribe() {
 							beego.Error(err)
 							response_json = `{"errcode":1,"errmsg":"AddWxUserMoney error"}`
 						} else {
-							_, err = models.AddUserMoneyRecord(user.OpenId, MONEY_SUBSCRIBE_SUM, MONEY_SUBSCRIBE)
+							_, err = models.AddUserMoneyRecord(user.OpenId, qutil.MONEY_SUBSCRIBE_SUM, qutil.MONEY_SUBSCRIBE)
 						}
 					}
 				}

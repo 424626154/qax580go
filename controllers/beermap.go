@@ -5,9 +5,11 @@ package controllers
 **/
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
 type BMResponseJson struct {
@@ -19,8 +21,6 @@ type BMResponseJson struct {
 type BeerMapController struct {
 	beego.Controller
 }
-
-
 
 //admin
 func (c *BeerMapController) ALogin() {
@@ -44,8 +44,8 @@ func (c *BeerMapController) ALogin() {
 				if autologin {
 					maxAge = 1<<31 - 1
 				}
-				c.Ctx.SetCookie(BM_PASSWORD, username, maxAge, "/")
-				c.Ctx.SetCookie(BM_PASSWORD, password, maxAge, "/")
+				c.Ctx.SetCookie(qutil.BM_PASSWORD, username, maxAge, "/")
+				c.Ctx.SetCookie(qutil.BM_PASSWORD, password, maxAge, "/")
 				beego.Debug("login ok------")
 				c.Redirect("/beermap/admin", 302)
 				return
@@ -100,7 +100,7 @@ func (c *BeerMapController) Ajax() {
 			lat := c.Input().Get("lat")
 			describe := c.Input().Get("describe")
 			beego.Debug(id, name, lng, lat, describe)
-			obj, err := models.AddBMMaker(id,citycode,name, lng, lat, describe)
+			obj, err := models.AddBMMaker(id, citycode, name, lng, lat, describe)
 			if err != nil {
 				beego.Error(err)
 				response_obj.ErrMsg = "存储失败"
