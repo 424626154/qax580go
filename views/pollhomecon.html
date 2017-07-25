@@ -19,10 +19,10 @@ wx.ready(function(){
     title: {{.WxShareCon.Title}}, // 分享标题
     link: {{.WxShareCon.Link}}, // 分享链接
     imgUrl: {{.WxShareCon.ImgUrl}}, // 分享图标
-    success: function () { 
+    success: function () {
         // 用户确认分享后执行的回调函数
     },
-    cancel: function () { 
+    cancel: function () {
         // 用户取消分享后执行的回调函数
     }
 });
@@ -35,7 +35,7 @@ wx.error(function(res){
 });
 //微信分享
   function closeErro(){
-    window.location.href="http://www.baoguangguang.cn/"; 
+    window.location.href="http://www.baoguangguang.cn/";
   }
   /**
 投票
@@ -44,7 +44,7 @@ wx.error(function(res){
                 $.ajax({
                 url : '/wxqax/qualification?openid='+{{.OpenId}}+'&pollsid='+{{.PollsId}},
                 data:{},
-                cache : false, 
+                cache : false,
                 async : false,
                 type : "POST",
                 dataType : 'json',
@@ -52,7 +52,7 @@ wx.error(function(res){
                     // alert(result.errcode)
                     if(result.errcode == 0){
                         if(isCheck()){
-                        var url = "/poll/pollhome?op=vote&pollsid="+{{.PollsId}}+"&id="+id; 
+                        var url = "/poll/pollhome?op=vote&pollsid="+{{.PollsId}}+"&id="+id;
                         // alert(url)
                         window.location.href = url
                         }
@@ -91,7 +91,7 @@ wx.error(function(res){
   function onSubscribe(){
     // alert("onSubscribe")
      $('#mymodal').hide();
-    window.location.href={{.Polls.More}}; 
+    window.location.href={{.Polls.More}};
   }
   /**
 关闭
@@ -112,7 +112,7 @@ wx.error(function(res){
   }
 </script>
 <body id="header_body">
-<div id="cont_bg">
+<div class="cont_bg">
   <ul class="nav nav-pills">
     <li >
       <a href="/poll/pollhome?pollsid={{.PollsId}}">返回</a>

@@ -6,10 +6,10 @@ $(document).ready(function(){
         });
 
 var img_path = "";
-  function setImage(obj){  
-    var value = obj.value;  
+  function setImage(obj){
+    var value = obj.value;
     img_path = value;
-  } 
+  }
   function addGuangao(){
     if(img_path == ""){
       alert("请选择图片");
@@ -43,9 +43,9 @@ var img_path = "";
     var url = "/admin/addguanggao?title="+title+"&info="+info+"&blink="+blink+"&link="+link+"&bimg="+bimg+"&imageitem0="+imageitem0+"&imageitem1="+imageitem1+"&imageitem2="+imageitem2;
     // alert(url)
     document.getElementById("add").action = url;
-     document.getElementById("add").method = "post";   
+     document.getElementById("add").method = "post";
      document.getElementById("add").enctype = "multipart/form-data";
-     document.getElementById("add").submit(); 
+     document.getElementById("add").submit();
   }
   function IsURL(str_url){
         var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
@@ -77,7 +77,7 @@ function checkURL(URL){
     }else{
     return false;
     }
-} 
+}
 </script>
 <form id = "add" name="add" class="form-inline" method="post" action="/admin/addguanggao" enctype="multipart/form-data">
   <div class="">
@@ -95,7 +95,7 @@ function checkURL(URL){
       <div>
         <h5>广告主页：尺寸为 450*250</h5>
       </div>
-      <input type="file" class="form-control my_file" name="image" id="image" accept="image/*" onchange="setImage(this)">
+      <input type="file" class="form-control my_file" name="image" id="image" accept="image/jpeg,image/jpg,image/png" onchange="setImage(this)">
       <label>
         <input type="checkbox" name="bimg" id="bimg">正文显示</label>
     </div>
@@ -104,16 +104,16 @@ function checkURL(URL){
     <div>
       <h5>详情图片0</h5>
     </div>
-    <input type="file" class="form-control my_file" name="imageitem0" id="imageitem0" accept="image/*"></div>
+    <input type="file" class="form-control my_file" name="imageitem0" id="imageitem0" accept="image/jpeg,image/jpg,image/png"></div>
   <div class="my_select_img">
     <div>
       <h5>详情图片1</h5>
     </div>
-    <input type="file" class="form-control my_file" name="imageitem1" id="imageitem1" accept="image/*" ></div>
+    <input type="file" class="form-control my_file" name="imageitem1" id="imageitem1" accept="image/jpeg,image/jpg,image/png" ></div>
   <div class="my_select_img">
     <div>
       <h5>详情图片2</h5>
-    <input type="file" class="form-control my_file" name="imageitem2" id="imageitem2" accept="image/*"></div>
+    <input type="file" class="form-control my_file" name="imageitem2" id="imageitem2" accept="image/jpeg,image/jpg,image/png"></div>
 </div>
 <button type="button" class="my_button my_gray" onclick="addGuangao();">发布</button>
 </form>

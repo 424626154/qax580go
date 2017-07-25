@@ -1,5 +1,5 @@
 {{template "adminheader.html" .}}
-<div id="cont_bg">
+<div class="cont_bg">
   <div > <font class="title_fnot" >{{.Post.Title}}</font>
   </div>
   <div class="cont_info"> <font class="info_fnot">{{.Post.Info}}</font>
@@ -14,7 +14,7 @@
     <span class="label label-success">已审核</span>
     {{if eq .Post.Label 1}}
     <span class="label label-primary">个人</span>
-    {{end}} 
+    {{end}}
     {{if eq .Post.Label 2}}
     <span class="label label-primary">官方</span>
     {{end}}

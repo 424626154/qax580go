@@ -51,16 +51,18 @@
         }
         var img_src = {{.ImgUrlPath}}+gaunggaos[i].Image;
         var img_alt = {{.ImgUrlPath}}+gaunggaos[i].Image;
-        guangao_div_tiem += "\" onclick=\"location.href='"+url+"';\"><img src=\""+img_src+"\" alt=\""+img_alt+"\"><div class=\"carousel-caption\"><h3>"+gaunggaos[i].Title+"</h3></div></div>";
+        guangao_div_tiem += "\" onclick=\"location.href='"+url+"';\"  align=\"center\"><img src=\""+img_src+"\" alt=\""+img_alt+"\"><div class=\"carousel-caption\"><h3>"+gaunggaos[i].Title+"</h3></div></div>";
         $(guangao_div_tiem).appendTo(guangao_div);
       }
   }
   function initNotice(){
-    var notice =document.getElementById("notice");
-    if({{.NoticeNum}} > 0) {
-    notice.style.visibility="visible"
-    }else{
-    notice.style.visibility="hidden"
+    if ({{.isUser}}){
+      var notice =document.getElementById("notice");
+      if({{.NoticeNum}} > 0) {
+        notice.style.visibility="visible"
+      }else{
+        notice.style.visibility="hidden"
+      }
     }
   }
   function myscroll(){

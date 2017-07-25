@@ -16,17 +16,17 @@
 </head>
 
   <script type="text/javascript">
-  
+
   function closeErro(){
-    window.location.href="http://www.baoguangguang.cn/"; 
+    window.location.href="http://www.baoguangguang.cn/";
   }
     function onclikVote(id){
-    var url = "/poll/pollhomesearch?op=vote&pollsid="+{{.PollsId}}+"&pollid="+id+"&search="+{{.Search}}; 
+    var url = "/poll/pollhomesearch?op=vote&pollsid="+{{.PollsId}}+"&pollid="+id+"&search="+{{.Search}};
     // alert(url)
     window.location.href = url
   }
   function onCon(id){
-    var url = "/poll/pollhomecon?pollsid="+{{.PollsId}}+"&pollid="+id; 
+    var url = "/poll/pollhomecon?pollsid="+{{.PollsId}}+"&pollid="+id;
     // alert(url)
     window.location.href = url
   }
@@ -37,7 +37,7 @@
   }
 </script>
 <body id="header_body">
-  <div id="cont_bg">
+  <div class="cont_bg">
   <ul class="nav nav-pills">
   <li ><button class="btn btn-default" onclick="onBack()">返回</button></li>
 </ul>
