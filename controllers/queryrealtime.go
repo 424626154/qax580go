@@ -5,10 +5,11 @@ package controllers
 */
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
 type RealTime struct {
@@ -89,7 +90,7 @@ func queryRealTime(start string, end string, date string, c *QueryRealTimeContro
 		beego.Debug("ErrorCode", obj.ErrorCode)
 		c.Data["ErrorCode"] = obj.ErrorCode
 		if obj.ErrorCode != 0 {
-			c.Data["ErrorInfo"] = getError(obj.ErrorCode)
+			c.Data["ErrorInfo"] = GetError(obj.ErrorCode)
 		} else {
 			c.Data["Results"] = obj.RTResult
 		}

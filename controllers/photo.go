@@ -6,11 +6,13 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
 	"net/url"
 	"qax580go/models"
+	"qax580go/qutil"
 	"strings"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 )
 
 type PhotoController struct {
@@ -223,7 +225,7 @@ func (c *PhotoController) OrderDet() {
 
 /*********admin***********/
 func (c *PhotoController) AdminHome() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -236,7 +238,7 @@ func (c *PhotoController) AdminHome() {
 }
 
 func (c *PhotoController) AdminUrl() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -249,7 +251,7 @@ func (c *PhotoController) AdminUrl() {
 }
 
 func (c *PhotoController) AdminOauth() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -283,7 +285,7 @@ func (c *PhotoController) Poauthtest() {
 }
 
 func (c *PhotoController) AdminSize() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -302,7 +304,7 @@ func (c *PhotoController) AdminSize() {
 	c.TplName = "padminsize.html"
 }
 func (c *PhotoController) AdminTemp() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -322,7 +324,7 @@ func (c *PhotoController) AdminTemp() {
 }
 
 func (c *PhotoController) AdminOrders() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -340,7 +342,7 @@ func (c *PhotoController) AdminOrders() {
 }
 
 func (c *PhotoController) AdminDetails() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {

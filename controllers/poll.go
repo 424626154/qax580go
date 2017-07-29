@@ -25,7 +25,7 @@ type PollController struct {
 投票后台
 */
 func (c *PollController) Adminpolls() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username
@@ -78,7 +78,7 @@ func (c *PollController) Adminpolls() {
 }
 
 func (c *PollController) AdminUppollsInfo() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username
@@ -162,7 +162,7 @@ func (c *PollController) AdminUppollsInfo() {
 }
 
 func (c *PollController) AdminUppollsImg() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username
@@ -228,7 +228,7 @@ func (c *PollController) AdminUppollsImg() {
 }
 
 func (c *PollController) Adminpollscon() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username
@@ -292,7 +292,7 @@ func (c *PollController) Adminpollscon() {
 	c.TplName = "adminpollscon.html"
 }
 func (c *PollController) AdminpollVote() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username
@@ -325,7 +325,7 @@ func (c *PollController) AdminpollVote() {
 投票后台添加新投票
 */
 func (c *PollController) Adminaddpoll() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username

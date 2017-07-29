@@ -78,73 +78,73 @@ func init() {
 	os.Mkdir("filehosting", os.ModePerm)
 	beego.Router("/filehosting/:all", &controllers.FileHostingController{})
 
-	beego.Router("/admin/home", &controllers.AdminHomeController{})                       //后台主页
-	beego.Router("/admin/modify", &controllers.AdminModifyController{})                   //修改信息
-	beego.Router("/admin/uplode", &controllers.AdminUplodeController{})                   //后台上传
-	beego.Router("/admin/feedbacklist", &controllers.AdminFeedbackListController{})       //意见反馈列表
-	beego.Router("/admin/feedbackcontent", &controllers.AdminFeedbackContentController{}) //意见反馈内容
-	beego.Router("/admin", &controllers.AdminLoginController{})                           //后台登陆
-	beego.Router("/admin/adminlist", &controllers.AdminAdminListController{})             //后台可登录用户列表
-	beego.Router("/admin/userlist", &controllers.AdminUserListController{})
-	beego.Router("/admin/adduser", &controllers.AdminAddUserController{})                 //添加后台用户
-	beego.Router("/admin/content", &controllers.AdminContentController{})                 //后台消息内容
-	beego.Router("/admin/wxuserlist", &controllers.WxUserListController{})                //后台统计公众号登录用户列表
-	beego.Router("/admin/juhe", &controllers.AdminJuheController{})                       //聚合数据主页
-	beego.Router("/admin/newskey", &controllers.AdminNewsKeyController{})                 //新闻关键词
-	beego.Router("/admin/addguanggao", &controllers.AdminaAddGuanggaoController{})        //后台添加广告
-	beego.Router("/admin/guanggaos", &controllers.AdminGuanggaosController{})             //后台广告列表
-	beego.Router("/admin/guanggaocontent", &controllers.AdminGuanggaoContentController{}) //后台广告内容
-	beego.Router("/admin/upguanggaoinfo", &controllers.AdminUpGuanggaoInfoController{})   //后台修改广告内容
-	beego.Router("/admin/upguanggaoimg", &controllers.AdminUpGuanggaoImgController{})     //后台修改广告图片
-	beego.Router("/admin/waimailist", &controllers.AdminWaimaiListController{})           //外卖列表
-	beego.Router("/admin/addwaimai", &controllers.AdminAddWaimaiController{})             //后台添加外卖
-	beego.Router("/admin/caidans", &controllers.AdminCaidansController{})                 //后台菜单列表
-	beego.Router("/admin/addcaidan", &controllers.AdminAddCaidanController{})             //后台添加菜单
+	beego.Router("/admin/home", &admin.AdminHomeController{})                       //后台主页
+	beego.Router("/admin/modify", &admin.AdminModifyController{})                   //修改信息
+	beego.Router("/admin/uplode", &admin.AdminUplodeController{})                   //后台上传
+	beego.Router("/admin/feedbacklist", &admin.AdminFeedbackListController{})       //意见反馈列表
+	beego.Router("/admin/feedbackcontent", &admin.AdminFeedbackContentController{}) //意见反馈内容
+	beego.Router("/admin", &admin.AdminLoginController{})                           //后台登陆
+	beego.Router("/admin/adminlist", &admin.AdminAdminListController{})             //后台可登录用户列表
+	beego.Router("/admin/userlist", &admin.AdminUserListController{})
+	beego.Router("/admin/adduser", &admin.AdminAddUserController{})                 //添加后台用户
+	beego.Router("/admin/content", &admin.AdminContentController{})                 //后台消息内容
+	beego.Router("/admin/wxuserlist", &admin.WxUserListController{})                //后台统计公众号登录用户列表
+	beego.Router("/admin/juhe", &admin.AdminJuheController{})                       //聚合数据主页
+	beego.Router("/admin/newskey", &admin.AdminNewsKeyController{})                 //新闻关键词
+	beego.Router("/admin/addguanggao", &admin.AdminaAddGuanggaoController{})        //后台添加广告
+	beego.Router("/admin/guanggaos", &admin.AdminGuanggaosController{})             //后台广告列表
+	beego.Router("/admin/guanggaocontent", &admin.AdminGuanggaoContentController{}) //后台广告内容
+	beego.Router("/admin/upguanggaoinfo", &admin.AdminUpGuanggaoInfoController{})   //后台修改广告内容
+	beego.Router("/admin/upguanggaoimg", &admin.AdminUpGuanggaoImgController{})     //后台修改广告图片
+	beego.Router("/admin/waimailist", &admin.AdminWaimaiListController{})           //外卖列表
+	beego.Router("/admin/addwaimai", &admin.AdminAddWaimaiController{})             //后台添加外卖
+	beego.Router("/admin/caidans", &admin.AdminCaidansController{})                 //后台菜单列表
+	beego.Router("/admin/addcaidan", &admin.AdminAddCaidanController{})             //后台添加菜单
 	// admin推荐微信号
-	beego.Router("/admin/wechats", &admin.AdminWeChat{}, "*:WeChats")             //后台推荐微信号列表
-	beego.Router("/admin/addwechat", &admin.AdminWeChat{}, "*:Add")               //后台添加推荐微信号
-	beego.Router("/admin/upwechatinfo", &admin.AdminWeChat{}, "*:UpInfo")         //后台修改微信号内容
-	beego.Router("/admin/upwechatimg", &admin.AdminWeChat{}, "*:UpImg")           //后台修改微信号图片
-	beego.Router("/admin/upusermoney", &controllers.AdminUpUserMoneyController{}) //后台用户金钱
+	beego.Router("/admin/wechats", &admin.AdminWeChat{}, "*:WeChats")       //后台推荐微信号列表
+	beego.Router("/admin/addwechat", &admin.AdminWeChat{}, "*:Add")         //后台添加推荐微信号
+	beego.Router("/admin/upwechatinfo", &admin.AdminWeChat{}, "*:UpInfo")   //后台修改微信号内容
+	beego.Router("/admin/upwechatimg", &admin.AdminWeChat{}, "*:UpImg")     //后台修改微信号图片
+	beego.Router("/admin/upusermoney", &admin.AdminUpUserMoneyController{}) //后台用户金钱
 	// admin 推荐公众号
 	beego.Router("/admin/wxofficials", &admin.AdminWxOfficial{}, "*:WxOfficials") //公众号列表
 	beego.Router("/admin/addwxofficial", &admin.AdminWxOfficial{}, "*:Add")       //添加微信公众号
 	beego.Router("/admin/upwxofficialinfo", &admin.AdminWxOfficial{}, "*:UpInfo") //修改微信公众号内容
 	beego.Router("/admin/upwxofficialimg", &admin.AdminWxOfficial{}, "*:UpImg")   //修改微信公众号图片
 
-	beego.Router("/admin/moneyinfo", &controllers.AdminMoneyInfoController{})            //后台用户金钱记录
-	beego.Router("admin/importuser", &controllers.AdminImportUserController{})           //后台导入微信用户
-	beego.Router("admin/upwxuserinfo", &controllers.AdminUpWxuserInfoController{})       //后台导入微信用户
-	beego.Router("admin/mall", &controllers.AdminMallController{})                       //后台商城
-	beego.Router("admin/addcommodity", &controllers.AdminaAddCommodityController{})      //添加商品
-	beego.Router("admin/upcommodityinfo", &controllers.AdminUpCommodityInfoController{}) //修改商品信息
-	beego.Router("admin/upcommodityimg", &controllers.AdminUpCommodityImgController{})   //修改商品图片
-	beego.Router("admin/exchange", &controllers.AdminExchangeController{})               //用户兑换
-	beego.Router("admin/shanghus", &controllers.AdminShanghusController{})               //后台商户
-	beego.Router("admin/addshanghu", &controllers.AdminAddShanghuController{})           //添加商户
-	beego.Router("admin/upshanghuinfo", &controllers.AdminUpShangHuInfoController{})     //修改商户信息
-	beego.Router("admin/upshanghuimg", &controllers.AdminUpShangHuImgController{})       //修改商户图片
-	beego.Router("admin/keywords", &controllers.AdminKeywordsController{})               //关键字列表
-	beego.Router("admin/addkeywords", &controllers.AdminaAddKeywordsController{})        //添加关键字
-	beego.Router("admin/keyobj", &controllers.AdminKeyobjController{})                   //关键字内容
-	beego.Router("admin/addkeyobj", &controllers.AdminaAddKeyobjController{})            //添加关键字内容
-	beego.Router("admin/wxtest", &controllers.AdminWxTestController{})                   //添加关键字内容
-	beego.Router("admin/updatelog", &controllers.AdminUpdateLogController{})             //后台更新日志
-	beego.Router("admin/notice", &controllers.AdminNoticeController{})                   //后台通知管理
+	beego.Router("/admin/moneyinfo", &admin.AdminMoneyInfoController{})            //后台用户金钱记录
+	beego.Router("admin/importuser", &admin.AdminImportUserController{})           //后台导入微信用户
+	beego.Router("admin/upwxuserinfo", &admin.AdminUpWxuserInfoController{})       //后台导入微信用户
+	beego.Router("admin/mall", &admin.AdminMallController{})                       //后台商城
+	beego.Router("admin/addcommodity", &admin.AdminaAddCommodityController{})      //添加商品
+	beego.Router("admin/upcommodityinfo", &admin.AdminUpCommodityInfoController{}) //修改商品信息
+	beego.Router("admin/upcommodityimg", &admin.AdminUpCommodityImgController{})   //修改商品图片
+	beego.Router("admin/exchange", &admin.AdminExchangeController{})               //用户兑换
+	beego.Router("admin/shanghus", &admin.AdminShanghusController{})               //后台商户
+	beego.Router("admin/addshanghu", &admin.AdminAddShanghuController{})           //添加商户
+	beego.Router("admin/upshanghuinfo", &admin.AdminUpShangHuInfoController{})     //修改商户信息
+	beego.Router("admin/upshanghuimg", &admin.AdminUpShangHuImgController{})       //修改商户图片
+	beego.Router("admin/keywords", &admin.AdminKeywordsController{})               //关键字列表
+	beego.Router("admin/addkeywords", &admin.AdminaAddKeywordsController{})        //添加关键字
+	beego.Router("admin/keyobj", &admin.AdminKeyobjController{})                   //关键字内容
+	beego.Router("admin/addkeyobj", &admin.AdminaAddKeyobjController{})            //添加关键字内容
+	beego.Router("admin/wxtest", &admin.AdminWxTestController{})                   //添加关键字内容
+	beego.Router("admin/updatelog", &admin.AdminUpdateLogController{})             //后台更新日志
+	beego.Router("admin/notice", &admin.AdminNoticeController{})                   //后台通知管理
 
-	beego.AutoRouter(&controllers.PollController{})      //投票系统
-	beego.AutoRouter(&controllers.RinseController{})     //冲洗系统
-	beego.AutoRouter(&controllers.WptController{})       //微信平台
-	beego.AutoRouter(&controllers.AdminPostController{}) //后台提交post
-	beego.AutoRouter(&controllers.PhotoController{})     //洗相系统
+	beego.AutoRouter(&controllers.PollController{})  //投票系统
+	beego.AutoRouter(&controllers.RinseController{}) //冲洗系统
+	beego.AutoRouter(&controllers.WptController{})   //微信平台
+	beego.AutoRouter(&admin.AdminPostController{})   //后台提交post
+	beego.AutoRouter(&controllers.PhotoController{}) //洗相系统
 
 	beego.AutoRouter(&controllers.ImageController{}) //图床
 
 	beego.AutoRouter(&controllers.WeiZhanController{}) //微站
 	beego.AutoRouter(&controllers.DqsjController{})    //大签世界
 
-	beego.Router("/admin/dqsj", &controllers.AdminDqsjUserListController{})
-	beego.Router("/admin/adddqsjuser", &controllers.AdminAddDqsjUserController{})
+	beego.Router("/admin/dqsj", &admin.AdminDqsjUserListController{})
+	beego.Router("/admin/adddqsjuser", &admin.AdminAddDqsjUserController{})
 
 	beego.AutoRouter(&controllers.WxAppController{}) //微信小程序
 

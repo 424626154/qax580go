@@ -77,7 +77,7 @@ func (c *WptController) Search() {
 */
 
 func (c *WptController) AdminHome() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -145,7 +145,7 @@ func (c *WptController) AdminHome() {
 */
 
 func (c *WptController) AdminAdd() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 
 	} else {
@@ -208,7 +208,7 @@ func (c *WptController) AdminAdd() {
 修改图片
 */
 func (c *WptController) AdminUpImg() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username
@@ -285,7 +285,7 @@ func (c *WptController) AdminUpImg() {
 */
 
 func (c *WptController) AdminUpInfo() {
-	bool, username := chackAccount(c.Ctx)
+	bool, username := qutil.ChackAccount(c.Ctx)
 	if bool {
 		c.Data["isUser"] = bool
 		c.Data["User"] = username

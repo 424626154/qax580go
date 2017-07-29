@@ -5,10 +5,11 @@ package controllers
 */
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
 type Qutlets struct {
@@ -79,7 +80,7 @@ func queryQutlets(province string, city string, county string, c *QueryQutletsCo
 		beego.Debug("ErrorCode", obj.ErrorCode)
 		c.Data["ErrorCode"] = obj.ErrorCode
 		if obj.ErrorCode != 0 {
-			c.Data["ErrorInfo"] = getError(obj.ErrorCode)
+			c.Data["ErrorInfo"] = GetError(obj.ErrorCode)
 		} else {
 			c.Data["QResults"] = obj.QResult
 		}

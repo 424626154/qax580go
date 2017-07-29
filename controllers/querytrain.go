@@ -5,10 +5,11 @@ package controllers
 */
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
 type Tation struct {
@@ -95,8 +96,8 @@ func queryTrain(name string, c *QueryTrainController) {
 		beego.Debug("ErrorCode", tation.ErrorCode)
 		c.Data["ErrorCode"] = tation.ErrorCode
 		if tation.ErrorCode != 0 {
-			c.Data["ErrorInfo"] = getError(tation.ErrorCode)
-			beego.Debug("Errorinfo", getError(tation.ErrorCode))
+			c.Data["ErrorInfo"] = GetError(tation.ErrorCode)
+			beego.Debug("Errorinfo", GetError(tation.ErrorCode))
 		} else {
 			c.Data["TrainInfo"] = tation.Result1.TrainInfo
 			c.Data["StationList"] = tation.Result1.StationList

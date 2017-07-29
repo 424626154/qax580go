@@ -1,0 +1,86 @@
+{{template "adminheader.html" .}}
+<script type="text/javascript" src="/static/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script language="javascript">
+$(document).ready(function(){
+            document.getElementById("title_font").href="/admin/waimailist";
+            initTime();
+        });
+function initTime(){
+      document.getElementById("starth").options.length=0;
+          for(var i = 0 ; i < 24; i ++ ){
+               document.getElementById("starth").options.add(new Option(i+1,i+1));
+         }
+         document.getElementById("startm").options.length=0;
+          for(var i = 0 ; i < 59; i ++ ){
+               document.getElementById("startm").options.add(new Option(i,i));
+         }
+               document.getElementById("endh").options.length=0;
+          for(var i = 0 ; i < 24; i ++ ){
+               document.getElementById("endh").options.add(new Option(i+1,i+1));
+         }
+         document.getElementById("endm").options.length=0;
+          for(var i = 0 ; i < 59; i ++ ){
+               document.getElementById("endm").options.add(new Option(i,i));
+         }
+}
+
+  function toVaild(){
+    var image = document.getElementById("image").value;
+    var name = document.getElementById("name").value;
+    var address = document.getElementById("address").value;
+    var phone = document.getElementById("phone").value;
+    if(image == ""){
+      alert("请选择图片");
+      return false;
+    }else if(name == ""){
+      alert("名称不能为空");
+      return false;
+    }else if(address == ""){
+      alert("地址不能为空");
+      return false;
+    }else if(phone == ""){
+      alert("手机号不能为空");
+      return false;
+    }else{
+      return true;
+    }
+  }
+</script>
+<div class="uplode_bg">
+  <form class="form-inline" method="post" action="/admin/addwaimai" enctype="multipart/form-data" onsubmit="return toVaild()">
+    <div class="input-group"> <font class="up_fnt" for="" style="color:#000">餐厅名称</font>
+      <input type="text" class="form-control" id="name" name="name" placeholder="输入餐厅名称"></div>
+    <div class="input-group"> <font class="up_fnt">地址</font>
+      <textarea class="form-control" rows="2" placeholder="输入餐厅地址" id="address" name="address"></textarea>
+    </div>
+    <div class="input-group">
+      <font class="up_fnt">订餐电话</font>
+      <textarea class="form-control" rows="1" placeholder="输入餐厅订餐电话" id="phone" name="phone"></textarea>
+    </div>
+    <div class="input-group">
+      <font class="up_fnt" for="" style="color:#000">上班时间:</font>
+      <select style="width:40px;font-size:20px" id="starth" name="starth"></select>
+      点
+      <select style="width:40px;font-size:20px" id="startm" name="startm"></select>
+      分
+    </div>
+    <div class="input-group">
+      <font class="up_fnt" for="" style="color:#000">下班时间:</font>
+      <select style="width:40px;font-size:20px" id="endh" name="endh"></select>
+      点
+      <select style="width:40px;font-size:20px" id="endm" name="endm"></select>
+      分
+    </div>
+    <div class="input-group">
+      <font class="up_fnt">选择图片：(上传餐厅的宣传图片)</font>
+      <input type="file" class="form-control" name="image" id="image" accept="image/jpeg,image/jpg,image/png" ></div>
+    <div>
+      <font class="info_fnot">发布餐厅审核后方可上线</font>
+    </div>
+    <div class="body_right">
+      <button type="submit" class="my_button my_gray">发布</button>
+    </div>
+  </form>
+
+</div>
+{{template "adminfooter.html" .}}

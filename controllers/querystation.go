@@ -5,10 +5,11 @@ package controllers
 */
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
 type Station struct {
@@ -88,7 +89,7 @@ func queryStation(start string, end string, c *QueryStationController) {
 		beego.Debug("ErrorCode", station.ErrorCode)
 		c.Data["ErrorCode"] = station.ErrorCode
 		if station.ErrorCode != 0 {
-			c.Data["ErrorInfo"] = getError(station.ErrorCode)
+			c.Data["ErrorInfo"] = GetError(station.ErrorCode)
 		} else {
 			c.Data["Datas"] = station.Result.Data
 			beego.Debug(station.Result.Data)
@@ -98,7 +99,7 @@ func queryStation(start string, end string, c *QueryStationController) {
 	}
 }
 
-func getError(errorcode int64) string {
+func GetError(errorcode int64) string {
 	error_indo := ""
 	if errorcode == 202201 {
 		error_indo = "车次不能为空"

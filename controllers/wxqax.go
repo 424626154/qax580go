@@ -201,7 +201,7 @@ func getWxUserInfo(access_toke, openid string, c *WxqaxController) string {
 	return response_json
 }
 
-func getToken() (errcode int64, token string) {
+func GetToken() (errcode int64, token string) {
 	r_errcode := int64(0)
 	r_token := ""
 	// https: //api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
@@ -240,7 +240,7 @@ func getToken() (errcode int64, token string) {
 	return r_errcode, r_token
 }
 
-func getWxUser(openid string, access_token string) (models.Wxuserinfo, error) {
+func GetWxUser(openid string, access_token string) (models.Wxuserinfo, error) {
 	user := models.Wxuserinfo{}
 	response_json := `{"errcode":1,"errmsg":"getWxUser error"}`
 	// ?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
@@ -375,7 +375,7 @@ func (c *WxqaxController) Qualification() {
 			} else {
 				if tokenobj.ErrCode == 0 {
 					//获取用户信息
-					userinfo, err := getWxUser(openid, tokenobj.AccessToken)
+					userinfo, err := GetWxUser(openid, tokenobj.AccessToken)
 					if err != nil {
 						pollCheck.ErrCode = pollChecks[5].ErrCode
 						pollCheck.ErrMsg = pollChecks[5].ErrMsg
